@@ -12,7 +12,12 @@ pass_size = 16
 
 
 def generate_pass():
-    return ''.join((random.choice(pass_chars)) for _ in range(pass_size))
+    numbers = [random.choice(string.digits) for _ in range(2)]
+    big_letters = [random.choice(string.letters.upper()) for _ in range(7)]
+    small_letters = [random.choice(string.letters.lower()) for _ in range(7)]
+    p = numbers + big_letters + small_letters
+    random.shuffle(p)
+    return ''.join(p)
 
 users = []
 
