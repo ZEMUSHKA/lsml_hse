@@ -5,7 +5,7 @@ import subprocess
 
 REGION = "eastus"
 RES_GR_TEMPLATE = "{0}_resources"
-STORAGE_ACCOUNT_TEMPLATE = "{0}storagelsmlhserocks"
+STORAGE_ACCOUNT_TEMPLATE = "{0}lsmlhse645221"
 
 users = pd.read_json("users.json", orient="records")
 
