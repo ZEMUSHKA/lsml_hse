@@ -7,8 +7,6 @@ import json
 import pandas as pd
 
 student_cnt = 81
-pass_chars = string.letters + string.digits
-pass_size = 16
 
 
 def generate_pass():
