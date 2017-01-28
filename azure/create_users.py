@@ -6,7 +6,7 @@ import subprocess
 import json
 import pandas as pd
 
-student_cnt = 2
+student_cnt = 81
 pass_chars = string.letters + string.digits
 pass_size = 16
 
@@ -32,6 +32,7 @@ for idx in range(student_cnt):
     out = json.loads(out)
     userId = out["objectId"]
     users.append([user, password, userId])
+    print user, "done"
 
 df = pd.DataFrame(users, columns=["user", "password", "userId"])
 df.to_json("users.json", orient="records")
