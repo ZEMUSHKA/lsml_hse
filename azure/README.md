@@ -1,6 +1,6 @@
 # Scripts and Wiki for Azure
 
-### Start
+## Start
 Install Azure CLI and Azure CLI 2.0: 
 https://docs.microsoft.com/en-us/cli/azure
 
