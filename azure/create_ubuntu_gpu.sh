@@ -91,10 +91,12 @@ az network nic create \
 azure vm create \
     -n $VM_NAME \
     -g $RG_NAME \
-    --admin-username ubuntu
+    -l $REGION \
+    --admin-username ubuntu \
     --image-urn "https://"$STORAGE_ACCOUNT".blob.core.windows.net/images/ubuntu_gpu.vhd" \
     --nic-names $NIC_NAME \
     --public-ip-name $IP_NAME \
+    --storage-account-name $STORAGE_ACCOUNT \
     --vm-size Standard_NC6 \
     --ssh-publickey-file ~/.ssh/id_rsa.pub \
     --os-type Linux \
