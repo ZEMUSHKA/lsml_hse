@@ -74,25 +74,12 @@ az network nic create \
     --private-ip-address 10.0.1.10
 
 # Create VM
-#az vm create \
-#    -n $VM_NAME \
-#    -g $RG_NAME \
-#    --image "https://"$STORAGE_ACCOUNT".blob.core.windows.net/images/ubuntu_gpu.vhd" \
-#    --authentication-type ssh \
-#    --nics $NIC_NAME \
-#    --nsg $NSG_NAME \
-#    --public-ip-address $IP_NAME \
-#    --size Standard_NC6 \
-#    --ssh-key-value ~/.ssh/id_rsa.pub \
-#    --storage-type Standard_LRS \
-#    --storage-account $STORAGE_ACCOUNT \
-#    --custom-os-disk-type Linux
-
 azure vm create \
     -n $VM_NAME \
     -g $RG_NAME \
     -l $REGION \
-    --admin-username ubuntu \
+    -u ubuntu \
+    -p $(cat ssh_pass.txt) \
     --image-urn "https://"$STORAGE_ACCOUNT".blob.core.windows.net/images/ubuntu_gpu.vhd" \
     --nic-names $NIC_NAME \
     --public-ip-name $IP_NAME \
@@ -100,4 +87,4 @@ azure vm create \
     --vm-size Standard_NC6 \
     --ssh-publickey-file ~/.ssh/id_rsa.pub \
     --os-type Linux \
-    --data-disk-size 1000
+    --data-disk-size 300
