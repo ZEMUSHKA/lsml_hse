@@ -1,7 +1,11 @@
 #!/usr/bin/env bash
-export STUDENT_NAME="student1"
-export RG_NAME=$STUDENT_NAME"_resources"
-export STORAGE_ACCOUNT=$STUDENT_NAME"lsmlhse645221"
+#export STUDENT_NAME="student1"
+#export RG_NAME=$STUDENT_NAME"_resources"
+#export STORAGE_ACCOUNT=$STUDENT_NAME"lsmlhse645221"
+
+export RG_NAME="admin_resources"
+export STORAGE_ACCOUNT="adminlsml"
+
 export VNET_NAME="student_network"
 export SUBNET_NAME="student_subnet"
 export REGION="eastus"
