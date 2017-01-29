@@ -36,15 +36,15 @@ with open("azcopy.bat", "w", buffering=0) as f:
         user_rg = RES_GR_TEMPLATE.format(user)
         user_key = get_storage_key(user_account, user_rg)
         command = \
-            """md "C:\Users\andrey\Desktop\AzureTemp\{d}"\r\n\
-start "AzCopy {s} to {d}" "C:\Program Files (x86)\Microsoft SDKs\Azure\AzCopy\AzCopy.exe" \
+            """md "C:\\Users\\andrey\\Desktop\\AzureTemp\\{d}"\r\n\
+start "AzCopy {s} to {d}" "C:\\Program Files (x86)\\Microsoft SDKs\\Azure\\AzCopy\\AzCopy.exe" \
             /Source:https://{s}.blob.core.windows.net/images \
             /Dest:https://{d}.blob.core.windows.net/images \
             /SourceKey:{sk} \
             /DestKey:{dk} \
             /Pattern:{p}\
-            /V:"C:\Users\andrey\Desktop\AzureTemp\{d}-log.txt"\
-            /Z:"C:\Users\andrey\Desktop\AzureTemp\{d}"\r\n""".format(
+            /V:"C:\\Users\\andrey\\Desktop\\AzureTemp\\{d}-log.txt"\
+            /Z:"C:\\Users\\andrey\\Desktop\\AzureTemp\\{d}"\r\n""".format(
                 s=admin_account,
                 d=user_account,
                 sk=admin_key,
