@@ -45,4 +45,13 @@ for _, row in users.iterrows():
         """.format(l=REGION, n=storName, g=resGrName),
         shell=True
     )
+    # create container for images
+    subprocess.check_output(
+        """
+        az storage container create \
+        -n images \
+        --account-name {s}
+        """.format(s=storName),
+        shell=True
+    )
     print user, "done"
