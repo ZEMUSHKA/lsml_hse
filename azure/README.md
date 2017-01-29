@@ -48,7 +48,8 @@ sudo chown -R ubuntu /mnt2
 ## Restore user files after VM creation (used in GPU machine)
 
 ```
-cp /usr/local/backup/* /home/ubuntu/
+# copy all files and directories including hidden
+sudo cp -rT /usr/local/backup /home/ubuntu
 ```
 
 ## Create image from VM
