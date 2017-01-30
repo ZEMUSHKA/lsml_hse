@@ -49,7 +49,8 @@ sudo chown -R ubuntu /mnt2
 
 ```
 # copy all files and directories including hidden
-sudo cp -rT /usr/local/backup /home/ubuntu
+sudo chown -R ubuntu /usr/local/backup
+cp -rT /usr/local/backup /home/ubuntu
 ```
 
 ## Create image from VM
@@ -64,3 +65,15 @@ az vm deallocate -g admin_resources -n ubuntugpu
 az vm generalize -g admin_resources -n ubuntugpu
 az vm capture -g admin_resources -n ubuntugpu --vhd-name-prefix ubuntugpu
 ```
+
+## NC6 vs NV6 machine
+
+Both work with NC6 image on Ubuntu 16.04.
+Approx. same price.
+M60 has less but faster cores and new architecture: 
+https://www.quora.com/What-are-the-major-differences-between-the-Nvidia-Tesla-M60-and-K80
+
+| Parameter     | NC6 (K80)     | NV6 (M60)    |
+| ------------- |:-------------:|:------------:|
+| ConvNet       | 14min 41s     | 8min 41s     |
+| Memory        | 12GB          | 8GB          |
