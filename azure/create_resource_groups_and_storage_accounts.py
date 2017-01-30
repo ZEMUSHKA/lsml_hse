@@ -2,10 +2,7 @@
 # -*- coding: utf-8 -*-
 import pandas as pd
 import subprocess
-
-REGION = "eastus"
-RES_GR_TEMPLATE = "{0}_resources"
-STORAGE_ACCOUNT_TEMPLATE = "{0}lsmlhse645221"
+from utils import REGION, RG_TEMPLATE, STORAGE_ACCOUNT_TEMPLATE
 
 users = pd.read_json("users.json", orient="records")
 
@@ -13,7 +10,7 @@ for _, row in users.iterrows():
     row = dict(row)
     user = row["user"]
     userId = row["userId"]
-    resGrName = RES_GR_TEMPLATE.format(user)
+    resGrName = RG_TEMPLATE.format(user)
     # create res gr
     subprocess.check_output(
         """
