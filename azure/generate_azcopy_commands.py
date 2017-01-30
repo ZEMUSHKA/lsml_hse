@@ -7,7 +7,7 @@ from utils import get_storage_key
 users = pd.read_json("users.json", orient="records")
 
 CONTAINER = "images"
-PATTERN = "ubuntugpu2.vhd"
+PATTERN = "ubuntugpu.vhd"
 
 admin_key = get_storage_key(ADMIN_STORAGE_ACCOUNT, ADMIN_RG)
 

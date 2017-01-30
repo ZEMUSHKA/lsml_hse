@@ -61,6 +61,7 @@ Capture machine: https://docs.microsoft.com/en-us/azure/virtual-machines/virtual
 
 ```
 # Azure CLI 2.0 commands for capturing:
+Over SSH: sudo waagent -deprovision+user
 az vm deallocate -g admin_resources -n ubuntugpu
 az vm generalize -g admin_resources -n ubuntugpu
 az vm capture -g admin_resources -n ubuntugpu --vhd-name-prefix ubuntugpu

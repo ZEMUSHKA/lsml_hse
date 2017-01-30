@@ -80,7 +80,7 @@ azure vm create \
     -l $REGION \
     -u ubuntu \
     -p $(cat ssh_pass.txt) \
-    --image-urn "https://"$STORAGE_ACCOUNT".blob.core.windows.net/images/ubuntugpu2.vhd" \
+    --image-urn "https://"$STORAGE_ACCOUNT".blob.core.windows.net/images/ubuntugpu.vhd" \
     --nic-names $NIC_NAME \
     --public-ip-name $IP_NAME \
     --storage-account-name $STORAGE_ACCOUNT \
