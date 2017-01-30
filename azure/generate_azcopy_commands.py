@@ -1,11 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import pandas as pd
-from utils import ADMIN_STORAGE_ACCOUNT, ADMIN_RG, RG_TEMPLATE, STORAGE_ACCOUNT_TEMPLATE
+from utils import RG_TEMPLATE, STORAGE_ACCOUNT_TEMPLATE
 from utils import get_storage_key
 
 users = pd.read_json("users.json", orient="records")
 
+ADMIN_STORAGE_ACCOUNT = STORAGE_ACCOUNT_TEMPLATE.format("admin")
+ADMIN_RG = RG_TEMPLATE.format("admin")
 CONTAINER = "images"
 PATTERN = "ubuntugpu.vhd"
 
