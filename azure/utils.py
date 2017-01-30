@@ -47,7 +47,8 @@ def create_nsg(NSG_NAME, RG_NAME, REGION):
             -n {NSG_NAME} \
             -g {RG_NAME} \
             -l {REGION}
-        """.format(**locals())
+        """.format(**locals()),
+        shell=True
     )
 
 
