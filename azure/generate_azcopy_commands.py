@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import pandas as pd
-import subprocess
-import json
+from utils import get_storage_key
 
 users = pd.read_json("users.json", orient="records")
 
@@ -11,20 +10,6 @@ STORAGE_ACCOUNT_TEMPLATE = "{0}lsmlhse645221"
 admin_account = "adminlsml"
 admin_rg = "admin_resources"
 PATTERN = "ubuntugpu2.vhd"
-
-
-def get_storage_key(account, rg):
-    out = subprocess.check_output(
-        """
-        az storage account keys list \
-        --name {n} \
-        --resource-group {g}
-        """.format(n=account, g=rg),
-        shell=True
-    )
-    out = json.loads(out)
-    key = out["keys"][0]["value"]
-    return key
 
 admin_key = get_storage_key(admin_account, admin_rg)
 
