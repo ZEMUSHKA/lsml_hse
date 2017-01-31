@@ -78,3 +78,14 @@ https://www.quora.com/What-are-the-major-differences-between-the-Nvidia-Tesla-M6
 | ------------- |:-------------:|:------------:|
 | ConvNet       | 14min 41s     | 8min 41s     |
 | Memory        | 12GB          | 8GB          |
+
+
+## HDP 2.5 cluster setup
+Predefined 3 node cluster on `10.0.1.[21-23]`.
+Installation guide: http://docs.hortonworks.com/HDPDocuments/Ambari-2.4.2.0/bk_ambari-installation/content/download_the_ambari_repo_ubuntu14.html
+
+## Proxy to cluster1
+Install FoxyProxy for Chrome.
+Add rule to use `localhost:8157` for `10.*`.
+Create socks proxy over ssh: `ssh ubuntu@*.*.*.* -ND 8157`.
+Open Ambari: `http://10.0.1.21:8080`.
