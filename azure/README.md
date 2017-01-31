@@ -35,8 +35,8 @@ sudo tune2fs -m 0 /dev/sdc1
 # create mount point
 sudo mkdir /mnt2
 
-# add line to /etc/fstab (with sudo)
-/dev/sdc1 /mnt2 ext4 defaults 0 2
+# add line to /etc/fstab
+echo "/dev/sdc1 /mnt2 ext4 defaults 0 2" | sudo tee -a /etc/fstab
 
 # mount for the first time (will be automounted on reboot)
 sudo mount /dev/sdc1
@@ -80,12 +80,23 @@ https://www.quora.com/What-are-the-major-differences-between-the-Nvidia-Tesla-M6
 | Memory        | 12GB          | 8GB          |
 
 
-## HDP 2.5 cluster setup
-Predefined 3 node cluster on `10.0.1.[21-23]`.
-Installation guide: http://docs.hortonworks.com/HDPDocuments/Ambari-2.4.2.0/bk_ambari-installation/content/download_the_ambari_repo_ubuntu14.html
+## On new ubuntu machine from interface
+```
+sudo apt-get update
+sudo apt-get install language-pack-en
+```
 
 ## Proxy to cluster1
 Install FoxyProxy for Chrome.
 Add rule to use `localhost:8157` for `10.*`.
 Create socks proxy over ssh: `ssh ubuntu@*.*.*.* -ND 8157`.
 Open Ambari: `http://10.0.1.21:8080`.
+
+## HDP 2.5 cluster setup
+Predefined 3 node cluster on `10.0.1.[21-23]`.
+Installation guide: http://docs.hortonworks.com/HDPDocuments/Ambari-2.4.2.0/bk_ambari-installation/content/download_the_ambari_repo_ubuntu14.html
+Disable THP: 
+```
+sudo bash
+echo never >/sys/kernel/mm/transparent_hugepage/enabled
+```
