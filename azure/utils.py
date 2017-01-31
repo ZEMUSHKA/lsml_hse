@@ -100,7 +100,7 @@ def create_nic_with_private_ip(NIC_NAME, RG_NAME, VNET_NAME, SUBNET_NAME, NSG_NA
     )
 
 
-def create_vm_from_image(VM_NAME, RG_NAME, REGION, NIC_NAME, IP_NAME, STORAGE_ACCOUNT, VM_SIZE, PUB_KEY, DISK_SIZE, IMAGE_NAME):
+def create_vm(VM_NAME, RG_NAME, REGION, NIC_NAME, IP_NAME, STORAGE_ACCOUNT, VM_SIZE, PUB_KEY, DISK_SIZE, IMAGE_URN):
     subprocess.check_output(
         """
         azure vm create \
@@ -109,7 +109,7 @@ def create_vm_from_image(VM_NAME, RG_NAME, REGION, NIC_NAME, IP_NAME, STORAGE_AC
             -l {REGION} \
             -u ubuntu \
             -p $(cat ssh_pass.txt) \
-            --image-urn "https://"{STORAGE_ACCOUNT}".blob.core.windows.net/images/{IMAGE_NAME}" \
+            --image-urn "{IMAGE_URN}" \
             --nic-names {NIC_NAME} \
             --public-ip-name {IP_NAME} \
             --storage-account-name {STORAGE_ACCOUNT} \
@@ -120,3 +120,11 @@ def create_vm_from_image(VM_NAME, RG_NAME, REGION, NIC_NAME, IP_NAME, STORAGE_AC
         """.format(**locals()),
         shell=True
     )
+
+
+def create_vm_from_image(VM_NAME, RG_NAME, REGION, NIC_NAME, IP_NAME, STORAGE_ACCOUNT, VM_SIZE, PUB_KEY, DISK_SIZE, IMAGE_NAME):
+    IMAGE_URN = "https://{STORAGE_ACCOUNT}.blob.core.windows.net/images/{IMAGE_NAME}".format(
+        STORAGE_ACCOUNT=STORAGE_ACCOUNT,
+        IMAGE_NAME=IMAGE_NAME
+    )
+    create_vm(VM_NAME, RG_NAME, REGION, NIC_NAME, IP_NAME, STORAGE_ACCOUNT, VM_SIZE, PUB_KEY, DISK_SIZE, IMAGE_URN)
