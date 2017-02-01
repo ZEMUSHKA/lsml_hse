@@ -102,3 +102,6 @@ echo never >/sys/kernel/mm/transparent_hugepage/enabled
 ```
 Use cluster[1-3] nodes names.
 Change `dfs.namenode.datanode.registration.ip-hostname-check` in `hdfs-site.xml`.
+
+# Resize OS disk
+https://lnx.azurewebsites.net/resizing-a-linux-vm-system-disk-in-microsoft-azure/

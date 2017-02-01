@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 import subprocess
 import json
+import time
 
 REGION = "eastus"
 RG_TEMPLATE = "{0}_resources"
@@ -11,12 +12,24 @@ SUBNET_NAME = "subnet"
 NSG_NAME = "security_group"
 
 
+def timeit(method):
+    def timed(*args, **kw):
+        ts = time.time()
+        result = method(*args, **kw)
+        te = time.time()
+        print '%r (%r, %r) %2.2f sec' % \
+              (method.__name__, args, kw, te-ts)
+        return result
+    return timed
+
+
+@timeit
 def get_storage_key(account, rg):
     out = subprocess.check_output(
         """
         az storage account keys list \
-        --name {n} \
-        --resource-group {g}
+            --name {n} \
+            --resource-group {g}
         """.format(n=account, g=rg),
         shell=True
     )
@@ -25,6 +38,7 @@ def get_storage_key(account, rg):
     return key
 
 
+@timeit
 def create_vnet(VNET_NAME, RG_NAME, REGION, SUBNET_NAME):
     subprocess.check_output(
         """
@@ -40,6 +54,7 @@ def create_vnet(VNET_NAME, RG_NAME, REGION, SUBNET_NAME):
     )
 
 
+@timeit
 def create_nsg(NSG_NAME, RG_NAME, REGION):
     subprocess.check_output(
         """
@@ -52,6 +67,7 @@ def create_nsg(NSG_NAME, RG_NAME, REGION):
     )
 
 
+@timeit
 def allow_incoming_port(NSG_NAME, RG_NAME, RULE_NAME, PORT, PRIORITY):
     subprocess.check_output(
         """
@@ -72,6 +88,7 @@ def allow_incoming_port(NSG_NAME, RG_NAME, RULE_NAME, PORT, PRIORITY):
     )
 
 
+@timeit
 def create_public_ip(IP_NAME, RG_NAME):
     subprocess.check_output(
         """
@@ -83,6 +100,7 @@ def create_public_ip(IP_NAME, RG_NAME):
     )
 
 
+@timeit
 def create_nic_with_private_ip(NIC_NAME, RG_NAME, VNET_NAME, SUBNET_NAME, NSG_NAME, IP_NAME, INT_DNS_NAME, IP):
     subprocess.check_output(
         """
@@ -100,6 +118,7 @@ def create_nic_with_private_ip(NIC_NAME, RG_NAME, VNET_NAME, SUBNET_NAME, NSG_NA
     )
 
 
+@timeit
 def create_vm(VM_NAME, RG_NAME, REGION, NIC_NAME, IP_NAME, STORAGE_ACCOUNT, VM_SIZE, PUB_KEY, DISK_SIZE, IMAGE_URN):
     subprocess.check_output(
         """
@@ -122,9 +141,48 @@ def create_vm(VM_NAME, RG_NAME, REGION, NIC_NAME, IP_NAME, STORAGE_ACCOUNT, VM_S
     )
 
 
+@timeit
 def create_vm_from_image(VM_NAME, RG_NAME, REGION, NIC_NAME, IP_NAME, STORAGE_ACCOUNT, VM_SIZE, PUB_KEY, DISK_SIZE, IMAGE_NAME):
     IMAGE_URN = "https://{STORAGE_ACCOUNT}.blob.core.windows.net/images/{IMAGE_NAME}".format(
         STORAGE_ACCOUNT=STORAGE_ACCOUNT,
         IMAGE_NAME=IMAGE_NAME
     )
     create_vm(VM_NAME, RG_NAME, REGION, NIC_NAME, IP_NAME, STORAGE_ACCOUNT, VM_SIZE, PUB_KEY, DISK_SIZE, IMAGE_URN)
+
+
+@timeit
+def deallocate_vm(VM_NAME, RG_NAME):
+    subprocess.check_output(
+        """
+        azure vm deallocate \
+            -g {RG_NAME} \
+            -n {VM_NAME}
+        """.format(**locals()),
+        shell=True
+    )
+
+
+@timeit
+def start_vm(VM_NAME, RG_NAME):
+    subprocess.check_output(
+        """
+        azure vm start \
+            -g {RG_NAME} \
+            -n {VM_NAME}
+        """.format(**locals()),
+        shell=True
+    )
+
+
+@timeit
+def resize_os_disk(RG_NAME, VM_NAME, DISK_SIZE):
+    subprocess.check_output(
+        [
+            "azure", "resource", "set",
+            "--resource-group", RG_NAME,
+            "--name", VM_NAME,
+            "--resource-type", "Microsoft.Compute/VirtualMachines",
+            "--properties", '{"storageProfile": {"osDisk": {"diskSizeGB": ' + str(DISK_SIZE) + '}}}'
+            "-o", "2015-06-15"
+        ]
+    )
