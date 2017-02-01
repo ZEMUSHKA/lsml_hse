@@ -177,12 +177,11 @@ def start_vm(VM_NAME, RG_NAME):
 @timeit
 def resize_os_disk(RG_NAME, VM_NAME, DISK_SIZE):
     subprocess.check_output(
-        [
-            "azure", "resource", "set",
-            "--resource-group", RG_NAME,
-            "--name", VM_NAME,
-            "--resource-type", "Microsoft.Compute/VirtualMachines",
-            "--properties", '{"storageProfile": {"osDisk": {"diskSizeGB": ' + str(DISK_SIZE) + '}}}'
-            "-o", "2015-06-15"
-        ]
+        """
+        azure vm set \
+            -g {RG_NAME} \
+            -n {VM_NAME} \
+            --new-os-disk-size {DISK_SIZE}
+        """.format(**locals()),
+        shell=True
     )
