@@ -32,7 +32,7 @@ for idx in [1, 2, 3]:
     VM_NAME = INT_DNS_NAME
     # https://docs.microsoft.com/en-us/azure/virtual-machines/virtual-machines-windows-sizes
     VM_SIZE = "Standard_D12_v2"
-    PUB_KEY = "~/.ssh/id_rsa.pub"
+    PUB_KEY = "~/.ssh/id_rsa_azure.pub"
     DISK_SIZE = 5
     IMAGE_URN = "Canonical:UbuntuServer:14.04.4-LTS:latest"
     utils.create_vm(VM_NAME, RG_NAME, REGION, NIC_NAME, IP_NAME, STORAGE_ACCOUNT, VM_SIZE, PUB_KEY, DISK_SIZE, IMAGE_URN)

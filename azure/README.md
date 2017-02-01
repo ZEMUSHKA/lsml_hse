@@ -100,3 +100,5 @@ Disable THP:
 sudo bash
 echo never >/sys/kernel/mm/transparent_hugepage/enabled
 ```
+Use cluster[1-3] nodes names.
+Change `dfs.namenode.datanode.registration.ip-hostname-check` in `hdfs-site.xml`.

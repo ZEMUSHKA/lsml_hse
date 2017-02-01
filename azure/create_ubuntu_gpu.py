@@ -30,7 +30,7 @@ utils.create_nic_with_private_ip(NIC_NAME, RG_NAME, VNET_NAME, SUBNET_NAME, NSG_
 # create VM
 VM_NAME = INT_DNS_NAME
 VM_SIZE = "Standard_NC6"
-PUB_KEY = "~/.ssh/id_rsa.pub"
+PUB_KEY = "~/.ssh/id_rsa_azure.pub"
 DISK_SIZE = 300
 IMAGE_NAME = "ubuntugpu.vhd"
 utils.create_vm_from_image(VM_NAME, RG_NAME, REGION, NIC_NAME, IP_NAME, STORAGE_ACCOUNT, VM_SIZE, PUB_KEY, DISK_SIZE, IMAGE_NAME)
