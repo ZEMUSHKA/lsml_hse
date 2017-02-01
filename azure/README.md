@@ -77,3 +77,8 @@ Change `dfs.namenode.datanode.registration.ip-hostname-check` in `hdfs-site.xml`
 ```
 enlarge_os_disk.py
 ```
+
+## Create images for cluster nodes
+* Stop all services in Ambari
+* Capture all nodes
+* Save os disks + data disks (5GB with HDFS, will be attached and enlarged on vm create)
