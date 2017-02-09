@@ -38,7 +38,7 @@ for idx in [1, 2, 3]:
     # create VM
     VM_SIZE = "Standard_D12_v2"  # https://docs.microsoft.com/en-us/azure/virtual-machines/virtual-machines-windows-sizes
     PUB_KEY = "~/.ssh/id_rsa_azure.pub"
-    DISK_SIZE = 0
+    DISK_SIZE = 1
 
     if CREATE_VM_FROM_IMAGE:
         IMAGE_NAME = "cluster{0}.vhd".format(idx)
