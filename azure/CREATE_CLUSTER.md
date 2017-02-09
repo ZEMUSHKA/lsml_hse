@@ -43,5 +43,5 @@ tmux
 Open Notebooks using `https://10.0.1.21:9999` via SOCKS proxy or public IP address.
 
 ## Known issues
-* Grafana fails to start automatically (because somehow it is already running), 
+* **(fixed with maintance mode)** Grafana fails to start automatically (because somehow it is already running),
 probably a bug (https://github.com/grafana/grafana/issues/1990).
