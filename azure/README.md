@@ -1,79 +1,20 @@
 # Scripts and Wiki for Azure
 
-## Start
+## Prerequisites
 Install Azure CLI and Azure CLI 2.0: 
 https://docs.microsoft.com/en-us/cli/azure
 
-Install AzCopy in Windows environment for blobs copy across storage accounts: 
+**(for admin)** Install AzCopy in Windows environment for blobs copy across storage accounts: 
 https://docs.microsoft.com/en-us/azure/storage/storage-use-azcopy
 
-Install Azure Storage Explorer: 
+**(for admin)** Install Azure Storage Explorer: 
 http://storageexplorer.com
 
-## Ubuntu machine mount data disk after start (used in GPU machine)
-```
-./mount_disk.sh
-```
+Authenticate in all of the above with your credentials.
 
-## Restore user files after VM creation (used in GPU machine)
+## How-To's
+[How to create a Hadoop cluster](CREATE_CLUSTER.md)
 
-```
-# copy all files and directories including hidden
-sudo chown -R ubuntu /usr/local/backup
-cp -rT /usr/local/backup /home/ubuntu
-```
+[How to create a machine with GPU](CREATE_GPU.md)
 
-## Create image from VM
-
-Save all needed user files from home directory to /usr/local/backup, the user will be deleted.
-  
-Capture machine: https://docs.microsoft.com/en-us/azure/virtual-machines/virtual-machines-linux-capture-image
-
-```
-# Azure CLI 2.0 commands for capturing:
-Over SSH: sudo waagent -deprovision+user
-az vm deallocate -g admin_resources -n ubuntugpu
-az vm generalize -g admin_resources -n ubuntugpu
-az vm capture -g admin_resources -n ubuntugpu --vhd-name-prefix ubuntugpu
-```
-
-## NC6 vs NV6 machine
-
-Both work with NC6 image on Ubuntu 16.04.
-Approx. same price.
-M60 has less but faster cores and new architecture: 
-https://www.quora.com/What-are-the-major-differences-between-the-Nvidia-Tesla-M60-and-K80
-
-| Parameter     | NC6 (K80)     | NV6 (M60)    |
-| ------------- |:-------------:|:------------:|
-| ConvNet       | 14min 41s     | 8min 41s     |
-| Memory        | 12GB          | 8GB          |
-
-
-## On new ubuntu machine from interface
-```
-sudo apt-get update
-sudo apt-get install language-pack-en
-```
-
-## Proxy to cluster1
-Install FoxyProxy for Chrome.
-Add rule to use `localhost:8157` for `10.*`.
-Create socks proxy over ssh: `ssh ubuntu@*.*.*.* -ND 8157`.
-Open Ambari: `http://10.0.1.21:8080`.
-
-## HDP 2.5 cluster setup
-Predefined 3 node cluster on `10.0.1.[21-23]`.
-Installation guide: http://docs.hortonworks.com/HDPDocuments/Ambari-2.4.2.0/bk_ambari-installation/content/download_the_ambari_repo_ubuntu14.html
-Disable THP: 
-```
-sudo bash
-echo never >/sys/kernel/mm/transparent_hugepage/enabled
-```
-Use cluster[1-3] nodes names.
-Change `dfs.namenode.datanode.registration.ip-hostname-check` in `hdfs-site.xml`.
-
-## Resize OS disk
-```
-enlarge_os_disk.py
-```
+[Admin notes](ADMIN.md)
