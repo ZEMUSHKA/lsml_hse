@@ -40,7 +40,7 @@ tmux
 ./start_notebook.sh
 ```
 
-Open `https://10.0.1.21:9999` via SOCKS proxy.
+Open Notebooks using `https://10.0.1.21:9999` via SOCKS proxy or public IP address.
 
 ## Known issues
 * Grafana fails to start automatically (because somehow it is already running), 
