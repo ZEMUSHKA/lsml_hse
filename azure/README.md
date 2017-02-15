@@ -10,6 +10,8 @@ https://docs.microsoft.com/en-us/azure/storage/storage-use-azcopy
 **(for admin)** Install Azure Storage Explorer: 
 http://storageexplorer.com
 
+Google Chrome is recommended for http://portal.azure.com.
+
 Authenticate in all of the above with your credentials.
 
 ## How-To's

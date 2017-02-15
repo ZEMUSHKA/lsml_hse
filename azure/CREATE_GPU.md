@@ -8,7 +8,7 @@ Run `python create_ubuntu_gpu.py`.
 
 Resize the disk using `python enlarge_os_disk.py`.
 
-Create SOCKS proxy like here: [How to create a Hadoop cluster](CREATE_CLUSTER.md)
+Create SOCKS proxy like here [Setup proxy for Chrome](SETUP_PROXY.md) for `ubuntugpu` machine.
 
 Copy necessary user settings:
 ```
@@ -24,4 +24,5 @@ tmux
 ```
 
 
-Open Notebooks using `https://10.0.1.21:9999` via SOCKS proxy or public IP address.
+Open Notebooks using `https://10.0.1.10:9999` via SOCKS proxy or public IP address.
+Ask admin for Notebook password.
