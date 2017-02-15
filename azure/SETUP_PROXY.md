@@ -12,11 +12,11 @@ You can use newly created SOCKS proxy with
 [Proxy SwitchyOmega plugin](https://chrome.google.com/webstore/detail/proxy-switchyomega/padekgcemlokbadohgkifijomclgjgif?hl=en-GB)
 for Chrome.
 
-Step 1:
+### Step 1:
 ![Proxy1](Proxy1.jpg "")
 
-Step 2:
+### Step 2:
 ![Proxy2](Proxy2.jpg "")
 
-Step 3:
+### Step 3:
 ![Proxy3](Proxy3.jpg "")
