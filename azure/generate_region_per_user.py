@@ -6,10 +6,16 @@ import json
 student_cnt = 81
 
 # GPU 6-core machines is the limit
-# eastus: 24 (NC)
-# southcentralus: 24 (NC) + 20 (NV)
-# westeurope: 20 (NV)
-# southeastasia: 20 (NV)
+# eastus: 24 (148 NC cores)
+# southcentralus: 24 (148 NC cores) + 20 (124 NV cores)
+# westeurope: 20 (124 NV cores)
+# southeastasia: 20 (124 NV cores)
+
+# Dv2 limits (ticket in progress)
+# eastus: 24 (288 cores)
+# southcentralus: 44 (528 cores)
+# westeurope: 20 (240 cores)
+# southeastasia: 20 (240 cores)
 
 regions = ["eastus"] * 17 + ["southcentralus"] * 44 + ["westeurope"] * 20
 gpus_kind = ["Standard_NC6"] * 17 + ["Standard_NC6"] * 24 + ["Standard_NV6"] * 20 + ["Standard_NV6"] * 20
