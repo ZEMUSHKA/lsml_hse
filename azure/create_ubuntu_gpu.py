@@ -1,7 +1,7 @@
 ##!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import utils
-from utils import RG_TEMPLATE, STORAGE_ACCOUNT_TEMPLATE, VNET_NAME, SUBNET_NAME, NSG_NAME, region_by_user
+from utils import RG_TEMPLATE, STORAGE_ACCOUNT_TEMPLATE, VNET_NAME, SUBNET_NAME, NSG_NAME, region_by_user, gpus_by_user
 
 STUDENT_NAME = "admin"
 RG_NAME = RG_TEMPLATE.format(STUDENT_NAME)
@@ -38,7 +38,7 @@ if CREATE_AUX_RESOURCES:
 
 # create VM
 VM_NAME = INT_DNS_NAME
-VM_SIZE = "Standard_NC6"
+VM_SIZE = gpus_by_user[STUDENT_NAME]
 PUB_KEY = "~/.ssh/id_rsa_azure.pub"
 DISK_SIZE = 1
 
