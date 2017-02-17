@@ -6,8 +6,6 @@ We are using images for a ready-to-use HDP cluster.
 Run `python create_cluster.py` to create 3 cluster nodes on `10.0.1.[21-23]` 
 with private DNS names `cluster[1-3]`.
 
-Resize disks for `cluster[1-3]` machines with `python enlarge_os_disk.py`.
-
 Create SOCKS proxy like here [Setup proxy for Chrome](SETUP_PROXY.md) for `cluster1` machine.
 
 Also add

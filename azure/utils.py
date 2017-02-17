@@ -4,12 +4,13 @@ import subprocess
 import json
 import time
 
-REGION = "eastus"
 RG_TEMPLATE = "{0}_resources"
 STORAGE_ACCOUNT_TEMPLATE = "{0}lsmlhse645221"
 VNET_NAME = "network"
 SUBNET_NAME = "subnet"
 NSG_NAME = "security_group"
+
+region_by_user = json.loads(open("regions.json", "r").read())
 
 
 def timeit(method):

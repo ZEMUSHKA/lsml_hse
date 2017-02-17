@@ -16,7 +16,8 @@ assert len(regions) == student_cnt
 
 users = pd.read_json("users.json", orient="records")
 
-region_by_user = {}
+region_by_user = dict()
+region_by_user["admin"] = "eastus"
 
 for idx, (_, row) in enumerate(users.iterrows()):
     row = dict(row)

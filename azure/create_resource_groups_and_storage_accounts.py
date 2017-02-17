@@ -2,22 +2,25 @@
 # -*- coding: utf-8 -*-
 import pandas as pd
 import subprocess
-from utils import REGION, RG_TEMPLATE, STORAGE_ACCOUNT_TEMPLATE
+from utils import RG_TEMPLATE, STORAGE_ACCOUNT_TEMPLATE, region_by_user
 
 users = pd.read_json("users.json", orient="records")
 
-for _, row in users.iterrows():
+for idx, (_, row) in enumerate(users.iterrows()):
+    if idx < 10:
+        continue
     row = dict(row)
     user = row["user"]
     userId = row["userId"]
-    resGrName = RG_TEMPLATE.format(user)
+    rgName = RG_TEMPLATE.format(user)
+    region = region_by_user[user]
     # create res gr
     subprocess.check_output(
         """
         az group create \
         -n "{n}" \
         -l "{l}"
-        """.format(n=resGrName, l=REGION),
+        """.format(n=rgName, l=region),
         shell=True
     )
     # assign user to his res gr
@@ -27,7 +30,7 @@ for _, row in users.iterrows():
         --assignee {userId} \
         --role Contributor \
         --resource-group {rg}
-        """.format(userId=userId, rg=resGrName),
+        """.format(userId=userId, rg=rgName),
         shell=True
     )
     # create storage account
@@ -39,7 +42,7 @@ for _, row in users.iterrows():
         -n {n} \
         -g {g} \
         --sku Standard_LRS
-        """.format(l=REGION, n=storName, g=resGrName),
+        """.format(l=region, n=storName, g=rgName),
         shell=True
     )
     # create container for images

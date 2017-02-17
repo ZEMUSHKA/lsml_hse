@@ -6,8 +6,6 @@ We will use both NV6 and NC6 machines in different regions!
 ## Instructions
 Run `python create_ubuntu_gpu.py`.
 
-Resize the disk using `python enlarge_os_disk.py`.
-
 Create SOCKS proxy like here [Setup proxy for Chrome](SETUP_PROXY.md) for `ubuntugpu` machine.
 
 Copy necessary user settings:
