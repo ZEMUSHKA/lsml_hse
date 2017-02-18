@@ -2,7 +2,7 @@
 
 We are using images for a ready-to-use HDP cluster.
 
-## Instructions
+## Start instructions
 Run `python create_cluster.py` to create 3 cluster nodes on `10.0.1.[21-23]` 
 with private DNS names `cluster[1-3]`.
 
@@ -36,6 +36,10 @@ tmux
 
 Open Notebooks using `https://10.0.1.21:9999` via SOCKS proxy or public IP address.
 Ask admin for Notebook password.
+
+## Stop instructions
+In Ambari select "Actions" -> "Stop All", wait till it's done.
+Then use https://portal.azure.com to stop all cluster machines.
 
 ## Known issues
 * **(fixed with maintance mode)** Grafana fails to start automatically (because somehow it is already running),
