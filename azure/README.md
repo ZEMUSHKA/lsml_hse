@@ -15,8 +15,8 @@ Google Chrome is recommended for http://portal.azure.com.
 Authenticate in all of the above with your credentials.
 
 ## How-To's
-[How to create a Hadoop cluster](CREATE_CLUSTER.md)
+[How to create a Hadoop cluster](docs/CREATE_CLUSTER.md)
 
-[How to create a machine with GPU](CREATE_GPU.md)
+[How to create a machine with GPU](docs/CREATE_GPU.md)
 
-[Admin notes](ADMIN.md)
+[Admin notes](docs/ADMIN.md)
