@@ -14,6 +14,9 @@ Google Chrome is recommended for http://portal.azure.com.
 
 Authenticate in all of the above with your credentials.
 
+Generate SSH key pair:
+https://docs.microsoft.com/en-us/azure/virtual-machines/virtual-machines-linux-mac-create-ssh-keys
+
 ## How-To's
 [How to create a Hadoop cluster](docs/CREATE_CLUSTER.md)
 
