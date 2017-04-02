@@ -3,7 +3,7 @@
 We are using images for a ready-to-use HDP cluster.
 
 ## Start instructions
-Run `python create_cluster.py` to create 3 cluster nodes on `10.0.1.[21-23]` 
+Run `python create_cluster.py --user student* --ssh_key ~/.ssh/*.pub` to create 3 cluster nodes on `10.0.1.[21-23]`
 with private DNS names `cluster[1-3]`.
 
 Create SOCKS proxy like here [Setup proxy for Chrome](SETUP_PROXY.md) for `cluster1` machine.
@@ -34,7 +34,7 @@ tmux
 ./start_notebook.sh
 ```
 
-Open Notebooks using `https://10.0.1.21:9999` via SOCKS proxy or public IP address.
+Open Notebooks using `https://10.0.1.21:9999` via SOCKS proxy.
 Ask admin for Notebook password.
 
 ## Stop instructions
