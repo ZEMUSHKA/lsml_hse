@@ -3,7 +3,7 @@
 import utils
 from utils import RG_TEMPLATE, STORAGE_ACCOUNT_TEMPLATE, VNET_NAME, SUBNET_NAME, NSG_NAME, region_by_user
 
-STUDENT_NAME="admin"
+STUDENT_NAME = "admin"
 RG_NAME = RG_TEMPLATE.format(STUDENT_NAME)
 STORAGE_ACCOUNT = STORAGE_ACCOUNT_TEMPLATE.format(STUDENT_NAME)
 region = region_by_user[STUDENT_NAME]
@@ -22,7 +22,6 @@ if CREATE_AUX_RESOURCES:
 
     # create SSH and Jupyter rules
     utils.allow_incoming_port(NSG_NAME, RG_NAME, "allow_ssh", 22, 1000)
-    utils.allow_incoming_port(NSG_NAME, RG_NAME, "allow_jupyter", 9999, 1010)
 
 for idx in [1, 2, 3]:
     IP_NAME = "ip_cluster{0}".format(idx)
@@ -49,8 +48,8 @@ for idx in [1, 2, 3]:
                                    DISK_SIZE, IMAGE_NAME)
     else:
         IMAGE_URN = "Canonical:UbuntuServer:14.04.4-LTS:latest"
-        utils.create_vm(VM_NAME, RG_NAME, region, NIC_NAME, IP_NAME, STORAGE_ACCOUNT, VM_SIZE, PUB_KEY, DISK_SIZE,
-                        IMAGE_URN)
+        utils.create_vm(VM_NAME, RG_NAME, region, NIC_NAME, IP_NAME, STORAGE_ACCOUNT, VM_SIZE, PUB_KEY, IMAGE_URN,
+                        NSG_NAME)
 
     if RESIZE_OS_DISK:
         utils.deallocate_vm(VM_NAME, RG_NAME)

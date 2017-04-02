@@ -121,42 +121,42 @@ def create_nic_with_private_ip(NIC_NAME, RG_NAME, VNET_NAME, SUBNET_NAME, NSG_NA
 
 
 @timeit
-def create_vm(VM_NAME, RG_NAME, REGION, NIC_NAME, IP_NAME, STORAGE_ACCOUNT, VM_SIZE, PUB_KEY, DISK_SIZE, IMAGE_URN):
+def create_vm(VM_NAME, RG_NAME, REGION, NIC_NAME, IP_NAME, STORAGE_ACCOUNT, VM_SIZE, PUB_KEY, IMAGE_URN, NSG_NAME):
     subprocess.check_output(
         """
-        azure vm create \
+        az vm create \
             -n {VM_NAME} \
             -g {RG_NAME} \
             -l {REGION} \
-            -u ubuntu \
-            -p $(cat ssh_pass.txt) \
-            --image-urn "{IMAGE_URN}" \
-            --nic-names {NIC_NAME} \
-            --public-ip-name {IP_NAME} \
-            --storage-account-name {STORAGE_ACCOUNT} \
-            --vm-size {VM_SIZE} \
-            --ssh-publickey-file {PUB_KEY} \
-            --os-type Linux \
-            --data-disk-size {DISK_SIZE}
+            --admin-username ubuntu \
+            --image "{IMAGE_URN}" \
+            --nics {NIC_NAME} \
+            --nsg {NSG_NAME} \
+            --public-ip-address {IP_NAME} \
+            --storage-account {STORAGE_ACCOUNT} \
+            --size {VM_SIZE} \
+            --ssh-key-value {PUB_KEY} \
+            --custom-os-disk-type Linux \
+            --authentication-type ssh
         """.format(**locals()),
         shell=True
     )
 
 
 @timeit
-def create_vm_from_image(VM_NAME, RG_NAME, REGION, NIC_NAME, IP_NAME, STORAGE_ACCOUNT, VM_SIZE, PUB_KEY, DISK_SIZE, IMAGE_NAME):
+def create_vm_from_image(VM_NAME, RG_NAME, REGION, NIC_NAME, IP_NAME, STORAGE_ACCOUNT, VM_SIZE, PUB_KEY, IMAGE_NAME, NSG_NAME):
     IMAGE_URN = "https://{STORAGE_ACCOUNT}.blob.core.windows.net/images/{IMAGE_NAME}".format(
         STORAGE_ACCOUNT=STORAGE_ACCOUNT,
         IMAGE_NAME=IMAGE_NAME
     )
-    create_vm(VM_NAME, RG_NAME, REGION, NIC_NAME, IP_NAME, STORAGE_ACCOUNT, VM_SIZE, PUB_KEY, DISK_SIZE, IMAGE_URN)
+    create_vm(VM_NAME, RG_NAME, REGION, NIC_NAME, IP_NAME, STORAGE_ACCOUNT, VM_SIZE, PUB_KEY, IMAGE_URN, NSG_NAME)
 
 
 @timeit
 def deallocate_vm(VM_NAME, RG_NAME):
     subprocess.check_output(
         """
-        azure vm deallocate \
+        az vm deallocate \
             -g {RG_NAME} \
             -n {VM_NAME}
         """.format(**locals()),
@@ -168,7 +168,7 @@ def deallocate_vm(VM_NAME, RG_NAME):
 def start_vm(VM_NAME, RG_NAME):
     subprocess.check_output(
         """
-        azure vm start \
+        az vm start \
             -g {RG_NAME} \
             -n {VM_NAME}
         """.format(**locals()),
