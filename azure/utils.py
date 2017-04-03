@@ -121,7 +121,7 @@ def create_nic_with_private_ip(NIC_NAME, RG_NAME, VNET_NAME, SUBNET_NAME, NSG_NA
 
 
 @timeit
-def create_vm(VM_NAME, RG_NAME, REGION, NIC_NAME, IP_NAME, STORAGE_ACCOUNT, VM_SIZE, PUB_KEY, IMAGE_URN, NSG_NAME):
+def create_vm(VM_NAME, RG_NAME, REGION, IMAGE_NAME, NIC_NAME, VM_SIZE, PUB_KEY, OS_DISK_NAME):
     subprocess.check_output(
         """
         az vm create \
@@ -129,27 +129,16 @@ def create_vm(VM_NAME, RG_NAME, REGION, NIC_NAME, IP_NAME, STORAGE_ACCOUNT, VM_S
             -g {RG_NAME} \
             -l {REGION} \
             --admin-username ubuntu \
-            --image "{IMAGE_URN}" \
+            --image "{IMAGE_NAME}" \
             --nics {NIC_NAME} \
-            --nsg {NSG_NAME} \
-            --public-ip-address {IP_NAME} \
-            --storage-account {STORAGE_ACCOUNT} \
             --size {VM_SIZE} \
             --ssh-key-value {PUB_KEY} \
-            --custom-os-disk-type Linux \
-            --authentication-type ssh
+            --os-disk-name {OS_DISK_NAME} \
+            --authentication-type ssh \
+            --storage-sku Standard_LRS
         """.format(**locals()),
         shell=True
     )
-
-
-@timeit
-def create_vm_from_image(VM_NAME, RG_NAME, REGION, NIC_NAME, IP_NAME, STORAGE_ACCOUNT, VM_SIZE, PUB_KEY, IMAGE_NAME, NSG_NAME):
-    IMAGE_URN = "https://{STORAGE_ACCOUNT}.blob.core.windows.net/images/{IMAGE_NAME}".format(
-        STORAGE_ACCOUNT=STORAGE_ACCOUNT,
-        IMAGE_NAME=IMAGE_NAME
-    )
-    create_vm(VM_NAME, RG_NAME, REGION, NIC_NAME, IP_NAME, STORAGE_ACCOUNT, VM_SIZE, PUB_KEY, IMAGE_URN, NSG_NAME)
 
 
 @timeit
@@ -177,13 +166,26 @@ def start_vm(VM_NAME, RG_NAME):
 
 
 @timeit
-def resize_os_disk(RG_NAME, VM_NAME, DISK_SIZE):
+def resize_managed_disk(RG_NAME, DISK_NAME, DISK_SIZE):
     subprocess.check_output(
         """
-        azure vm set \
-            -g {RG_NAME} \
-            -n {VM_NAME} \
-            --new-os-disk-size {DISK_SIZE}
+        az disk update \
+            --resource-group {RG_NAME} \
+            --name {DISK_NAME} \
+            --size-gb {DISK_SIZE}
         """.format(**locals()),
         shell=True
     )
+
+
+@timeit
+def get_subscription_id():
+    out = subprocess.check_output(
+        """
+        az account list
+        """,
+        shell=True
+    )
+    out = json.loads(out)
+    out = filter(lambda x: x["isDefault"], out)[0]
+    return out["id"]

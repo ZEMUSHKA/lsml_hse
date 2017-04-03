@@ -1,6 +1,20 @@
 # Admin notes
 
-## Copy VHD images accross storage accounts
+## New Images feature
+https://docs.microsoft.com/en-us/azure/virtual-machines/linux/capture-image
+```
+az image create -g admin_resources -n ubuntu_gpu_image1 --source "https://adminlsmlhse645221.blob.core.windows.net/images/ubuntugpu.vhd"
+```
+
+Can share images across subscription:
+```
+/subscriptions/<subscriptionId>/resourceGroups/admin_resources/providers/Microsoft.Compute/images/ubuntu_gpu_image1
+```
+
+## Managed disk resize (including OS disk)
+https://docs.microsoft.com/en-us/azure/virtual-machines/linux/expand-disks
+
+## Copy VHD images accross storage accounts (obsolete, use managed disks and images)
 All images are copied to students' storage accounts with
 `python generate_azcopy_commands.py` and running the resulting
 `azcopy.bat` on Windows VM in Azure.

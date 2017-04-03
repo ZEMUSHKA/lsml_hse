@@ -3,8 +3,8 @@
 ![](docs/azure_logo.png)
 
 ## Prerequisites
-Install Azure CLI and Azure CLI 2.0: 
-https://docs.microsoft.com/en-us/cli/azure
+Install Azure CLI 2.0:
+https://docs.microsoft.com/en-us/cli/azure/install-azure-cli
 
 **(for admin)** Install AzCopy in Windows environment for blobs copy across storage accounts: 
 https://docs.microsoft.com/en-us/azure/storage/storage-use-azcopy
