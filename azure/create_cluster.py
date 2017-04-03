@@ -19,7 +19,7 @@ region = region_by_user[STUDENT_NAME]
 
 CREATE_VM_FROM_IMAGE = True
 RESIZE_OS_DISK = True
-OS_DISK_SIZE = 500
+OS_DISK_SIZE = 511
 
 if args.create_shared:
     # create vnet and subnet
@@ -35,6 +35,7 @@ for idx in [1, 2, 3]:
     IP_NAME = "ip_cluster{0}".format(idx)
     NIC_NAME = "nic_cluster{0}".format(idx)
     INT_DNS_NAME = "cluster{0}".format(idx)
+    OS_DISK_NAME = "cluster{0}_os_disk".format(idx)
     VM_NAME = INT_DNS_NAME
     IP = "10.0.1.2{0}".format(idx)
 
@@ -50,15 +51,15 @@ for idx in [1, 2, 3]:
     PUB_KEY = args.ssh_key
 
     if CREATE_VM_FROM_IMAGE:
-        IMAGE_NAME = "cluster{0}.vhd".format(idx)
-        utils.create_vm_from_image(VM_NAME, RG_NAME, region, NIC_NAME, IP_NAME, STORAGE_ACCOUNT, VM_SIZE, PUB_KEY,
-                                   IMAGE_NAME, NSG_NAME)
+        IMAGE_NAME = "/subscriptions/" + utils.get_subscription_id() + \
+                     "/resourceGroups/admin_resources/providers/Microsoft.Compute/images/" + \
+                     "cluster{0}".format(idx) + "_image1"
+        utils.create_vm(VM_NAME, RG_NAME, region, IMAGE_NAME, NIC_NAME, VM_SIZE, PUB_KEY, OS_DISK_NAME)
     else:
-        IMAGE_URN = "Canonical:UbuntuServer:14.04.4-LTS:latest"
-        utils.create_vm(VM_NAME, RG_NAME, region, NIC_NAME, IP_NAME, STORAGE_ACCOUNT, VM_SIZE, PUB_KEY, IMAGE_URN,
-                        NSG_NAME)
+        IMAGE_NAME = "Canonical:UbuntuServer:14.04.4-LTS:latest"
+        utils.create_vm(VM_NAME, RG_NAME, region, IMAGE_NAME, NIC_NAME, VM_SIZE, PUB_KEY, OS_DISK_NAME)
 
     if RESIZE_OS_DISK:
         utils.deallocate_vm(VM_NAME, RG_NAME)
-        utils.resize_os_disk(RG_NAME, VM_NAME, OS_DISK_SIZE)
+        utils.resize_managed_disk(RG_NAME, OS_DISK_NAME, OS_DISK_SIZE)
         utils.start_vm(VM_NAME, RG_NAME)

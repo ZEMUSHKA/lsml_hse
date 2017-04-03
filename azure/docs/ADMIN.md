@@ -3,7 +3,9 @@
 ## New Images feature
 https://docs.microsoft.com/en-us/azure/virtual-machines/linux/capture-image
 ```
-az image create -g admin_resources -n ubuntu_gpu_image1 --source "https://adminlsmlhse645221.blob.core.windows.net/images/ubuntugpu.vhd"
+az image create -g admin_resources -n ubuntu_gpu_image1
+--source "https://adminlsmlhse645221.blob.core.windows.net/images/ubuntugpu.vhd"
+--os-type linux
 ```
 
 Can share images across subscription:
