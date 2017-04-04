@@ -3,7 +3,7 @@
 We are using an image with installed TensorFlow, GPU drivers and stuff.
 We will use both NV6 and NC6 machines in different regions!
 
-## Instructions
+## Create instructions
 Run `python create_ubuntu_gpu.py --user student* --ssh_key ~/.ssh/*.pub
 --create_shared --create_aux`.
 
@@ -25,3 +25,5 @@ tmux
 
 Open Notebooks using `https://10.0.1.10:9999` via SOCKS proxy.
 Ask admin for Notebook password.
+
+You can start/stop machine in Azure portal http://portal.azure.com
