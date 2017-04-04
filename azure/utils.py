@@ -141,7 +141,7 @@ def create_vm(VM_NAME, RG_NAME, REGION, IMAGE_NAME, NIC_NAME, VM_SIZE, PUB_KEY, 
     )
 
 
-@timeit
+# @timeit
 def deallocate_vm(VM_NAME, RG_NAME):
     subprocess.check_output(
         """
@@ -153,7 +153,7 @@ def deallocate_vm(VM_NAME, RG_NAME):
     )
 
 
-@timeit
+# @timeit
 def start_vm(VM_NAME, RG_NAME):
     subprocess.check_output(
         """
