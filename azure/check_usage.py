@@ -40,14 +40,14 @@ for vm in vm_statuses:
     rg = vm["resourceGroup"]
     vm_size = vm["hardwareProfile"]["vmSize"]
     power_state = vm["powerState"]
-    is_deallocated = power_state == "VM deallocated"
-    df.append([rg, vm_size, int(is_deallocated), int(~is_deallocated)])
+    is_deallocated = int(power_state == "VM deallocated")
+    df.append([rg, vm_size, is_deallocated, 1 - is_deallocated])
 
 df = pd.DataFrame(df, columns=["resourceGroup", "vmSize", "deallocated", "running"])
 
 df = pd.pivot_table(
     df,
-    index=["vmSize", "resourceGroup"],
+    index=["resourceGroup", "vmSize"],
     values=["deallocated", "running"],
     aggfunc=[np.sum],
     fill_value=0)
