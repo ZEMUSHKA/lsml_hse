@@ -53,7 +53,7 @@ for idx in [1, 2, 3]:
     if CREATE_VM_FROM_IMAGE:
         IMAGE_NAME = "/subscriptions/" + utils.get_subscription_id() + \
                      "/resourceGroups/admin_resources/providers/Microsoft.Compute/images/" + \
-                     "cluster{0}".format(idx) + "_image1"
+                     "cluster{0}".format(idx) + "_image1_" + region
         utils.create_vm(VM_NAME, RG_NAME, region, IMAGE_NAME, NIC_NAME, VM_SIZE, PUB_KEY, OS_DISK_NAME)
     else:
         IMAGE_NAME = "Canonical:UbuntuServer:14.04.4-LTS:latest"

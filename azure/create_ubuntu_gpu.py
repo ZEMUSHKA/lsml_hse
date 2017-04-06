@@ -51,7 +51,7 @@ PUB_KEY = args.ssh_key
 
 if CREATE_VM_FROM_IMAGE:
     IMAGE_NAME = "/subscriptions/" + utils.get_subscription_id() + \
-                 "/resourceGroups/admin_resources/providers/Microsoft.Compute/images/ubuntu_gpu_image1"
+                 "/resourceGroups/admin_resources/providers/Microsoft.Compute/images/ubuntu_gpu_image1_" + region
     utils.create_vm(VM_NAME, RG_NAME, region, IMAGE_NAME, NIC_NAME, VM_SIZE, PUB_KEY, OS_DISK_NAME)
 else:
     pass
