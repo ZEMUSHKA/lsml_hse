@@ -3,9 +3,8 @@
 We are using an image with installed TensorFlow, GPU drivers and stuff.
 We will use both NV6 and NC6 machines in different regions!
 
-## Create instructions
-Run `python create_ubuntu_gpu.py --user student* --ssh_key ~/.ssh/*.pub
---create_shared --create_aux`.
+## Create instructions (shared is already created in cluster script)
+Run `python create_ubuntu_gpu.py --user student* --ssh_key ~/.ssh/*.pub --create_aux`.
 
 Create SOCKS proxy like here [Setup proxy for Chrome](SETUP_PROXY.md) for `ubuntugpu` machine.
 

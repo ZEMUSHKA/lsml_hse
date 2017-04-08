@@ -135,7 +135,8 @@ def create_vm(VM_NAME, RG_NAME, REGION, IMAGE_NAME, NIC_NAME, VM_SIZE, PUB_KEY, 
             --ssh-key-value {PUB_KEY} \
             --os-disk-name {OS_DISK_NAME} \
             --authentication-type ssh \
-            --storage-sku Standard_LRS
+            --storage-sku Standard_LRS \
+            --storage-caching "ReadWrite"
         """.format(**locals()),
         shell=True
     )
