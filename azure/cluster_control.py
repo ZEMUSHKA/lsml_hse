@@ -18,6 +18,6 @@ assert args.start or args.stop
 assert not (args.start and args.stop)
 action_func = utils.deallocate_vm if args.stop else utils.start_vm
 
-Parallel(n_jobs=3)(
+Parallel(n_jobs=3, backend="threading")(
     delayed(action_func)("cluster{0}".format(idx), RG_NAME) for idx in [1, 2, 3]
 )

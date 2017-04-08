@@ -3,6 +3,7 @@
 import utils
 from utils import RG_TEMPLATE, STORAGE_ACCOUNT_TEMPLATE, VNET_NAME, SUBNET_NAME, NSG_NAME, region_by_user
 import argparse
+from joblib import Parallel, delayed
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--user", action="store", help="account name, for example student1", required=True)
@@ -31,7 +32,8 @@ if args.create_shared:
     # create SSH and Jupyter rules
     utils.allow_incoming_port(NSG_NAME, RG_NAME, "allow_ssh", 22, 1000)
 
-for idx in [1, 2, 3]:
+
+def create_cluster_node(idx):
     IP_NAME = "ip_cluster{0}".format(idx)
     NIC_NAME = "nic_cluster{0}".format(idx)
     INT_DNS_NAME = "cluster{0}".format(idx)
@@ -63,3 +65,7 @@ for idx in [1, 2, 3]:
         utils.deallocate_vm(VM_NAME, RG_NAME)
         utils.resize_managed_disk(RG_NAME, OS_DISK_NAME, OS_DISK_SIZE)
         utils.start_vm(VM_NAME, RG_NAME)
+
+Parallel(n_jobs=3, backend="threading")(
+    delayed(create_cluster_node)(idx) for idx in [1, 2, 3]
+)
