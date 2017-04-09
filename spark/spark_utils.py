@@ -15,7 +15,7 @@ def get_spark_conf(parallelism, addPythonMemoryOverhead, nodesAlive,
         .set("spark.driver.memory", "{0}m".format(executorMemoryMb))
         .set("spark.yarn.executor.memoryOverhead", executorMemoryOverheadMb)
         .set("spark.yarn.driver.memoryOverhead", executorMemoryOverheadMb)
-        .set("spark.python.worker.memory", executorMemoryOverheadMb * 0.8)  # 10 % of memory is for other stuff
+        .set("spark.python.worker.memory", "{0}m".format(int(executorMemoryOverheadMb * 0.8)))  # 10 % of memory is for other stuff
         .set("spark.executor.instances", executorInstances)
         .set("spark.default.parallelism", parallelism)
     )
