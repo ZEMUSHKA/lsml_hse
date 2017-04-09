@@ -21,6 +21,7 @@ def create_image(RG_NAME, IMAGE_NAME, SOURCE, REGION):
         shell=True
     )
     create_image_lock(RG_NAME, IMAGE_NAME)
+    assign_role_to_student_group(IMAGE_NAME)
 
 
 @timeit
@@ -29,6 +30,20 @@ def create_image_lock(RG_NAME, IMAGE_NAME):
         """
         az lock create -t CanNotDelete -n lock -g {RG_NAME} --parent-resource-path "" --resource-name "{IMAGE_NAME}" \
         --resource-provider-namespace "" --resource-type "Microsoft.Compute/images"
+        """.format(**locals()),
+        shell=True
+    )
+
+
+@timeit
+def assign_role_to_student_group(IMAGE_NAME):
+    # for students group
+    subprocess.check_output(
+        """
+        az role assignment create \
+            --role Contributor \
+            --assignee "3cf12edd-00e1-4c10-85a3-7f1b34e57cb4" \
+            --scope "/subscriptions/62e31321-0aac-47b0-b396-f7f518e91cb2/resourceGroups/admin_resources/providers/Microsoft.Compute/images/{IMAGE_NAME}"
         """.format(**locals()),
         shell=True
     )
