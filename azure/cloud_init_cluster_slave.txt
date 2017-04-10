@@ -1,0 +1,14 @@
+#cloud-config
+disk_setup:
+    /dev/sdc:
+        table_type: mbr
+        layout: [100]
+        overwrite: True
+fs_setup:
+    - device: /dev/sdc1
+      filesystem: ext4
+mounts:
+    - ["/dev/sdc1", "/data1", "auto", "defaults,nofail", "0", "2"]
+runcmd:
+    - [chmod, go+w, /data1]
+    - [chmod, go+w, /mnt]
