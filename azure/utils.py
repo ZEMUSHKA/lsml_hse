@@ -173,6 +173,49 @@ def start_vm(VM_NAME, RG_NAME):
     )
 
 
+def remove_vm(VM_NAME, RG_NAME):
+    subprocess.check_output(
+        """
+        az vm delete \
+            -g {RG_NAME} \
+            -n {VM_NAME} \
+            --yes
+        """.format(**locals()),
+        shell=True
+    )
+
+
+def remove_vm_and_disks(VM_NAME, RG_NAME):
+    out = subprocess.check_output(
+        """
+        az vm list \
+            -g {RG_NAME}
+        """.format(**locals()),
+        shell=True
+    )
+    out = json.loads(out)
+    vm = filter(lambda x: x["name"] == VM_NAME, out)
+    assert len(vm) == 1
+    vm = vm[0]
+    storageProfile = vm["storageProfile"]
+    data_disk_ids = map(lambda x: x.get("managedDisk", {}).get("id", None), storageProfile.get("dataDisks", []))
+    os_disk_id = storageProfile.get("osDisk", {}).get("managedDisk", {}).get("id", None)
+    all_disk_ids = data_disk_ids + [os_disk_id]
+    all_disk_ids = filter(lambda x: x is not None, all_disk_ids)
+
+    print "Will delete disks:\n" + "\n".join(all_disk_ids)
+
+    remove_vm(VM_NAME, RG_NAME)
+
+    subprocess.check_output(
+        """
+        az disk delete \
+            --ids {0}
+        """.format(" ".join(all_disk_ids)),
+        shell=True
+    )
+
+
 @timeit
 def resize_managed_disk(RG_NAME, DISK_NAME, DISK_SIZE):
     subprocess.check_output(
