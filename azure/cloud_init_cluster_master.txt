@@ -1,20 +1,27 @@
 #cloud-config
 disk_setup:
+    ephemeral0:
+        table_type: mbr
+        layout: [100]
+        overwrite: True
     /dev/sdc:
         table_type: mbr
         layout: [100]
         overwrite: True
 fs_setup:
+    - device: ephemeral0.1
+      filesystem: ext4
     - device: /dev/sdc1
       filesystem: ext4
 mounts:
+    - ["ephemeral0.1", "/mnt", "auto", "defaults,nobootwait", "0", "0"]
     - ["/dev/sdc1", "/data1", "auto", "defaults,nofail", "0", "2"]
 runcmd:
     - [chmod, go+w, /data1]
     - [chmod, go+w, /mnt]
     - [mv, /mnt2/hdfs, /data1/hdfs]
     - [ambari-server, restart]
-    - [sleep, 2m]
+    - [sleep, 10s]
     - [/var/lib/ambari-server/resources/scripts/configs.sh, set, localhost, Cluster, yarn-site, "yarn.nodemanager.local-dirs", "/mnt/hadoop/yarn/local"]
     - [/var/lib/ambari-server/resources/scripts/configs.sh, set, localhost, Cluster, hdfs-site, "dfs.datanode.data.dir", "/data1/hdfs/data"]
     - [/var/lib/ambari-server/resources/scripts/configs.sh, set, localhost, Cluster, hdfs-site, "dfs.namenode.name.dir", "/data1/hdfs/namenode"]
