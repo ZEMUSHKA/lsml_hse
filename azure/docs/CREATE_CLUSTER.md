@@ -17,6 +17,12 @@ Also add
 ```
 to your /etc/hosts (Mac, Linux).
 
+Wait for cloud-init to finish:
+```
+ubuntu@cluster1:~$ cat /var/log/cloud-init-output.log
+Cloud-init v. 0.7.5 finished at Tue, 11 Apr 2017 11:13:50 +0000. Datasource DataSourceAzureNet [seed=/dev/sr0].  Up 247.74 seconds
+```
+
 Open Ambari via proxy: `http://10.0.1.21:8080`, 
 use `admin/admin` to authenticate.
 Ambari is a Hadoop cluster management utility.
