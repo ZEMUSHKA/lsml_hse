@@ -12,3 +12,4 @@ mounts:
 runcmd:
     - [chmod, go+w, /data1]
     - [chmod, go+w, /mnt]
+    - [mv, /mnt2/hdfs, /data1/hdfs]

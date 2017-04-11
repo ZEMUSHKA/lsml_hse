@@ -121,8 +121,9 @@ def create_nic_with_private_ip(NIC_NAME, RG_NAME, VNET_NAME, SUBNET_NAME, NSG_NA
 
 
 @timeit
-def create_vm(VM_NAME, RG_NAME, REGION, IMAGE_NAME, NIC_NAME, VM_SIZE, PUB_KEY, OS_DISK_NAME):
-    subprocess.check_output(
+def create_vm(VM_NAME, RG_NAME, REGION, IMAGE_NAME, NIC_NAME, VM_SIZE, PUB_KEY, OS_DISK_NAME,
+              cloud_init_fn=None, data_disks=None):
+    template = \
         """
         az vm create \
             -n {VM_NAME} \
@@ -136,8 +137,14 @@ def create_vm(VM_NAME, RG_NAME, REGION, IMAGE_NAME, NIC_NAME, VM_SIZE, PUB_KEY, 
             --os-disk-name {OS_DISK_NAME} \
             --authentication-type ssh \
             --storage-sku Standard_LRS \
-            --storage-caching "ReadWrite"
-        """.format(**locals()),
+            --storage-caching "ReadWrite" """
+    if data_disks is not None:
+        template += " --data-disk-sizes-gb {0} ".format(data_disks)
+    if cloud_init_fn is not None:
+        template += ' --custom-data "{0}" '.format(cloud_init_fn)
+
+    subprocess.check_output(
+        template.format(**locals()),
         shell=True
     )
 
