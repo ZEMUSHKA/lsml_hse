@@ -55,3 +55,4 @@ runcmd:
     - [/var/lib/ambari-server/resources/scripts/configs.sh, set, localhost, Cluster, yarn-site, "yarn.nodemanager.local-dirs", "/mnt/hadoop/yarn/local"]
     - [/var/lib/ambari-server/resources/scripts/configs.sh, set, localhost, Cluster, hdfs-site, "dfs.datanode.data.dir", "/data1/hdfs/data,/data2/hdfs/data,/data3/hdfs/data,/data4/hdfs/data"]
     - [/var/lib/ambari-server/resources/scripts/configs.sh, set, localhost, Cluster, hdfs-site, "dfs.namenode.name.dir", "/data1/hdfs/namenode"]
+    - [/var/lib/ambari-server/resources/scripts/configs.sh, set, localhost, Cluster, hdfs-site, "dfs.permissions.enabled", "false"]
