@@ -23,7 +23,7 @@ runcmd:
     - [chmod, go+w, /mnt]
     - [mv, /mnt2/hdfs, /data/hdfs]
     - [ambari-server, restart]
-    - [sleep, 10s]
+    - [sleep, 2m]
     - [/var/lib/ambari-server/resources/scripts/configs.sh, set, localhost, Cluster, yarn-site, "yarn.nodemanager.local-dirs", "/mnt/hadoop/yarn/local"]
     - [/var/lib/ambari-server/resources/scripts/configs.sh, set, localhost, Cluster, hdfs-site, "dfs.datanode.data.dir", "/data/hdfs/data"]
     - [/var/lib/ambari-server/resources/scripts/configs.sh, set, localhost, Cluster, hdfs-site, "dfs.namenode.name.dir", "/data/hdfs/namenode"]
