@@ -49,20 +49,20 @@ def create_cluster_node(idx):
         utils.create_nic_with_private_ip(NIC_NAME, RG_NAME, VNET_NAME, SUBNET_NAME, NSG_NAME, IP_NAME, INT_DNS_NAME, IP)
 
     # create VM
-    VM_SIZE = "Standard_D12_v2"  # https://docs.microsoft.com/en-us/azure/virtual-machines/virtual-machines-windows-sizes
+    VM_SIZE = "Standard_DS12_v2"  # https://docs.microsoft.com/en-us/azure/virtual-machines/virtual-machines-windows-sizes
     PUB_KEY = args.ssh_key
 
     if CREATE_VM_FROM_IMAGE:
         IMAGE_NAME = "/subscriptions/" + utils.get_subscription_id() + \
                      "/resourceGroups/admin_resources/providers/Microsoft.Compute/images/" + \
                      "cluster{0}".format(idx) + "_image1_" + region
-        data_disks = "127 127 127 127 127 127 127 127"
+        data_disks = "511 511"
         if idx == 1:
             cloud_init_fn = "cloud_init_cluster_master.txt"
         else:
             cloud_init_fn = "cloud_init_cluster_slave.txt"
         utils.create_vm(VM_NAME, RG_NAME, region, IMAGE_NAME, NIC_NAME, VM_SIZE, PUB_KEY, OS_DISK_NAME,
-                        cloud_init_fn, data_disks)
+                        cloud_init_fn, data_disks, "Premium_LRS")
     else:
         IMAGE_NAME = "Canonical:UbuntuServer:14.04.4-LTS:latest"
         utils.create_vm(VM_NAME, RG_NAME, region, IMAGE_NAME, NIC_NAME, VM_SIZE, PUB_KEY, OS_DISK_NAME)
