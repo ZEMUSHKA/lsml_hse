@@ -2,6 +2,7 @@
 packages:
     - mdadm
     - iotop
+    - iftop
     - sysstat
 disk_setup:
     ephemeral0:
@@ -14,7 +15,7 @@ fs_setup:
 mounts:
     - ["ephemeral0.1", "/mnt", "auto", "defaults,nobootwait", "0", "0"]
 runcmd:
-    - [mdadm, --create, --verbose, /dev/md0, --level=0, --raid-devices=2, /dev/sdc, /dev/sdd]
+    - [mdadm, --create, --verbose, /dev/md0, --level=0, --raid-devices=3, /dev/sdc, /dev/sdd, /dev/sde]
     - [mkfs.ext4, /dev/md0]
     - [mkdir, /data]
     - echo "/dev/md0 /data ext4 defaults,nobootwait,nofail 0 2" >> /etc/fstab

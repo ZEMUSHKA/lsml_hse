@@ -18,7 +18,6 @@ RG_NAME = RG_TEMPLATE.format(STUDENT_NAME)
 STORAGE_ACCOUNT = STORAGE_ACCOUNT_TEMPLATE.format(STUDENT_NAME)
 region = region_by_user[STUDENT_NAME]
 
-CREATE_VM_FROM_IMAGE = True
 RESIZE_OS_DISK = False
 OS_DISK_SIZE = 511
 
@@ -52,20 +51,16 @@ def create_cluster_node(idx):
     VM_SIZE = "Standard_DS12_v2"  # https://docs.microsoft.com/en-us/azure/virtual-machines/virtual-machines-windows-sizes
     PUB_KEY = args.ssh_key
 
-    if CREATE_VM_FROM_IMAGE:
-        IMAGE_NAME = "/subscriptions/" + utils.get_subscription_id() + \
-                     "/resourceGroups/admin_resources/providers/Microsoft.Compute/images/" + \
-                     "cluster{0}".format(idx) + "_image1_" + region
-        data_disks = "511 511"
-        if idx == 1:
-            cloud_init_fn = "cloud_init_cluster_master.txt"
-        else:
-            cloud_init_fn = "cloud_init_cluster_slave.txt"
-        utils.create_vm(VM_NAME, RG_NAME, region, IMAGE_NAME, NIC_NAME, VM_SIZE, PUB_KEY, OS_DISK_NAME,
-                        cloud_init_fn, data_disks, "Premium_LRS")
+    IMAGE_NAME = "/subscriptions/" + utils.get_subscription_id() + \
+                 "/resourceGroups/admin_resources/providers/Microsoft.Compute/images/" + \
+                 "cluster{0}".format(idx) + "_image1_" + region
+    data_disks = "127 127 127"
+    if idx == 1:
+        cloud_init_fn = "cloud_init_cluster_master.txt"
     else:
-        IMAGE_NAME = "Canonical:UbuntuServer:14.04.4-LTS:latest"
-        utils.create_vm(VM_NAME, RG_NAME, region, IMAGE_NAME, NIC_NAME, VM_SIZE, PUB_KEY, OS_DISK_NAME)
+        cloud_init_fn = "cloud_init_cluster_slave.txt"
+    utils.create_vm(VM_NAME, RG_NAME, region, IMAGE_NAME, NIC_NAME, VM_SIZE, PUB_KEY, OS_DISK_NAME,
+                    cloud_init_fn, data_disks, "Premium_LRS")
 
     if RESIZE_OS_DISK:
         utils.deallocate_vm(VM_NAME, RG_NAME)
