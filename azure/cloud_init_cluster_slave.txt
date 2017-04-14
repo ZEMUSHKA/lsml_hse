@@ -15,10 +15,10 @@ fs_setup:
 mounts:
     - ["ephemeral0.1", "/mnt", "auto", "defaults,nobootwait", "0", "0"]
 runcmd:
-    - [mdadm, --create, --verbose, /dev/md0, --level=0, --raid-devices=3, /dev/sdc, /dev/sdd, /dev/sde]
-    - [mkfs.ext4, /dev/md0]
+    - [mdadm, --create, --verbose, /dev/md0, --level=0, --name=MY_RAID, --raid-devices=3, /dev/sdc, /dev/sdd, /dev/sde]
+    - [mkfs.ext4, "-L", "MY_RAID", /dev/md0]
     - [mkdir, /data]
-    - echo "/dev/md0 /data ext4 defaults,nobootwait,nofail 0 2" >> /etc/fstab
+    - echo "LABEL=MY_RAID /data ext4 defaults,nobootwait,nofail 0 2" >> /etc/fstab
     - [mount, "-a"]
     - [chmod, go+w, /data]
     - [chmod, go+w, /mnt]
