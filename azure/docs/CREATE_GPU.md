@@ -8,7 +8,7 @@ Run `python create_ubuntu_gpu.py --user student* --ssh_key ~/.ssh/*.pub --create
 
 Wait for cloud-init to finish:
 ```
-ubuntu@cluster1:~$ cat /var/log/cloud-init-output.log
+ubuntu@ubuntugpu:~$ cat /var/log/cloud-init-output.log
 Cloud-init v. 0.7.5 finished at Tue, 11 Apr 2017 11:13:50 +0000. Datasource DataSourceAzureNet [seed=/dev/sr0].  Up 247.74 seconds
 ```
 
