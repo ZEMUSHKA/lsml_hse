@@ -1,0 +1,28 @@
+#cloud-config
+packages:
+    - mdadm
+    - iotop
+    - iftop
+    - sysstat
+disk_setup:
+    ephemeral0:
+        table_type: mbr
+        layout: [100]
+        overwrite: True
+fs_setup:
+    - device: ephemeral0.1
+      filesystem: ext4
+mounts:
+    - ["ephemeral0.1", "/mnt", "auto", "defaults,nobootwait", "0", "0"]
+runcmd:
+    - [mdadm, --create, --verbose, /dev/md127, --level=0, --name=MY_RAID, --raid-devices=4, /dev/sdc, /dev/sdd, /dev/sde, /dev/sdf]
+    - [mkfs.ext4, "-L", "MY_RAID", /dev/md127]
+    - [mkdir, /data]
+    - echo "LABEL=MY_RAID /data ext4 defaults,nobootwait,nofail 0 2" >> /etc/fstab
+    - [mount, "-a"]
+    - [chmod, go+w, /data]
+    - [chmod, go+w, /mnt]
+    - chown -R ubuntu /usr/local/backup
+    - cp -rT /usr/local/backup /home/ubuntu
+    - cd /home/ubuntu && git clone https://github.com/ZEMUSHKA/lsml_hse.git
+    - chown -R ubuntu:ubuntu /home/ubuntu/lsml_hse

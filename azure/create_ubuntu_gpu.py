@@ -17,8 +17,7 @@ RG_NAME = RG_TEMPLATE.format(STUDENT_NAME)
 STORAGE_ACCOUNT = STORAGE_ACCOUNT_TEMPLATE.format(STUDENT_NAME)
 region = region_by_user[STUDENT_NAME]
 
-CREATE_VM_FROM_IMAGE = True
-RESIZE_OS_DISK = True
+RESIZE_OS_DISK = False
 OS_DISK_SIZE = 1023
 
 if args.create_shared:
@@ -49,12 +48,12 @@ VM_NAME = INT_DNS_NAME
 VM_SIZE = gpus_by_user[STUDENT_NAME]
 PUB_KEY = args.ssh_key
 
-if CREATE_VM_FROM_IMAGE:
-    IMAGE_NAME = "/subscriptions/" + utils.get_subscription_id() + \
-                 "/resourceGroups/admin_resources/providers/Microsoft.Compute/images/ubuntu_gpu_image1_" + region
-    utils.create_vm(VM_NAME, RG_NAME, region, IMAGE_NAME, NIC_NAME, VM_SIZE, PUB_KEY, OS_DISK_NAME)
-else:
-    pass
+IMAGE_NAME = "/subscriptions/" + utils.get_subscription_id() + \
+             "/resourceGroups/admin_resources/providers/Microsoft.Compute/images/ubuntu_gpu_image1_" + region
+data_disks = "255 255 255 255"
+cloud_init_fn = "cloud_init_ubuntugpu.txt"
+utils.create_vm(VM_NAME, RG_NAME, region, IMAGE_NAME, NIC_NAME, VM_SIZE, PUB_KEY, OS_DISK_NAME,
+                cloud_init_fn, data_disks)
 
 if RESIZE_OS_DISK:
     utils.deallocate_vm(VM_NAME, RG_NAME)
