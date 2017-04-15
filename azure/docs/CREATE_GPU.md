@@ -24,3 +24,9 @@ Open Notebooks using `https://10.0.1.10:9999` via SOCKS proxy.
 Ask admin for Notebook password.
 
 You can start/stop machine in Azure portal http://portal.azure.com
+
+## GPU machine start/stop
+```
+python ubuntugpu_control.py --user student* --start
+python ubuntugpu_control.py --user student* --stop
+```
