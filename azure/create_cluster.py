@@ -54,7 +54,7 @@ def create_cluster_node(idx):
     IMAGE_NAME = "/subscriptions/" + utils.get_subscription_id() + \
                  "/resourceGroups/admin_resources/providers/Microsoft.Compute/images/" + \
                  "cluster{0}".format(idx) + "_image1_" + region
-    data_disks = "127 127 127"
+    data_disks = "127 127 127 127"
     if idx == 1:
         cloud_init_fn = "cloud_init_cluster_master.txt"
     else:

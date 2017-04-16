@@ -15,7 +15,7 @@ fs_setup:
 mounts:
     - ["ephemeral0.1", "/mnt", "auto", "defaults,nobootwait", "0", "0"]
 runcmd:
-    - [mdadm, --create, --verbose, /dev/md127, --level=0, --name=MY_RAID, --raid-devices=3, /dev/sdc, /dev/sdd, /dev/sde]
+    - [mdadm, --create, --verbose, /dev/md127, --level=0, --name=MY_RAID, --raid-devices=4, /dev/sdc, /dev/sdd, /dev/sde, /dev/sdf]
     - [mkfs.ext4, "-L", "MY_RAID", /dev/md127]
     - [mkdir, /data]
     - echo "LABEL=MY_RAID /data ext4 defaults,nobootwait,nofail 0 2" >> /etc/fstab
@@ -25,7 +25,7 @@ runcmd:
     - [mv, /mnt2/hdfs, /data/hdfs]
     - [ambari-server, restart]
     - [sleep, 2m]
-    - [/var/lib/ambari-server/resources/scripts/configs.sh, set, localhost, Cluster, yarn-site, "yarn.nodemanager.local-dirs", "/mnt/hadoop/yarn/local"]
+    - [/var/lib/ambari-server/resources/scripts/configs.sh, set, localhost, Cluster, yarn-site, "yarn.nodemanager.local-dirs", "/data/hadoop/yarn/local"]
     - [/var/lib/ambari-server/resources/scripts/configs.sh, set, localhost, Cluster, hdfs-site, "dfs.datanode.data.dir", "/data/hdfs/data"]
     - [/var/lib/ambari-server/resources/scripts/configs.sh, set, localhost, Cluster, hdfs-site, "dfs.namenode.name.dir", "/data/hdfs/namenode"]
     - [/var/lib/ambari-server/resources/scripts/configs.sh, set, localhost, Cluster, hdfs-site, "dfs.permissions.enabled", "false"]
