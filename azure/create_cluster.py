@@ -22,14 +22,7 @@ RESIZE_OS_DISK = False
 OS_DISK_SIZE = 511
 
 if args.create_shared:
-    # create vnet and subnet
-    utils.create_vnet(VNET_NAME, RG_NAME, region, SUBNET_NAME)
-
-    # create network security group
-    utils.create_nsg(NSG_NAME, RG_NAME, region)
-
-    # create SSH and Jupyter rules
-    utils.allow_incoming_port(NSG_NAME, RG_NAME, "allow_ssh", 22, 1000)
+    utils.create_shared(RG_NAME, region)
 
 
 def create_cluster_node(idx):

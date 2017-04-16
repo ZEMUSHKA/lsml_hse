@@ -242,3 +242,15 @@ def get_subscription_id():
     out = json.loads(out)
     out = filter(lambda x: x["isDefault"], out)[0]
     return out["id"]
+
+
+@timeit
+def create_shared(RG_NAME, region):
+    # create vnet and subnet
+    create_vnet(VNET_NAME, RG_NAME, region, SUBNET_NAME)
+
+    # create network security group
+    create_nsg(NSG_NAME, RG_NAME, region)
+
+    # create SSH rule
+    allow_incoming_port(NSG_NAME, RG_NAME, "allow_ssh", 22, 1000)
