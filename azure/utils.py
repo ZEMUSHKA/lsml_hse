@@ -104,18 +104,19 @@ def create_public_ip(IP_NAME, RG_NAME):
 
 @timeit
 def create_nic_with_private_ip(NIC_NAME, RG_NAME, VNET_NAME, SUBNET_NAME, NSG_NAME, IP_NAME, INT_DNS_NAME, IP):
-    subprocess.check_output(
-        """
+    template = """
         az network nic create \
             -n {NIC_NAME} \
             -g {RG_NAME} \
             --vnet-name {VNET_NAME} \
             --subnet {SUBNET_NAME} \
             --network-security-group {NSG_NAME} \
-            --public-ip-address {IP_NAME} \
             --internal-dns-name {INT_DNS_NAME} \
-            --private-ip-address {IP}
-        """.format(**locals()),
+            --private-ip-address {IP} """
+    if IP_NAME is not None:
+        template += " --public-ip-address {IP_NAME} "
+    subprocess.check_output(
+        template.format(**locals()),
         shell=True
     )
 

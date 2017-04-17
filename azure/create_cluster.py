@@ -33,9 +33,13 @@ def create_cluster_node(idx):
     VM_NAME = INT_DNS_NAME
     IP = "10.0.1.2{0}".format(idx)
 
+    if idx != 1:
+        IP_NAME = None
+
     if args.create_aux:
         # create public IP
-        utils.create_public_ip(IP_NAME, RG_NAME)
+        if IP_NAME is not None:
+            utils.create_public_ip(IP_NAME, RG_NAME)
 
         # Create network card with fixed private IP
         utils.create_nic_with_private_ip(NIC_NAME, RG_NAME, VNET_NAME, SUBNET_NAME, NSG_NAME, IP_NAME, INT_DNS_NAME, IP)
