@@ -15,7 +15,7 @@ fs_setup:
 mounts:
     - ["ephemeral0.1", "/mnt", "auto", "defaults,nobootwait", "0", "0"]
 runcmd:
-    - [mdadm, --create, --verbose, /dev/md127, --level=0, --name=MY_RAID, --raid-devices=3, /dev/sdc, /dev/sdd, /dev/sde]
+    - [mdadm, --create, --verbose, /dev/md127, --level=0, --name=MY_RAID, --raid-devices=4, /dev/sdc, /dev/sdd, /dev/sde, /dev/sdf]
     - [mkfs.ext4, "-L", "MY_RAID", /dev/md127]
     - [mkdir, /data]
     - echo "LABEL=MY_RAID /data ext4 defaults,nobootwait,nofail 0 2" >> /etc/fstab
