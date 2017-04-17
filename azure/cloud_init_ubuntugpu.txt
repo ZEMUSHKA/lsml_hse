@@ -13,14 +13,16 @@ fs_setup:
     - device: ephemeral0.1
       filesystem: ext4
 mounts:
-    - ["ephemeral0.1", "/mnt", "auto", "defaults,nobootwait", "0", "0"]
+    - ["ephemeral0.1", "/mnt", "auto", "defaults", "0", "0"]
 runcmd:
     - [mdadm, --create, --verbose, /dev/md127, --level=0, --name=MY_RAID, --raid-devices=4, /dev/sdc, /dev/sdd, /dev/sde, /dev/sdf]
     - [mkfs.ext4, "-L", "MY_RAID", /dev/md127]
     - [mkdir, /data]
-    - echo "LABEL=MY_RAID /data ext4 defaults,nobootwait,nofail 0 2" >> /etc/fstab
+    - echo "LABEL=MY_RAID /data ext4 defaults,nofail 0 2" >> /etc/fstab
     - [mount, "-a"]
     - [chmod, go+w, /data]
     - [chmod, go+w, /mnt]
-    - [mv, /mnt2/hdfs, /data/hdfs]
-    - pip install hdfs
+    - chown -R ubuntu /usr/local/backup
+    - cp -rT /usr/local/backup /home/ubuntu
+    - cd /home/ubuntu && git clone https://github.com/ZEMUSHKA/lsml_hse.git
+    - chown -R ubuntu:ubuntu /home/ubuntu/lsml_hse

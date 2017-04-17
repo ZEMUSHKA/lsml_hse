@@ -28,13 +28,6 @@ use `admin/admin` to authenticate.
 Ambari is a Hadoop cluster management utility.
 To start Hadoop cluster, select "Actions" -> "Start All".
 
-Copy necessary user settings on `cluster1`:
-```
-# copy all files and directories including hidden
-sudo chown -R ubuntu /usr/local/backup
-cp -rT /usr/local/backup /home/ubuntu
-```
-
 Start Jupyter notebooks on `cluster1`:
 ```
 tmux

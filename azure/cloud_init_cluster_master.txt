@@ -1,58 +1,36 @@
 #cloud-config
+packages:
+    - mdadm
+    - iotop
+    - iftop
+    - sysstat
 disk_setup:
     ephemeral0:
-        table_type: mbr
-        layout: [100]
-        overwrite: True
-    /dev/sdc:
-        table_type: mbr
-        layout: [100]
-        overwrite: True
-    /dev/sdd:
-        table_type: mbr
-        layout: [100]
-        overwrite: True
-    /dev/sde:
-        table_type: mbr
-        layout: [100]
-        overwrite: True
-    /dev/sdf:
         table_type: mbr
         layout: [100]
         overwrite: True
 fs_setup:
     - device: ephemeral0.1
       filesystem: ext4
-    - device: /dev/sdc1
-      filesystem: ext4
-    - device: /dev/sdd1
-      filesystem: ext4
-    - device: /dev/sde1
-      filesystem: ext4
-    - device: /dev/sdf1
-      filesystem: ext4
 mounts:
     - ["ephemeral0.1", "/mnt", "auto", "defaults,nobootwait", "0", "0"]
-    - ["/dev/sdc1", "/data1", "auto", "defaults,nofail", "0", "2"]
-    - ["/dev/sdd1", "/data2", "auto", "defaults,nofail", "0", "2"]
-    - ["/dev/sde1", "/data3", "auto", "defaults,nofail", "0", "2"]
-    - ["/dev/sdf1", "/data4", "auto", "defaults,nofail", "0", "2"]
 runcmd:
-    - [chmod, go+w, /data1]
-    - [chmod, go+w, /data2]
-    - [chmod, go+w, /data3]
-    - [chmod, go+w, /data4]
+    - [mdadm, --create, --verbose, /dev/md127, --level=0, --name=MY_RAID, --raid-devices=4, /dev/sdc, /dev/sdd, /dev/sde, /dev/sdf]
+    - [mkfs.ext4, "-L", "MY_RAID", /dev/md127]
+    - [mkdir, /data]
+    - echo "LABEL=MY_RAID /data ext4 defaults,nobootwait,nofail 0 2" >> /etc/fstab
+    - [mount, "-a"]
+    - [chmod, go+w, /data]
     - [chmod, go+w, /mnt]
-    - [mv, /mnt2/hdfs, /data1/hdfs]
-    - [mkdir, "-p", /data2/hdfs/data]
-    - [mkdir, "-p", /data3/hdfs/data]
-    - [mkdir, "-p", /data4/hdfs/data]
-    - [chown, "hdfs:hadoop", /data2/hdfs/data]
-    - [chown, "hdfs:hadoop", /data3/hdfs/data]
-    - [chown, "hdfs:hadoop", /data4/hdfs/data]
+    - [mv, /mnt2/hdfs, /data/hdfs]
     - [ambari-server, restart]
-    - [sleep, 10s]
-    - [/var/lib/ambari-server/resources/scripts/configs.sh, set, localhost, Cluster, yarn-site, "yarn.nodemanager.local-dirs", "/mnt/hadoop/yarn/local"]
-    - [/var/lib/ambari-server/resources/scripts/configs.sh, set, localhost, Cluster, hdfs-site, "dfs.datanode.data.dir", "/data1/hdfs/data,/data2/hdfs/data,/data3/hdfs/data,/data4/hdfs/data"]
-    - [/var/lib/ambari-server/resources/scripts/configs.sh, set, localhost, Cluster, hdfs-site, "dfs.namenode.name.dir", "/data1/hdfs/namenode"]
+    - [sleep, 2m]
+    - [/var/lib/ambari-server/resources/scripts/configs.sh, set, localhost, Cluster, yarn-site, "yarn.nodemanager.local-dirs", "/data/hadoop/yarn/local"]
+    - [/var/lib/ambari-server/resources/scripts/configs.sh, set, localhost, Cluster, hdfs-site, "dfs.datanode.data.dir", "/data/hdfs/data"]
+    - [/var/lib/ambari-server/resources/scripts/configs.sh, set, localhost, Cluster, hdfs-site, "dfs.namenode.name.dir", "/data/hdfs/namenode"]
     - [/var/lib/ambari-server/resources/scripts/configs.sh, set, localhost, Cluster, hdfs-site, "dfs.permissions.enabled", "false"]
+    - chown -R ubuntu /usr/local/backup
+    - cp -rT /usr/local/backup /home/ubuntu
+    - cd /home/ubuntu && git clone https://github.com/ZEMUSHKA/lsml_hse.git
+    - chown -R ubuntu:ubuntu /home/ubuntu/lsml_hse
+    - pip install hdfs
