@@ -37,13 +37,16 @@ tmux
 Open Notebooks using `https://10.0.1.21:9999` via SOCKS proxy.
 Ask admin for Notebook password.
 
-## Stop Ambari instructions (do before shutdown!)
-In Ambari select "Actions" -> "Stop All", wait till it's done.
-
-## Cluster machines start/stop
+## Cluster machines start
 ```
-python cluster_control.py --user student* --start
-python cluster_control.py --user student* --stop
+1. python cluster_control.py --user student* --start
+2. In Ambari select "Actions" -> "Start All", wait till it's done.
+```
+
+## Cluster machines stop
+```
+1. In Ambari select "Actions" -> "Stop All", wait till it's done.
+2. python cluster_control.py --user student* --stop
 ```
 
 ## Known issues
