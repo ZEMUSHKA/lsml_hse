@@ -16,7 +16,7 @@ Google Chrome is recommended for http://portal.azure.com.
 
 Authenticate in all of the above with your credentials.
 
-Generate SSH key pair:
+Generate SSH key pair (name it **id_rsa_azure**):
 https://docs.microsoft.com/en-us/azure/virtual-machines/virtual-machines-linux-mac-create-ssh-keys
 
 ## How-To's
