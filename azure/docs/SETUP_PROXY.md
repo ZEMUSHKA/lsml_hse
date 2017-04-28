@@ -2,6 +2,8 @@
 
 ## Create proxy
 
+Get public IP for VM at http://portal.azure.com
+
 Create SOCKS proxy via ssh with
 `ssh ubuntu@(paste public IP of virtual machine here) -ND 8157 -i ~/.ssh/*.pub` (Mac, Linux),
 this will give you access to internal network of the virtual machine.
