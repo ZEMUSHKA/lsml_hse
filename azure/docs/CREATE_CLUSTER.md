@@ -22,6 +22,7 @@ Also add
 10.0.1.23	cluster3
 ```
 to your /etc/hosts (Mac, Linux).
+Instructions for Windows: https://www.howtogeek.com/howto/27350/beginner-geek-how-to-edit-your-hosts-file/
 
 Wait for cloud-init to finish:
 ```
