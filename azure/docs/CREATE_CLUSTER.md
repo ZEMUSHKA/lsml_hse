@@ -7,6 +7,12 @@ Run `python create_cluster.py --user student* --ssh_key ~/.ssh/*.pub
 --create_shared --create_aux` to create 3 cluster nodes on `10.0.1.[21-23]`
 with private DNS names `cluster[1-3]`.
 
+`--create_shared` flag creates shared resources like virtual network (need to do it once throughout the course).
+
+`--create_aux` flag creates resources for virtual machines you create like IP address (need to do once per machine).
+
+If you recreate cluster you should omit these two flags!
+
 Create SOCKS proxy like here [Setup proxy for Chrome](SETUP_PROXY.md) for `cluster1` machine.
 
 Also add
