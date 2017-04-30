@@ -24,3 +24,6 @@ elif args.remove:
     action_func = utils.remove_vm_and_disks
 
 action_func("ubuntugpu", RG_NAME)
+
+if args.start:
+    print "ubuntugpu public IP: {}".format(utils.get_public_ip("ip_ubuntugpu", RG_NAME))

@@ -52,3 +52,5 @@ if RESIZE_OS_DISK:
     utils.deallocate_vm(VM_NAME, RG_NAME)
     utils.resize_managed_disk(RG_NAME, OS_DISK_NAME, OS_DISK_SIZE)
     utils.start_vm(VM_NAME, RG_NAME)
+
+print "ubuntugpu public IP: {}".format(utils.get_public_ip("ip_ubuntugpu", RG_NAME))
