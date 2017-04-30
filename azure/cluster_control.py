@@ -27,3 +27,6 @@ elif args.remove:
 Parallel(n_jobs=3, backend="threading")(
     delayed(action_func)("cluster{0}".format(idx), RG_NAME) for idx in [1, 2, 3]
 )
+
+if args.start:
+    print "cluster1 public IP: {}".format(utils.get_public_ip("ip_cluster1", RG_NAME))

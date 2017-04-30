@@ -255,3 +255,14 @@ def create_shared(RG_NAME, region):
 
     # create SSH rule
     allow_incoming_port(NSG_NAME, RG_NAME, "allow_ssh", 22, 1000)
+
+
+def get_public_ip(IP_NAME, RG_NAME):
+    out = subprocess.check_output(
+        """
+        az network public-ip show -n {IP_NAME} -g {RG_NAME}
+        """.format(**locals()),
+        shell=True
+    )
+    out = json.loads(out)
+    return out["ipAddress"]
