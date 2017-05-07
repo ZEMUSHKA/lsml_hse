@@ -9,19 +9,19 @@ disk_setup:
         table_type: mbr
         layout: [100]
         overwrite: True
+    /dev/sdc:
+        table_type: mbr
+        layout: [100]
+        overwrite: True
 fs_setup:
     - device: ephemeral0.1
       filesystem: ext4
+    - device: /dev/sdc1
+      filesystem: ext4
 mounts:
     - ["ephemeral0.1", "/mnt", "auto", "defaults,nobootwait", "0", "0"]
+    - ["/dev/sdc1", "/data", "auto", "defaults,nobootwait", "0", "0"]
 runcmd:
-    - [sleep, 30s]
-    - [lsblk]
-    - [mdadm, --create, --verbose, /dev/md127, --level=0, --name=MY_RAID, --raid-devices=4, /dev/sdc, /dev/sdd, /dev/sde, /dev/sdf]
-    - [mkfs.ext4, "-L", "MY_RAID", /dev/md127]
-    - [mkdir, /data]
-    - echo "LABEL=MY_RAID /data ext4 defaults,nobootwait,nofail 0 2" >> /etc/fstab
-    - [mount, "-a"]
     - [chmod, go+w, /data]
     - [chmod, go+w, /mnt]
     - [mv, /mnt2/hdfs, /data/hdfs]
