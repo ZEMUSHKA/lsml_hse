@@ -22,7 +22,7 @@ Run `python create_ubuntu_gpu.py --user student* --ssh_key ~/.ssh/*.pub --create
 **Wait for cloud-init to finish (this is crucial):**
 ```
 ubuntu@ubuntugpu:~$ cat /var/log/cloud-init-output.log
-Cloud-init v. 0.7.5 finished at Tue, 11 Apr 2017 11:13:50 +0000. Datasource DataSourceAzureNet [seed=/dev/sr0].  Up 247.74 seconds
+Cloud-init v. 0.7.8 finished at Mon, 08 May 2017 11:05:21 +0000. Datasource DataSourceAzureNet [seed=/dev/sr0].  Up 77.67 seconds
 ```
 
 Create SOCKS proxy like here [Setup proxy for Chrome](SETUP_PROXY.md) for `ubuntugpu` machine.
