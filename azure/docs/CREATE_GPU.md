@@ -3,10 +3,23 @@
 We are using an image with installed TensorFlow, GPU drivers and stuff.
 We will use both NV6 and NC6 machines in different regions!
 
+Always pull the latest version of this repository before running anything!
+
+## If you need to recreate GPU machine
+
+First remove it (can be in any state, will be removed anyway):
+```
+python ubuntugpu_control.py —user student* —remove
+```
+
+Then proceed with all instructions below omitting `--create_aux` flag.
+
 ## Create instructions (shared is already created in cluster script)
 Run `python create_ubuntu_gpu.py --user student* --ssh_key ~/.ssh/*.pub --create_aux`.
 
-Wait for cloud-init to finish:
+`--create_aux` flag creates resources for virtual machines you create like IP address (need to do once per machine).
+
+**Wait for cloud-init to finish (this is crucial):**
 ```
 ubuntu@ubuntugpu:~$ cat /var/log/cloud-init-output.log
 Cloud-init v. 0.7.5 finished at Tue, 11 Apr 2017 11:13:50 +0000. Datasource DataSourceAzureNet [seed=/dev/sr0].  Up 247.74 seconds
