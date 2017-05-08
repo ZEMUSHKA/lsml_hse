@@ -2,7 +2,9 @@
 
 We are using images for a ready-to-use HDP cluster.
 
-Always pull the latest version of this repository before running anything!
+**Always pull the latest version of this repository before running anything!**
+
+**If commands below fail, maybe you need to update Azure CLI 2.0 to the latest version: `az component update`**
 
 ## If you need to recreate cluster
 
@@ -53,13 +55,18 @@ tmux
 Open Notebooks using `https://10.0.1.21:9999` via SOCKS proxy.
 Ask admin for Notebook password.
 
-## Cluster machines start
+## Cluster start/stop
+
+Stop (deallocate) resources when you don't need them.
+There will be no charges for VM usage, but all the data is still stored.
+
+### Cluster machines start
 ```
 1. python cluster_control.py --user student* --start
 2. In Ambari select "Actions" -> "Start All", wait till it's done.
 ```
 
-## Cluster machines stop
+### Cluster machines stop
 ```
 1. In Ambari select "Actions" -> "Stop All", wait till it's done.
 2. python cluster_control.py --user student* --stop

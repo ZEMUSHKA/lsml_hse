@@ -3,7 +3,10 @@
 We are using an image with installed TensorFlow, GPU drivers and stuff.
 We will use both NV6 and NC6 machines in different regions!
 
-Always pull the latest version of this repository before running anything!
+**Always pull the latest version of this repository before running anything!**
+
+**If commands below fail, maybe you need to update Azure CLI 2.0 to the latest version: `az component update`**
+
 
 ## If you need to recreate GPU machine
 
@@ -39,6 +42,10 @@ Ask admin for Notebook password.
 You can start/stop machine in Azure portal http://portal.azure.com
 
 ## GPU machine start/stop
+
+Stop (deallocate) resources when you don't need them.
+There will be no charges for VM usage, but all the data is still stored.
+
 ```
 python ubuntugpu_control.py --user student* --start
 python ubuntugpu_control.py --user student* --stop
