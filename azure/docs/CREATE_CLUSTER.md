@@ -35,6 +35,9 @@ Also add
 to your /etc/hosts (Mac, Linux).
 Instructions for Windows: https://www.howtogeek.com/howto/27350/beginner-geek-how-to-edit-your-hosts-file/
 
+SSH to `cluster1` machine:
+`ssh ubuntu@(paste public IP of virtual machine here) -i ~/.ssh/id_rsa_azure`.
+
 **Wait for cloud-init to finish (this is crucial):**
 ```
 ubuntu@cluster1:~$ cat /var/log/cloud-init-output.log
