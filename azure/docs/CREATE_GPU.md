@@ -18,9 +18,16 @@ python ubuntugpu_control.py —user student* —remove
 Then proceed with all instructions below omitting `--create_aux` flag.
 
 ## Create instructions (shared is already created in cluster script)
-Run `python create_ubuntu_gpu.py --user student* --ssh_key ~/.ssh/*.pub --create_aux`.
+
+Generate SSH key pair (name it **id_rsa_azure**):
+https://docs.microsoft.com/en-us/azure/virtual-machines/virtual-machines-linux-mac-create-ssh-keys
+
+Run `python create_ubuntu_gpu.py --user student* --ssh_key ~/.ssh/id_rsa_azure.pub --create_aux`.
 
 `--create_aux` flag creates resources for virtual machines you create like IP address (need to do once per machine).
+
+SSH to `ubuntugpu` machine:
+`ssh ubuntu@(paste public IP of virtual machine here) -i ~/.ssh/id_rsa_azure`.
 
 **Wait for cloud-init to finish (this is crucial):**
 ```

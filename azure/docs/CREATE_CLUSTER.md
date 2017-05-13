@@ -16,7 +16,11 @@ python cluster_control.py —user student* —remove
 Then proceed with all instructions below omitting `--create_shared` and `--create_aux` flags.
 
 ## Create instructions
-Run `python create_cluster.py --user student* --ssh_key ~/.ssh/*.pub
+
+Generate SSH key pair (name it **id_rsa_azure**):
+https://docs.microsoft.com/en-us/azure/virtual-machines/virtual-machines-linux-mac-create-ssh-keys
+
+Run `python create_cluster.py --user student* --ssh_key ~/.ssh/id_rsa_azure.pub
 --create_shared --create_aux` to create 3 cluster nodes on `10.0.1.[21-23]`
 with private DNS names `cluster[1-3]`.
 
