@@ -17,7 +17,8 @@ curl 'http://localhost:8080/api/v1/clusters/Cluster/config_groups/2' -u admin:ad
 /var/lib/ambari-server/resources/scripts/configs.sh set localhost Cluster yarn-site yarn.nodemanager.resource.memory-mb 98304
 /var/lib/ambari-server/resources/scripts/configs.sh set localhost Cluster yarn-site yarn.scheduler.maximum-allocation-mb 98304
 
-4. Change SparkContext settings
+4. Start All in Ambari
+5. Change SparkContext settings
 
 More workers:
     sc = get_spark_context(executorsPerNode=16, memoryPerExecutor=6144)
