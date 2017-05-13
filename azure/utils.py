@@ -266,3 +266,15 @@ def get_public_ip(IP_NAME, RG_NAME):
     )
     out = json.loads(out)
     return out["ipAddress"]
+
+
+def resize_VM(VM_NAME, RG_NAME, NEW_SIZE):
+    subprocess.check_output(
+        """
+        az vm resize \
+        --resource-group {RG_NAME} \
+        --name {VM_NAME} \
+        --size {NEW_SIZE}
+        """.format(**locals()),
+        shell=True
+    )
