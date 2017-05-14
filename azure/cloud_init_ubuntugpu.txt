@@ -44,9 +44,9 @@ runcmd:
     - cd /home/ubuntu && git clone https://github.com/ZEMUSHKA/lsml_hse.git
     - chown -R ubuntu:ubuntu /home/ubuntu/lsml_hse
     - systemctl stop apt-daily.service
-    - systemctl stop apt-daily.timer
     - systemctl kill --kill-who=all apt-daily.service
     - while ! (systemctl list-units --all apt-daily.service | fgrep -q dead) do sleep 1; done
+    - systemctl stop apt-daily.timer
     - systemctl disable apt-daily.service
     - systemctl disable apt-daily.timer
     - systemctl daemon-reload
