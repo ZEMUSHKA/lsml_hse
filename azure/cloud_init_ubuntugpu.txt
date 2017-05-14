@@ -38,7 +38,7 @@ runcmd:
     - systemctl disable apt-daily.service
     - systemctl disable apt-daily.timer
     - systemctl daemon-reload
-    - apt-get remove unattended-upgrades
+    - apt-get remove unattended-upgrades -y
     - [lsblk]
     - [mdadm, --create, --verbose, /dev/md127, --level=0, --name=MY_RAID, --raid-devices=4, /dev/sdc1, /dev/sdd1, /dev/sde1, /dev/sdf1]
     - [mkfs.ext4, "-L", "MY_RAID", /dev/md127]
@@ -51,5 +51,5 @@ runcmd:
     - cp -rT /usr/local/backup /home/ubuntu
     - cd /home/ubuntu && git clone https://github.com/ZEMUSHKA/lsml_hse.git
     - chown -R ubuntu:ubuntu /home/ubuntu/lsml_hse
-    - apt-get install libcupti-dev
+    - apt-get install libcupti-dev -y
     - pip install tensorflow-gpu==1.1.0 --upgrade
