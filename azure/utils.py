@@ -210,6 +210,10 @@ def remove_vm_and_disks(VM_NAME, RG_NAME):
     remove_vm(VM_NAME, RG_NAME)
 
     print "Removing disks..."
+    remove_disks(all_disk_ids)
+
+
+def remove_disks(all_disk_ids):
     subprocess.check_output(
         """
         az disk delete \

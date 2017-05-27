@@ -66,7 +66,22 @@ def get_vm_status(VM, RG):
     return power_state
 
 
+def list_disks_for_rg(RG):
+    out = subprocess.check_output(
+        """
+        az disk list -g {0}
+        """.format(RG),
+        shell=True
+    )
+    if out == "":
+        return []
+    out = json.loads(out)
+    return out
+
+
 def safe_remove(VM, RG):
+    assert len(VM) > 0
+    assert len(RG) > 0
     vm_status = get_vm_status(VM, RG)
     if vm_status == "VM deallocated":
         try:
@@ -76,10 +91,21 @@ def safe_remove(VM, RG):
             print "Error removing", VM, RG
     elif vm_status == "VM running":
         print "Didn't remove running VM", VM, RG
+        return
     elif vm_status is None:
         print "Already removed", VM, RG
     else:
         print "Unknown status", VM, RG, vm_status
+        return
+    # remove orphaned disks
+    disks = list_disks_for_rg(RG)
+    disks = filter(lambda x: x["name"].startswith(VM), disks)
+    disks = map(lambda x: x["id"], disks)
+    if disks:
+        print "Removing orphaned disks"
+        for disk in disks:
+            print disk
+        utils.remove_disks(disks)
 
 
 Parallel(n_jobs=10, backend="threading")(
