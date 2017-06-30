@@ -16,7 +16,7 @@ for idx, (_, row) in enumerate(users.iterrows()):
     subprocess.check_output(
         """
         az group delete \
-        -n "{n}"
+        -n "{n}" --yes --no-wait
         """.format(n=resGrName),
         shell=True
     )
