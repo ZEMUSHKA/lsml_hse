@@ -217,7 +217,7 @@ def remove_disks(all_disk_ids):
     subprocess.check_output(
         """
         az disk delete \
-            --ids {0}
+            --ids {0} --yes
         """.format(" ".join(all_disk_ids)),
         shell=True
     )
