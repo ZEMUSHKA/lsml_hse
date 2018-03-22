@@ -8,6 +8,7 @@ import time
 
 STUDENT_COUNT = 81
 AD_DOMAIN = "zimovnovgmail.onmicrosoft.com"
+AD_GROUP = "students"
 RG_TEMPLATE = "{0}_resources"
 STORAGE_ACCOUNT_TEMPLATE = "{0}lsmlhse645221"
 VNET_NAME = "network"
@@ -295,3 +296,14 @@ def generate_pass():
     p = numbers + big_letters + small_letters
     random.shuffle(p)
     return ''.join(p)
+
+
+def get_ad_group_id(ad_group):
+    out = subprocess.check_output(
+        """
+        az ad group show --group {g}
+        """.format(g=ad_group),
+        shell=True
+    )
+    out = json.loads(out)
+    return out["objectId"]
