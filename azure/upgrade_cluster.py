@@ -1,9 +1,11 @@
 ##!/usr/bin/env python
 # -*- coding: utf-8 -*-
+import argparse
+
+from joblib import Parallel, delayed
+
 import utils
 from utils import RG_TEMPLATE, resize_VM
-from joblib import Parallel, delayed
-import argparse
 
 """
 README:

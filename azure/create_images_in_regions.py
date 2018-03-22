@@ -1,10 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import subprocess
-import json
+
 from utils import timeit, AD_GROUP, SUBSCRIPTION_ID, get_ad_group_id
-import pandas as pd
-import numpy as np
 
 
 @timeit

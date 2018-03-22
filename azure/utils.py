@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+import json
 import random
 import string
 import subprocess
-import json
 import time
 
 STUDENT_COUNT = 81

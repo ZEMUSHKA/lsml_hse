@@ -1,8 +1,9 @@
 ##!/usr/bin/env python
 # -*- coding: utf-8 -*-
+import argparse
+
 import utils
 from utils import RG_TEMPLATE
-import argparse
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--user", action="store", help="account name, for example student1", required=True)

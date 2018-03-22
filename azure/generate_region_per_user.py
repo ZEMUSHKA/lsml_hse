@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import pandas as pd
 import json
+
+import pandas as pd
 
 student_cnt = 81
 

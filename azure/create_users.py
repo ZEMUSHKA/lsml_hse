@@ -1,8 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import subprocess
 import json
+import subprocess
+
 import pandas as pd
+
 from utils import generate_pass, STUDENT_COUNT, AD_DOMAIN
 
 users = []

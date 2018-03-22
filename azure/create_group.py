@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import subprocess
+
 import pandas as pd
+
 from utils import AD_GROUP, get_ad_group_id
 
 subprocess.check_output(

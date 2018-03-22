@@ -1,11 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+import json
+import subprocess
+
+from joblib import Parallel, delayed
+
 import utils
 from utils import RG_TEMPLATE
-from joblib import Parallel, delayed
-import subprocess
-import json
-
 
 finished_students = [
 

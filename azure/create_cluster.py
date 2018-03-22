@@ -1,9 +1,11 @@
 ##!/usr/bin/env python
 # -*- coding: utf-8 -*-
+import argparse
+
+from joblib import Parallel, delayed
+
 import utils
 from utils import RG_TEMPLATE, STORAGE_ACCOUNT_TEMPLATE, VNET_NAME, SUBNET_NAME, NSG_NAME, region_by_user
-import argparse
-from joblib import Parallel, delayed
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--user", action="store", help="account name, for example student1", required=True)

@@ -1,10 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import subprocess
 import json
-from utils import timeit
-import pandas as pd
+import subprocess
+
 import numpy as np
+import pandas as pd
+
+from utils import timeit
 
 
 @timeit

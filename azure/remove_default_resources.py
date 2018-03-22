@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import pandas as pd
 import subprocess
+
+import pandas as pd
+
 from utils import RG_TEMPLATE
 
 users = pd.read_json("users.json", orient="records")

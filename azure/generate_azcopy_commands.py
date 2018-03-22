@@ -1,8 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import pandas as pd
-from utils import RG_TEMPLATE, STORAGE_ACCOUNT_TEMPLATE
 import json
+
+import pandas as pd
+
+from utils import RG_TEMPLATE, STORAGE_ACCOUNT_TEMPLATE
 
 users = pd.read_json("users.json", orient="records")
 storage_keys = json.loads(open("storage_keys.json", "r").read())

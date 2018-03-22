@@ -1,9 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import pandas as pd
 import subprocess
-from utils import get_storage_key
-from utils import RG_TEMPLATE, STORAGE_ACCOUNT_TEMPLATE
+
+import pandas as pd
+
+from utils import RG_TEMPLATE, STORAGE_ACCOUNT_TEMPLATE, get_storage_key
 
 users = pd.read_json("users.json", orient="records")
 
