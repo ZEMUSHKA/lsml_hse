@@ -1,35 +1,23 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import string
-import random
 import subprocess
 import json
 import pandas as pd
-
-student_cnt = 81
-
-
-def generate_pass():
-    numbers = [random.choice(string.digits) for _ in range(2)]
-    big_letters = [random.choice(string.letters.upper()) for _ in range(7)]
-    small_letters = [random.choice(string.letters.lower()) for _ in range(7)]
-    p = numbers + big_letters + small_letters
-    random.shuffle(p)
-    return ''.join(p)
+from utils import generate_pass, STUDENT_COUNT, AD_DOMAIN
 
 users = []
 
-for idx in range(student_cnt):
+for idx in range(STUDENT_COUNT):
     password = generate_pass()
     user = "student{}".format(idx + 1)
     out = subprocess.check_output(
         """
         az ad user create \
-        --user-principal-name "{u}@zimovnovgmail.onmicrosoft.com" \
+        --user-principal-name "{u}@{d}" \
         --display-name "{u}" \
         --password {p} \
         --mail-nickname "{u}"
-        """.format(p=password, u=user),
+        """.format(p=password, u=user, d=AD_DOMAIN),
         shell=True
     )
     out = json.loads(out)

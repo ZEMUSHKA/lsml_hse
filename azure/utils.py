@@ -1,9 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+import random
+import string
 import subprocess
 import json
 import time
 
+STUDENT_COUNT = 81
+AD_DOMAIN = "zimovnovgmail.onmicrosoft.com"
 RG_TEMPLATE = "{0}_resources"
 STORAGE_ACCOUNT_TEMPLATE = "{0}lsmlhse645221"
 VNET_NAME = "network"
@@ -282,3 +286,12 @@ def resize_VM(VM_NAME, RG_NAME, NEW_SIZE):
         """.format(**locals()),
         shell=True
     )
+
+
+def generate_pass():
+    numbers = [random.choice(string.digits) for _ in range(2)]
+    big_letters = [random.choice(string.letters.upper()) for _ in range(7)]
+    small_letters = [random.choice(string.letters.lower()) for _ in range(7)]
+    p = numbers + big_letters + small_letters
+    random.shuffle(p)
+    return ''.join(p)
