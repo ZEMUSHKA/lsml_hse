@@ -1,5 +1,13 @@
 # Admin notes
 
+## Tools
+
+**(for admin)** Install AzCopy in Windows environment for blobs copy across storage accounts:
+https://docs.microsoft.com/en-us/azure/storage/storage-use-azcopy
+
+**(for admin)** Install Azure Storage Explorer:
+http://storageexplorer.com
+
 ## New Images feature
 https://docs.microsoft.com/en-us/azure/virtual-machines/linux/capture-image
 ```

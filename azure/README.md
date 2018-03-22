@@ -2,19 +2,13 @@
 
 ![](docs/azure_logo.png)
 
-## Prerequisites
-Install Azure CLI 2.0:
+## First steps
+1. Install Azure CLI 2.0 (tested with 2.0.29):
 https://docs.microsoft.com/en-us/cli/azure/install-azure-cli
 
-**(for admin)** Install AzCopy in Windows environment for blobs copy across storage accounts: 
-https://docs.microsoft.com/en-us/azure/storage/storage-use-azcopy
+2. Authenticate with `az login` in command line using your student credentials.
 
-**(for admin)** Install Azure Storage Explorer: 
-http://storageexplorer.com
-
-Google Chrome is recommended for http://portal.azure.com.
-
-**Authenticate** in all of the above with your credentials.
+3. Authenticate in http://portal.azure.com (Google Chrome is recommended) using the same credentials.
 
 ## How-To's
 [How to create a Hadoop cluster](docs/CREATE_CLUSTER.md)
