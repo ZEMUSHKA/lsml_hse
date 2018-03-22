@@ -45,13 +45,4 @@ for idx, (_, row) in enumerate(users.iterrows()):
         """.format(l=region, n=storName, g=rgName),
         shell=True
     )
-    # create container for images
-    subprocess.check_output(
-        """
-        az storage container create \
-        -n images \
-        --account-name {s}
-        """.format(s=storName),
-        shell=True
-    )
     print user, "done"
