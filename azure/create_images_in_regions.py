@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 import subprocess
 import json
-from utils import timeit
+from utils import timeit, AD_GROUP, SUBSCRIPTION_ID, get_ad_group_id
 import pandas as pd
 import numpy as np
 
@@ -42,9 +42,9 @@ def assign_role_to_student_group(IMAGE_NAME):
         """
         az role assignment create \
             --role Contributor \
-            --assignee "3cf12edd-00e1-4c10-85a3-7f1b34e57cb4" \
-            --scope "/subscriptions/62e31321-0aac-47b0-b396-f7f518e91cb2/resourceGroups/admin_resources/providers/Microsoft.Compute/images/{IMAGE_NAME}"
-        """.format(**locals()),
+            --assignee "{g}" \
+            --scope "/subscriptions/{s}/resourceGroups/admin_resources/providers/Microsoft.Compute/images/{image}"
+        """.format(image=IMAGE_NAME, g=get_ad_group_id(AD_GROUP), s=SUBSCRIPTION_ID),
         shell=True
     )
 

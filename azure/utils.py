@@ -7,8 +7,10 @@ import json
 import time
 
 STUDENT_COUNT = 81
+SUBSCRIPTION_ID = "62e31321-0aac-47b0-b396-f7f518e91cb2"
 AD_DOMAIN = "zimovnovgmail.onmicrosoft.com"
 AD_GROUP = "students"
+
 RG_TEMPLATE = "{0}_resources"
 STORAGE_ACCOUNT_TEMPLATE = "{0}lsmlhse645221"
 VNET_NAME = "network"
