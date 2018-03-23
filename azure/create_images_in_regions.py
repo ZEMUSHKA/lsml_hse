@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 import subprocess
 
-from utils import timeit, AD_GROUP, SUBSCRIPTION_ID, get_ad_group_id
+from utils import timeit, AD_GROUP, get_ad_group_id, get_subscription_id
 
 
 @timeit
@@ -42,7 +42,7 @@ def assign_role_to_student_group(IMAGE_NAME):
             --role Contributor \
             --assignee "{g}" \
             --scope "/subscriptions/{s}/resourceGroups/admin_resources/providers/Microsoft.Compute/images/{image}"
-        """.format(image=IMAGE_NAME, g=get_ad_group_id(AD_GROUP), s=SUBSCRIPTION_ID),
+        """.format(image=IMAGE_NAME, g=get_ad_group_id(AD_GROUP), s=get_subscription_id()),
         shell=True
     )
 
