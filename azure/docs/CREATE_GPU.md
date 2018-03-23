@@ -19,7 +19,7 @@ Then proceed with all instructions below omitting `--create_aux` flag.
 
 ## Create instructions
 
-Run `python create_ubuntu_gpu.py --user student*`.
+Run `python create_ubuntu_gpu.py --user student*` adding the necessary flags described below.
 
 **If** you want to ssh to your virtual machine using a public key add `--ssh_key ~/.ssh/id_rsa_azure.pub`
 You can generate a key pair **id_rsa_azure** following the instructions:
