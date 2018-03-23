@@ -270,6 +270,7 @@ def create_shared(RG_NAME, region):
     # firewall rules
     allow_incoming_port(NSG_NAME, RG_NAME, "allow_ssh", 22, 1000)
     allow_incoming_port(NSG_NAME, RG_NAME, "allow_squid", 3128, 1010)
+    allow_incoming_port(NSG_NAME, RG_NAME, "allow_jupyter", 9999, 1020)
 
 
 def get_public_ip(IP_NAME, RG_NAME):
