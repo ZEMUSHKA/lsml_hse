@@ -52,7 +52,7 @@ runcmd:
     - cd /home/ubuntu && git clone https://github.com/ZEMUSHKA/lsml_hse.git
     - chown -R ubuntu:ubuntu /home/ubuntu/lsml_hse
     - apt-get install libcupti-dev -y
-    - pip install tensorflow-gpu==1.3.0 --upgrade
+    - pip install tensorflow-gpu==1.2.0 --upgrade
     - echo "10.0.1.10 ubuntugpu" >> /etc/hosts
     - apt-get install squid apache2-utils -y
     - echo "http_port 3128" >> /etc/squid/squid.conf
