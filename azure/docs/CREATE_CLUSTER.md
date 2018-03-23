@@ -68,16 +68,12 @@ Stop (deallocate) resources when you don't need them.
 There will be no charges for VM usage, but all the data is still stored.
 
 ### Cluster machines start
-```
-1. python cluster_control.py --user student* --start
+1. `python cluster_control.py --user student* --start`
 2. In Ambari select "Actions" -> "Start All", wait till it's done.
-```
 
 ### Cluster machines stop
-```
 1. In Ambari select "Actions" -> "Stop All", wait till it's done.
-2. python cluster_control.py --user student* --stop
-```
+2. `python cluster_control.py --user student* --stop`
 
 ## Known issues
 * **(fixed with maintance mode)** Grafana fails to start automatically (because somehow it is already running),
