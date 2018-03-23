@@ -15,7 +15,7 @@ First remove it (can be in any state, will be removed anyway):
 python ubuntugpu_control.py —user student* —remove
 ```
 
-Then proceed with all instructions below omitting `--create_aux` flag.
+Then proceed with all instructions below omitting `--create_shared` and `--create_aux` flags.
 
 ## Create instructions
 
@@ -25,7 +25,7 @@ Run `python create_ubuntu_gpu.py --user student*` adding the necessary flags des
 You can generate a key pair **id_rsa_azure** following the instructions:
 https://docs.microsoft.com/en-us/azure/virtual-machines/virtual-machines-linux-mac-create-ssh-keys
 
-**If** you haven't created a cluster, add `--create_shared` flag which creates shared resources like a virtual network (need to do it once throughout the course),
+**If** you haven't created a cluster, add `--create_shared` flag which creates shared resources like a virtual network (need to do it once throughout the course).
 
 **If** you create this machine for the first time, add `--create_aux` flag which creates resources for virtual machines you create like IP address (need to do once per machine).
 
