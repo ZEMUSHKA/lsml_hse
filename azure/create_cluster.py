@@ -69,7 +69,7 @@ def create_cluster_node(idx):
         utils.resize_managed_disk(rg_name, OS_DISK_NAME, OS_DISK_SIZE)
         utils.start_vm(VM_NAME, rg_name)
 
-    print "password:", user_pass
+    print VM_NAME, "password:", user_pass
 
 
 Parallel(n_jobs=3, backend="threading")(
