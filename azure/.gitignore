@@ -2,3 +2,4 @@ users.json
 ssh_pass.txt
 azcopy.bat
 storage_keys.json
+*_filled.txt
