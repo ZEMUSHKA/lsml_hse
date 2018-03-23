@@ -48,5 +48,5 @@ runcmd:
     - echo "http_access allow authenticated" >> /etc/squid3/squid.conf
     - touch /etc/squid3/passwd
     - htpasswd -cb /etc/squid3/passwd ubuntu ###PASSWORD###
-    - service squid restart
+    - service squid3 restart
     - python -c "from notebook.auth import passwd; print 'c.NotebookApp.password = u\'{}\''.format(passwd('###PASSWORD###'))" >> jupyter_config.py
