@@ -55,9 +55,9 @@ def create_cluster_node(idx):
                  "cluster{0}".format(idx) + "_image1_" + region
     data_disks = "1023"
     if idx == 1:
-        cloud_init_fn = "cloud_init_cluster_master.txt"
+        cloud_init_fn = "configs/cloud_init_cluster_master.txt"
     else:
-        cloud_init_fn = "cloud_init_cluster_slave.txt"
+        cloud_init_fn = "configs/cloud_init_cluster_slave.txt"
     utils.create_vm(VM_NAME, RG_NAME, region, IMAGE_NAME, NIC_NAME, VM_SIZE, PUB_KEY, OS_DISK_NAME,
                     cloud_init_fn, data_disks, "Premium_LRS")
 

@@ -8,7 +8,7 @@ from utils import RG_TEMPLATE, STORAGE_ACCOUNT_TEMPLATE, VNET_NAME, SUBNET_NAME,
 parser = argparse.ArgumentParser()
 parser.add_argument("--user", action="store", help="account name, for example student1", required=True)
 parser.add_argument("--ssh_key", action="store", help="ssh public key, for example ~/.ssh/id_rsa_azure.pub",
-                    required=True)
+                    required=False)
 parser.add_argument("--create_shared", action="store_true", help="create shared resources")
 parser.add_argument("--create_aux", action="store_true", help="create aux resources, only once per script run")
 args = parser.parse_args()
@@ -45,7 +45,15 @@ PUB_KEY = args.ssh_key
 IMAGE_NAME = "/subscriptions/" + utils.get_subscription_id() + \
              "/resourceGroups/admin_resources/providers/Microsoft.Compute/images/ubuntu_gpu_image1_" + region
 data_disks = "255 255 255 255"
-cloud_init_fn = "cloud_init_ubuntugpu.txt"
+
+# prepare cloud-init script
+cloud_init_fn = "configs/cloud_init_ubuntugpu.txt"
+user_pass = utils.generate_pass()
+with open(cloud_init_fn, "w") as f:
+    f.write(
+        open("configs/cloud_init_ubuntugpu_template.txt").read().replace("###PASSWORD###", user_pass)
+    )
+
 utils.create_vm(VM_NAME, RG_NAME, region, IMAGE_NAME, NIC_NAME, VM_SIZE, PUB_KEY, OS_DISK_NAME,
                 cloud_init_fn, data_disks)
 
@@ -55,3 +63,4 @@ if RESIZE_OS_DISK:
     utils.start_vm(VM_NAME, RG_NAME)
 
 print "ubuntugpu public IP: {}".format(utils.get_public_ip("ip_ubuntugpu", RG_NAME))
+print "password:", user_pass

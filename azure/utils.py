@@ -128,8 +128,8 @@ def create_nic_with_private_ip(NIC_NAME, RG_NAME, VNET_NAME, SUBNET_NAME, NSG_NA
 
 
 @timeit
-def create_vm(VM_NAME, RG_NAME, REGION, IMAGE_NAME, NIC_NAME, VM_SIZE, PUB_KEY, OS_DISK_NAME,
-              cloud_init_fn=None, data_disks=None, storage_type="Standard_LRS"):
+def create_vm(VM_NAME, RG_NAME, REGION, IMAGE_NAME, NIC_NAME, VM_SIZE, pub_key, OS_DISK_NAME,
+              password, cloud_init_fn=None, data_disks=None, storage_type="Standard_LRS"):
     template = \
         """
         az vm create \
@@ -140,15 +140,19 @@ def create_vm(VM_NAME, RG_NAME, REGION, IMAGE_NAME, NIC_NAME, VM_SIZE, PUB_KEY, 
             --image "{IMAGE_NAME}" \
             --nics {NIC_NAME} \
             --size {VM_SIZE} \
-            --ssh-key-value {PUB_KEY} \
             --os-disk-name {OS_DISK_NAME} \
-            --authentication-type ssh \
             --storage-sku {storage_type} \
             --storage-caching "ReadWrite" """
+
     if data_disks is not None:
         template += " --data-disk-sizes-gb {0} ".format(data_disks)
     if cloud_init_fn is not None:
         template += ' --custom-data "{0}" '.format(cloud_init_fn)
+
+    if pub_key is not None:
+        template += " --authentication-type ssh --ssh-key-value {0} ".format(pub_key)
+    else:
+        template += " --authentication-type password --admin-password {0}".format(password)
 
     subprocess.check_output(
         template.format(**locals()),
@@ -263,8 +267,9 @@ def create_shared(RG_NAME, region):
     # create network security group
     create_nsg(NSG_NAME, RG_NAME, region)
 
-    # create SSH rule
+    # firewall rules
     allow_incoming_port(NSG_NAME, RG_NAME, "allow_ssh", 22, 1000)
+    allow_incoming_port(NSG_NAME, RG_NAME, "allow_squid", 3128, 1010)
 
 
 def get_public_ip(IP_NAME, RG_NAME):
