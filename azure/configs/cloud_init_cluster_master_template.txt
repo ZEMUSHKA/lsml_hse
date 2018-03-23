@@ -40,13 +40,13 @@ runcmd:
     - echo "10.0.1.22 cluster2" >> /etc/hosts
     - echo "10.0.1.23 cluster3" >> /etc/hosts
     - apt-get install squid apache2-utils -y
-    - mv /etc/squid/squid.conf /etc/squid/squid.conf.orig
-    - echo "http_port 3128" >> /etc/squid/squid.conf
-    - echo "auth_param basic program /usr/lib/squid/basic_ncsa_auth /etc/squid/passwd" >> /etc/squid/squid.conf
-    - echo "auth_param basic realm proxy" >> /etc/squid/squid.conf
-    - echo "acl authenticated proxy_auth REQUIRED" >> /etc/squid/squid.conf
-    - echo "http_access allow authenticated" >> /etc/squid/squid.conf
-    - touch /etc/squid/passwd
-    - htpasswd -cb /etc/squid/passwd ubuntu ###PASSWORD###
-    - systemctl restart squid
+    - mv /etc/squid3/squid.conf /etc/squid3/squid.conf.orig
+    - echo "http_port 3128" >> /etc/squid3/squid.conf
+    - echo "auth_param basic program /usr/lib/squid3/basic_ncsa_auth /etc/squid3/passwd" >> /etc/squid3/squid.conf
+    - echo "auth_param basic realm proxy" >> /etc/squid3/squid.conf
+    - echo "acl authenticated proxy_auth REQUIRED" >> /etc/squid3/squid.conf
+    - echo "http_access allow authenticated" >> /etc/squid3/squid.conf
+    - touch /etc/squid3/passwd
+    - htpasswd -cb /etc/squid3/passwd ubuntu ###PASSWORD###
+    - service squid restart
     - python -c "from notebook.auth import passwd; print 'c.NotebookApp.password = u\'{}\''.format(passwd('###PASSWORD###'))" >> jupyter_config.py
