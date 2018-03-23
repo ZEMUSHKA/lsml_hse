@@ -17,34 +17,46 @@ python ubuntugpu_control.py —user student* —remove
 
 Then proceed with all instructions below omitting `--create_aux` flag.
 
-## Create instructions (shared is already created in cluster script)
+## Create instructions
 
-Generate SSH key pair (name it **id_rsa_azure**):
+Run `python create_ubuntu_gpu.py --user student*`.
+
+**If** you want to ssh to your virtual machine using a public key add `--ssh_key ~/.ssh/id_rsa_azure.pub`
+You can generate a key pair **id_rsa_azure** following the instructions:
 https://docs.microsoft.com/en-us/azure/virtual-machines/virtual-machines-linux-mac-create-ssh-keys
 
-Run `python create_ubuntu_gpu.py --user student* --ssh_key ~/.ssh/id_rsa_azure.pub --create_aux`.
+**If** you haven't created a cluster, add `--create_shared` flag which creates shared resources like a virtual network (need to do it once throughout the course),
 
-`--create_aux` flag creates resources for virtual machines you create like IP address (need to do once per machine).
+**If** you create this machine for the first time, add `--create_aux` flag which creates resources for virtual machines you create like IP address (need to do once per machine).
 
-SSH to `ubuntugpu` machine:
-`ssh ubuntu@(paste public IP of virtual machine here) -i ~/.ssh/id_rsa_azure`.
+After the scipt finishes you will see a **public IP** of your new machine and a **password** for everything on that machine.
 
-**Wait for cloud-init to finish (this is crucial):**
+Now ssh to `ubuntugpu` machine:
+- Using a password: `ssh ubuntu@(paste public IP of virtual machine here)` and enter the password
+- Using a key pair: `ssh ubuntu@(paste public IP of virtual machine here) -i ~/.ssh/id_rsa_azure`
+
+**Wait for cloud-init to finish on the remote machine (this is crucial):**
 ```
 ubuntu@ubuntugpu:~$ cat /var/log/cloud-init-output.log
 Cloud-init v. 0.7.8 finished at Mon, 08 May 2017 11:05:21 +0000. Datasource DataSourceAzureNet [seed=/dev/sr0].  Up 77.67 seconds
 ```
 
-Create SOCKS proxy like here [Setup proxy for Chrome](SETUP_PROXY.md) for `ubuntugpu` machine.
+This machine has a squid http proxy to access its network. Use the following settings:
+- host: a public IP of a virtual machine
+- port: 3128
+- user: ubuntu
+- password: a passsword generated after create script finishes
 
-Start Jupyter notebooks:
+You can setup an http proxy in Google Chrome using a plugin described [here](SETUP_PROXY.md).
+
+Now start Jupyter notebooks (in remote shell):
 ```
 tmux
 ./start_notebook.sh
 ```
 
-Open Notebooks using `https://10.0.1.10:9999` via SOCKS proxy.
-Ask admin for Notebook password.
+Open Notebooks using `https://ubuntugpu:9999` via http proxy or `https://(paste public IP of virtual machine here):9999` to access from the Internet.
+Use generated password to access Jupyter Notebooks.
 
 You can start/stop machine in Azure portal http://portal.azure.com
 
