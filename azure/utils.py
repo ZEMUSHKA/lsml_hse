@@ -314,3 +314,10 @@ def get_ad_group_id(ad_group):
     )
     out = json.loads(out)
     return out["objectId"]
+
+
+def cloud_init_fill_template(template_fn, user_pass):
+    result_fn = template_fn + "_filled.txt"
+    with open(result_fn, "w") as f:
+        f.write(open(template_fn).read().replace("###PASSWORD###", user_pass))
+    return result_fn

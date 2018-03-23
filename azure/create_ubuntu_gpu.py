@@ -3,7 +3,8 @@
 import argparse
 
 import utils
-from utils import RG_TEMPLATE, STORAGE_ACCOUNT_TEMPLATE, VNET_NAME, SUBNET_NAME, NSG_NAME, region_by_user, gpus_by_user
+from utils import RG_TEMPLATE, STORAGE_ACCOUNT_TEMPLATE, VNET_NAME, SUBNET_NAME, NSG_NAME, region_by_user, \
+    gpus_by_user, cloud_init_fill_template
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--user", action="store", help="account name, for example student1", required=True)
@@ -46,14 +47,8 @@ IMAGE_NAME = "/subscriptions/" + utils.get_subscription_id() + \
              "/resourceGroups/admin_resources/providers/Microsoft.Compute/images/ubuntu_gpu_image1_" + region
 data_disks = "255 255 255 255"
 
-# prepare cloud-init script
-cloud_init_fn = "configs/cloud_init_ubuntugpu.txt"
 user_pass = utils.generate_pass()
-with open(cloud_init_fn, "w") as f:
-    f.write(
-        open("configs/cloud_init_ubuntugpu_template.txt").read().replace("###PASSWORD###", user_pass)
-    )
-
+cloud_init_fn = cloud_init_fill_template("configs/cloud_init_ubuntugpu_template.txt", user_pass)
 utils.create_vm(VM_NAME, rg_name, region, IMAGE_NAME, NIC_NAME, vm_size, pub_key, OS_DISK_NAME,
                 user_pass, cloud_init_fn, data_disks)
 
