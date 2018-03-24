@@ -75,6 +75,13 @@ There will be no charges for VM usage, but all the data is still stored.
 1. In Ambari select "Actions" -> "Stop All", wait till it's done.
 2. `python cluster_control.py --user student* --stop`
 
+### Ssh access to `cluster2` and `cluster3`
+1. These commands are executed in `cluster1` remote shell.
+2. Generate a key pair with `ssh-keygen`
+3. Run `ssh-copy-id cluster2` and enter the password for this node
+4. Run `ssh-copy-id cluster3` and enter the password for this node
+5. Now you can run `ssh cluster2` and `ssh cluster3`
+
 ## Known issues
 * **(fixed with maintance mode)** Grafana fails to start automatically (because somehow it is already running),
 probably a bug (https://github.com/grafana/grafana/issues/1990).
