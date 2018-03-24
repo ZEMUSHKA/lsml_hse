@@ -1,5 +1,15 @@
 # Admin notes
 
+## Flush disks
+`parallel-ssh -i -t 0 -H "cluster1 cluster2 cluster3" "sudo sh -c \"sync && echo 3 > /proc/sys/vm/drop_caches\""`
+
+## Benchmark
+Using `N_KEYS = 200; MB_PER_KEY = 500; N_JOBS = 100` in `spark_demo.ipynb`
+- Sequential write with `df.write.save("hdfs:///user/ubuntu/bigData.parquet")`
+HDD: 7.5 min, SSD: 6.1 min
+- Sequential read with `ss.read.parquet("hdfs:///user/ubuntu/bigData.parquet").rdd.map(lambda x: len(x)).distinct().count()`
+HDD: 38 min, SSD: 11 min
+
 ## Tools
 
 **(for admin)** Install AzCopy in Windows environment for blobs copy across storage accounts:
