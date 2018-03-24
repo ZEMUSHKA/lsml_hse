@@ -17,6 +17,14 @@ disk_setup:
         table_type: mbr
         layout: [100]
         overwrite: True
+    /dev/sde:
+        table_type: mbr
+        layout: [100]
+        overwrite: True
+    /dev/sdf:
+        table_type: mbr
+        layout: [100]
+        overwrite: True
 fs_setup:
     - device: ephemeral0.1
       filesystem: ext4
@@ -24,19 +32,27 @@ fs_setup:
       filesystem: ext4
     - device: /dev/sdd1
       filesystem: ext4
+    - device: /dev/sde1
+      filesystem: ext4
+    - device: /dev/sdf1
+      filesystem: ext4
 mounts:
     - ["ephemeral0.1", "/mnt", "auto", "defaults,nobootwait", "0", "0"]
-    - ["/dev/sdc1", "/data", "auto", "defaults,nobootwait", "0", "0"]
-    - ["/dev/sdd1", "/data2", "auto", "defaults,nobootwait", "0", "0"]
+    - ["/dev/sdc1", "/data", "auto", "defaults,nobootwait,noatime", "0", "0"]
+    - ["/dev/sdd1", "/data2", "auto", "defaults,nobootwait,noatime", "0", "0"]
+    - ["/dev/sde1", "/data3", "auto", "defaults,nobootwait,noatime", "0", "0"]
+    - ["/dev/sdf1", "/data4", "auto", "defaults,nobootwait,noatime", "0", "0"]
 runcmd:
     - [chmod, go+w, /data]
     - [chmod, go+w, /data2]
+    - [chmod, go+w, /data3]
+    - [chmod, go+w, /data4]
     - [chmod, go+w, /mnt]
     - [mv, /mnt2/hdfs, /data/hdfs]
     - [ambari-server, restart]
     - [sleep, 2m]
-    - [/var/lib/ambari-server/resources/scripts/configs.sh, set, localhost, Cluster, yarn-site, "yarn.nodemanager.local-dirs", "/data/hadoop/yarn/local,/data2/hadoop/yarn/local"]
-    - [/var/lib/ambari-server/resources/scripts/configs.sh, set, localhost, Cluster, hdfs-site, "dfs.datanode.data.dir", "/data/hdfs/data,/data2/hdfs/data"]
+    - [/var/lib/ambari-server/resources/scripts/configs.sh, set, localhost, Cluster, yarn-site, "yarn.nodemanager.local-dirs", "/data/hadoop/yarn/local,/data2/hadoop/yarn/local,/data3/hadoop/yarn/local,/data4/hadoop/yarn/local"]
+    - [/var/lib/ambari-server/resources/scripts/configs.sh, set, localhost, Cluster, hdfs-site, "dfs.datanode.data.dir", "/data/hdfs/data,/data2/hdfs/data,/data3/hdfs/data,/data4/hdfs/data"]
     - [/var/lib/ambari-server/resources/scripts/configs.sh, set, localhost, Cluster, hdfs-site, "dfs.namenode.name.dir", "/data/hdfs/namenode,/data2/hdfs/namenode"]
     - [/var/lib/ambari-server/resources/scripts/configs.sh, set, localhost, Cluster, hdfs-site, "dfs.permissions.enabled", "false"]
     - chown -R ubuntu /usr/local/backup

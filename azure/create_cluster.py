@@ -54,7 +54,7 @@ def create_cluster_node(idx):
     IMAGE_NAME = "/subscriptions/" + utils.get_subscription_id() + \
                  "/resourceGroups/admin_resources/providers/Microsoft.Compute/images/" + \
                  "cluster{0}".format(idx) + "_image1_" + region
-    data_disks = "511 511"
+    data_disks = "255 255 255 255"
 
     user_pass = utils.generate_pass()
     if idx == 1:
