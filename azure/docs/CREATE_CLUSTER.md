@@ -82,6 +82,11 @@ There will be no charges for VM usage, but all the data is still stored.
 4. Run `ssh-copy-id cluster3` and enter the password for this node
 5. Now you can run `ssh cluster2` and `ssh cluster3`
 
+### Execute a command on all nodes
+1. `sudo apt-get install pssh`
+2. Run `ssh-copy-id cluster1` and enter the password for this node
+3. `parallel-ssh -i -t 0 -H "cluster1 cluster2 cluster3" "hostname"`
+
 ## Known issues
 * **(fixed with maintance mode)** Grafana fails to start automatically (because somehow it is already running),
 probably a bug (https://github.com/grafana/grafana/issues/1990).
