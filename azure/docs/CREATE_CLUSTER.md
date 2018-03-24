@@ -18,7 +18,7 @@ Then proceed with all instructions below omitting `--create_shared` and `--creat
 ## Create instructions
 
 Run `python create_cluster.py --user student*` to create 3 cluster nodes on `10.0.1.[21-23]`
-with private DNS names `cluster[1-3]`.
+with private DNS names `cluster[1-3]` using necessary flags described below.
 
 **If** you want to ssh to your cluster nodes using a public key add `--ssh_key ~/.ssh/id_rsa_azure.pub`
 You can generate a key pair **id_rsa_azure** following the instructions:
@@ -36,7 +36,7 @@ Now ssh to `cluster1` machine (which is a master node):
 
 **Wait for cloud-init to finish (this is crucial):**
 ```
-ubuntu@cluster1:~$ cat /var/log/cloud-init-output.log
+ubuntu@cluster1:~$ tail -fn 100 /var/log/cloud-init-output.log
 Cloud-init v. 0.7.5 finished at Tue, 11 Apr 2017 11:13:50 +0000. Datasource DataSourceAzureNet [seed=/dev/sr0].  Up 247.74 seconds
 ```
 

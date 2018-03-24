@@ -37,7 +37,7 @@ Now ssh to `ubuntugpu` machine:
 
 **Wait for cloud-init to finish on the remote machine (this is crucial):**
 ```
-ubuntu@ubuntugpu:~$ cat /var/log/cloud-init-output.log
+ubuntu@ubuntugpu:~$ tail -fn 100 /var/log/cloud-init-output.log
 Cloud-init v. 0.7.8 finished at Mon, 08 May 2017 11:05:21 +0000. Datasource DataSourceAzureNet [seed=/dev/sr0].  Up 77.67 seconds
 ```
 
