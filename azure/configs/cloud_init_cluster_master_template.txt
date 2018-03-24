@@ -38,10 +38,10 @@ fs_setup:
       filesystem: ext4
 mounts:
     - ["ephemeral0.1", "/mnt", "auto", "defaults,nobootwait", "0", "0"]
-    - ["/dev/sdc1", "/data", "auto", "defaults,nobootwait,noatime", "0", "0"]
-    - ["/dev/sdd1", "/data2", "auto", "defaults,nobootwait,noatime", "0", "0"]
-    - ["/dev/sde1", "/data3", "auto", "defaults,nobootwait,noatime", "0", "0"]
-    - ["/dev/sdf1", "/data4", "auto", "defaults,nobootwait,noatime", "0", "0"]
+    - ["/dev/sdc1", "/data", "auto", "defaults,nobootwait,noatime,barrier=0", "0", "0"]
+    - ["/dev/sdd1", "/data2", "auto", "defaults,nobootwait,noatime,barrier=0", "0", "0"]
+    - ["/dev/sde1", "/data3", "auto", "defaults,nobootwait,noatime,barrier=0", "0", "0"]
+    - ["/dev/sdf1", "/data4", "auto", "defaults,nobootwait,noatime,barrier=0", "0", "0"]
 runcmd:
     - [chmod, go+w, /data]
     - [chmod, go+w, /data2]
@@ -55,6 +55,9 @@ runcmd:
     - [/var/lib/ambari-server/resources/scripts/configs.sh, set, localhost, Cluster, hdfs-site, "dfs.datanode.data.dir", "/data/hdfs/data,/data2/hdfs/data,/data3/hdfs/data,/data4/hdfs/data"]
     - [/var/lib/ambari-server/resources/scripts/configs.sh, set, localhost, Cluster, hdfs-site, "dfs.namenode.name.dir", "/data/hdfs/namenode,/data2/hdfs/namenode"]
     - [/var/lib/ambari-server/resources/scripts/configs.sh, set, localhost, Cluster, hdfs-site, "dfs.permissions.enabled", "false"]
+    - [/var/lib/ambari-server/resources/scripts/configs.sh, set, localhost, Cluster, spark2-defaults, "spark.io.compression.lz4.blockSize", "1m"]
+    - [/var/lib/ambari-server/resources/scripts/configs.sh, set, localhost, Cluster, spark2-defaults, "spark.io.compression.snappy.blockSize", "1m"]
+    - [/var/lib/ambari-server/resources/scripts/configs.sh, set, localhost, Cluster, spark2-defaults, "spark.shuffle.file.buffer", "1m"]
     - chown -R ubuntu /usr/local/backup
     - cp -rT /usr/local/backup /home/ubuntu
     - cd /home/ubuntu && git clone https://github.com/ZEMUSHKA/lsml_hse.git

@@ -38,10 +38,10 @@ fs_setup:
       filesystem: ext4
 mounts:
     - ["ephemeral0.1", "/mnt", "auto", "defaults,nobootwait", "0", "0"]
-    - ["/dev/sdc1", "/data", "auto", "defaults,nobootwait,noatime", "0", "0"]
-    - ["/dev/sdd1", "/data2", "auto", "defaults,nobootwait,noatime", "0", "0"]
-    - ["/dev/sde1", "/data3", "auto", "defaults,nobootwait,noatime", "0", "0"]
-    - ["/dev/sdf1", "/data4", "auto", "defaults,nobootwait,noatime", "0", "0"]
+    - ["/dev/sdc1", "/data", "auto", "defaults,nobootwait,noatime,barrier=0", "0", "0"]
+    - ["/dev/sdd1", "/data2", "auto", "defaults,nobootwait,noatime,barrier=0", "0", "0"]
+    - ["/dev/sde1", "/data3", "auto", "defaults,nobootwait,noatime,barrier=0", "0", "0"]
+    - ["/dev/sdf1", "/data4", "auto", "defaults,nobootwait,noatime,barrier=0", "0", "0"]
 runcmd:
     - [chmod, go+w, /data]
     - [chmod, go+w, /data2]
