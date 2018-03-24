@@ -13,16 +13,24 @@ disk_setup:
         table_type: mbr
         layout: [100]
         overwrite: True
+    /dev/sdd:
+        table_type: mbr
+        layout: [100]
+        overwrite: True
 fs_setup:
     - device: ephemeral0.1
       filesystem: ext4
     - device: /dev/sdc1
       filesystem: ext4
+    - device: /dev/sdd1
+      filesystem: ext4
 mounts:
     - ["ephemeral0.1", "/mnt", "auto", "defaults,nobootwait", "0", "0"]
     - ["/dev/sdc1", "/data", "auto", "defaults,nobootwait", "0", "0"]
+    - ["/dev/sdd1", "/data2", "auto", "defaults,nobootwait", "0", "0"]
 runcmd:
     - [chmod, go+w, /data]
+    - [chmod, go+w, /data2]
     - [chmod, go+w, /mnt]
     - [mv, /mnt2/hdfs, /data/hdfs]
     - pip install hdfs

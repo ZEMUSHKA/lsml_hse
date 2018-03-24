@@ -54,7 +54,7 @@ def create_cluster_node(idx):
     IMAGE_NAME = "/subscriptions/" + utils.get_subscription_id() + \
                  "/resourceGroups/admin_resources/providers/Microsoft.Compute/images/" + \
                  "cluster{0}".format(idx) + "_image1_" + region
-    data_disks = "1023"
+    data_disks = "511 511"
 
     user_pass = utils.generate_pass()
     if idx == 1:
@@ -62,7 +62,7 @@ def create_cluster_node(idx):
     else:
         cloud_init_fn = "configs/cloud_init_cluster_slave.txt"
     utils.create_vm(VM_NAME, rg_name, region, IMAGE_NAME, NIC_NAME, VM_SIZE, pub_key, OS_DISK_NAME,
-                    user_pass, cloud_init_fn, data_disks, "Premium_LRS")
+                    user_pass, cloud_init_fn, data_disks, "Standard_LRS")
 
     if RESIZE_OS_DISK:
         utils.deallocate_vm(VM_NAME, rg_name)
