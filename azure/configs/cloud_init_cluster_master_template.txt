@@ -74,7 +74,8 @@ runcmd:
     - echo -e 'y' | ssh-keygen -f /home/ubuntu/.ssh/id_rsa -t rsa -N ''
     - printf "\nStrictHostKeyChecking no\nUserKnownHostsFile=/dev/null\n" >> /home/ubuntu/.ssh/config
     - chown -R ubuntu /home/ubuntu
-    - echo "StrictHostKeyChecking no" >> /root/.ssh/config
+    - rm /root/.ssh/known_hosts
+    - printf "\nStrictHostKeyChecking no\nUserKnownHostsFile=/dev/null\n" >> /root/.ssh/config
     - HOME=/root sshpass -p ###PASSWORD### ssh-copy-id -i /home/ubuntu/.ssh/id_rsa ubuntu@cluster1
     - HOME=/root sshpass -p ###PASSWORD### ssh-copy-id -i /home/ubuntu/.ssh/id_rsa ubuntu@cluster2
     - HOME=/root sshpass -p ###PASSWORD### ssh-copy-id -i /home/ubuntu/.ssh/id_rsa ubuntu@cluster3
