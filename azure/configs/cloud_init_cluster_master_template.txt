@@ -72,7 +72,9 @@ runcmd:
     - service squid3 restart
     - python -c "from notebook.auth import passwd; print 'c.NotebookApp.password = u\'{}\''.format(passwd('###PASSWORD###'))" >> jupyter_config.py
     - echo -e 'y' | ssh-keygen -f /home/ubuntu/.ssh/id_rsa -t rsa -N ''
-    - echo "StrictHostKeyChecking no" >> ~/.ssh/config
-    - sshpass -p ###PASSWORD### ssh-copy-id cluster1
-    - sshpass -p ###PASSWORD### ssh-copy-id cluster2
-    - sshpass -p ###PASSWORD### ssh-copy-id cluster3
+    - printf "\nStrictHostKeyChecking no\nUserKnownHostsFile=/dev/null\n" >> /home/ubuntu/.ssh/config
+    - chown -R ubuntu /home/ubuntu
+    - echo "StrictHostKeyChecking no" >> /root/.ssh/config
+    - sshpass -p ###PASSWORD### ssh-copy-id -i /home/ubuntu/.ssh/id_rsa ubuntu@cluster1
+    - sshpass -p ###PASSWORD### ssh-copy-id -i /home/ubuntu/.ssh/id_rsa ubuntu@cluster2
+    - sshpass -p ###PASSWORD### ssh-copy-id -i /home/ubuntu/.ssh/id_rsa ubuntu@cluster3
