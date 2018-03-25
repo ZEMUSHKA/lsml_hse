@@ -66,9 +66,12 @@ runcmd:
     - [/var/lib/ambari-server/resources/scripts/configs.sh, set, localhost, Cluster, hdfs-site, "dfs.datanode.data.dir", "/data/hdfs/data"]
     - [/var/lib/ambari-server/resources/scripts/configs.sh, set, localhost, Cluster, hdfs-site, "dfs.namenode.name.dir", "/data/hdfs/namenode"]
     - [/var/lib/ambari-server/resources/scripts/configs.sh, set, localhost, Cluster, hdfs-site, "dfs.permissions.enabled", "false"]
+    - [/var/lib/ambari-server/resources/scripts/configs.sh, set, localhost, Cluster, hdfs-site, "dfs.datanode.handler.count", "16"]
+    - [/var/lib/ambari-server/resources/scripts/configs.sh, set, localhost, Cluster, hdfs-site, "io.file.buffer.size", "1048576"]
     - [/var/lib/ambari-server/resources/scripts/configs.sh, set, localhost, Cluster, spark2-defaults, "spark.io.compression.lz4.blockSize", "1m"]
     - [/var/lib/ambari-server/resources/scripts/configs.sh, set, localhost, Cluster, spark2-defaults, "spark.io.compression.snappy.blockSize", "1m"]
     - [/var/lib/ambari-server/resources/scripts/configs.sh, set, localhost, Cluster, spark2-defaults, "spark.shuffle.file.buffer", "1m"]
+    - [/var/lib/ambari-server/resources/scripts/configs.sh, set, localhost, Cluster, spark2-defaults, "spark.buffer.size", "1048576"]
     - chown -R ubuntu /usr/local/backup
     - cp -rT /usr/local/backup /home/ubuntu
     - cd /home/ubuntu && git clone https://github.com/ZEMUSHKA/lsml_hse.git
