@@ -8,8 +8,6 @@ from utils import RG_TEMPLATE, STORAGE_ACCOUNT_TEMPLATE, VNET_NAME, SUBNET_NAME,
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--user", action="store", help="account name, for example student1", required=True)
-parser.add_argument("--ssh_key", action="store", help="ssh public key, for example ~/.ssh/id_rsa_azure.pub",
-                    required=False)
 parser.add_argument("--create_shared", action="store_true", help="create shared resources")
 parser.add_argument("--create_aux", action="store_true", help="create aux resources, only once per script run")
 args = parser.parse_args()
@@ -41,7 +39,6 @@ if args.create_aux:
 # create VM
 VM_NAME = INT_DNS_NAME
 vm_size = gpus_by_user[student_name]
-pub_key = args.ssh_key
 
 IMAGE_NAME = "/subscriptions/" + utils.get_subscription_id() + \
              "/resourceGroups/admin_resources/providers/Microsoft.Compute/images/ubuntu_gpu_image1_" + region
@@ -49,7 +46,7 @@ data_disks = "255 255 255 255"
 
 user_pass = utils.generate_pass()
 cloud_init_fn = cloud_init_fill_template("configs/cloud_init_ubuntugpu_template.txt", user_pass)
-utils.create_vm(VM_NAME, rg_name, region, IMAGE_NAME, NIC_NAME, vm_size, pub_key, OS_DISK_NAME,
+utils.create_vm(VM_NAME, rg_name, region, IMAGE_NAME, NIC_NAME, vm_size, None, OS_DISK_NAME,
                 user_pass, cloud_init_fn, data_disks)
 
 if RESIZE_OS_DISK:

@@ -4,6 +4,8 @@ packages:
     - iotop
     - iftop
     - sysstat
+    - squid
+    - apache2-utils
 disk_setup:
     ephemeral0:
         table_type: mbr
@@ -54,7 +56,6 @@ runcmd:
     - apt-get install libcupti-dev -y
     - pip install tensorflow-gpu==1.2.0 --upgrade
     - echo "10.0.1.10 ubuntugpu" >> /etc/hosts
-    - apt-get install squid apache2-utils -y
     - mv /etc/squid/squid.conf /etc/squid/squid.conf.orig
     - echo "http_port 3128" >> /etc/squid/squid.conf
     - echo "auth_param basic program /usr/lib/squid/basic_ncsa_auth /etc/squid/passwd" >> /etc/squid/squid.conf

@@ -1,5 +1,21 @@
 # Admin notes
 
+## Good Azure docs
+https://github.com/MicrosoftDocs/azure-docs/blob/master/articles/virtual-machines/linux/optimization.md
+https://github.com/MicrosoftDocs/azure-docs/blob/master/articles/virtual-machines/linux/configure-raid.md
+https://github.com/MicrosoftDocs/azure-docs/blob/master/articles/virtual-machines/linux/classic/optimize-mysql.md
+
+## Spark benchmark
+Using `N_KEYS = 200; MB_PER_KEY = 500; N_JOBS = 100` in `spark_demo.ipynb`
+- Sequential write with `df.write.save("hdfs:///user/ubuntu/bigData.parquet")`
+4HDD: 7.5 min, 4SSD: 6.1 min, 4HDD RAID0: 7.3 min
+- Flush disks: `parallel-ssh -i -t 0 -H "cluster1 cluster2 cluster3" "sudo sh -c \"sync && echo 3 > /proc/sys/vm/drop_caches\""`
+- Sequential read with `ss.read.parquet("hdfs:///user/ubuntu/bigData.parquet").rdd.map(lambda x: len(x)).distinct().count()`
+4HDD: 38 min, 4SSD: 11 min, 4HDD RAID0: 12 min
+- Flush disks again
+- Shuffle test with `ss.read.parquet("hdfs:///user/ubuntu/bigData.parquet").groupby("key").agg({"value": "max"}).collect()`
+4HDD RAID0: 21 min
+
 ## Tools
 
 **(for admin)** Install AzCopy in Windows environment for blobs copy across storage accounts:

@@ -4,6 +4,10 @@ packages:
     - iotop
     - iftop
     - sysstat
+    - pssh
+    - sshpass
+    - squid
+    - apache2-utils
 disk_setup:
     ephemeral0:
         table_type: mbr
@@ -13,15 +17,30 @@ disk_setup:
         table_type: mbr
         layout: [100]
         overwrite: True
+    /dev/sdd:
+        table_type: mbr
+        layout: [100]
+        overwrite: True
+    /dev/sde:
+        table_type: mbr
+        layout: [100]
+        overwrite: True
+    /dev/sdf:
+        table_type: mbr
+        layout: [100]
+        overwrite: True
 fs_setup:
     - device: ephemeral0.1
       filesystem: ext4
-    - device: /dev/sdc1
-      filesystem: ext4
 mounts:
-    - ["ephemeral0.1", "/mnt", "auto", "defaults,nobootwait", "0", "0"]
-    - ["/dev/sdc1", "/data", "auto", "defaults,nobootwait", "0", "0"]
+    - ["ephemeral0.1", "/mnt", "auto", "defaults", "0", "0"]
 runcmd:
+    - [lsblk]
+    - [mdadm, --create, --verbose, /dev/md127, --level=0, --name=MY_RAID, --raid-devices=4, /dev/sdc1, /dev/sdd1, /dev/sde1, /dev/sdf1]
+    - [mkfs.ext4, "-L", "MY_RAID", /dev/md127]
+    - [mkdir, /data]
+    - echo "LABEL=MY_RAID /data ext4 defaults,nofail 0 2" >> /etc/fstab
+    - [mount, "-a"]
     - [chmod, go+w, /data]
     - [chmod, go+w, /mnt]
     - [mv, /mnt2/hdfs, /data/hdfs]
@@ -31,6 +50,9 @@ runcmd:
     - [/var/lib/ambari-server/resources/scripts/configs.sh, set, localhost, Cluster, hdfs-site, "dfs.datanode.data.dir", "/data/hdfs/data"]
     - [/var/lib/ambari-server/resources/scripts/configs.sh, set, localhost, Cluster, hdfs-site, "dfs.namenode.name.dir", "/data/hdfs/namenode"]
     - [/var/lib/ambari-server/resources/scripts/configs.sh, set, localhost, Cluster, hdfs-site, "dfs.permissions.enabled", "false"]
+    - [/var/lib/ambari-server/resources/scripts/configs.sh, set, localhost, Cluster, spark2-defaults, "spark.io.compression.lz4.blockSize", "1m"]
+    - [/var/lib/ambari-server/resources/scripts/configs.sh, set, localhost, Cluster, spark2-defaults, "spark.io.compression.snappy.blockSize", "1m"]
+    - [/var/lib/ambari-server/resources/scripts/configs.sh, set, localhost, Cluster, spark2-defaults, "spark.shuffle.file.buffer", "1m"]
     - chown -R ubuntu /usr/local/backup
     - cp -rT /usr/local/backup /home/ubuntu
     - cd /home/ubuntu && git clone https://github.com/ZEMUSHKA/lsml_hse.git
@@ -39,7 +61,6 @@ runcmd:
     - echo "10.0.1.21 cluster1" >> /etc/hosts
     - echo "10.0.1.22 cluster2" >> /etc/hosts
     - echo "10.0.1.23 cluster3" >> /etc/hosts
-    - apt-get install squid apache2-utils -y
     - mv /etc/squid3/squid.conf /etc/squid3/squid.conf.orig
     - echo "http_port 3128" >> /etc/squid3/squid.conf
     - echo "auth_param basic program /usr/lib/squid3/basic_ncsa_auth /etc/squid3/passwd" >> /etc/squid3/squid.conf
@@ -50,3 +71,11 @@ runcmd:
     - htpasswd -cb /etc/squid3/passwd ubuntu ###PASSWORD###
     - service squid3 restart
     - python -c "from notebook.auth import passwd; print 'c.NotebookApp.password = u\'{}\''.format(passwd('###PASSWORD###'))" >> jupyter_config.py
+    - echo -e 'y' | ssh-keygen -f /home/ubuntu/.ssh/id_rsa -t rsa -N ''
+    - printf "\nStrictHostKeyChecking no\nUserKnownHostsFile=/dev/null\n" >> /home/ubuntu/.ssh/config
+    - chown -R ubuntu /home/ubuntu
+    - rm /root/.ssh/known_hosts
+    - printf "\nStrictHostKeyChecking no\nUserKnownHostsFile=/dev/null\n" >> /root/.ssh/config
+    - HOME=/root sshpass -p ###PASSWORD### ssh-copy-id -i /home/ubuntu/.ssh/id_rsa ubuntu@cluster1
+    - HOME=/root sshpass -p ###PASSWORD### ssh-copy-id -i /home/ubuntu/.ssh/id_rsa ubuntu@cluster2
+    - HOME=/root sshpass -p ###PASSWORD### ssh-copy-id -i /home/ubuntu/.ssh/id_rsa ubuntu@cluster3
