@@ -28,25 +28,16 @@ disk_setup:
 fs_setup:
     - device: ephemeral0.1
       filesystem: ext4
-    - device: /dev/sdc1
-      filesystem: ext4
-    - device: /dev/sdd1
-      filesystem: ext4
-    - device: /dev/sde1
-      filesystem: ext4
-    - device: /dev/sdf1
-      filesystem: ext4
 mounts:
-    - ["ephemeral0.1", "/mnt", "auto", "defaults,nobootwait", "0", "0"]
-    - ["/dev/sdc1", "/data", "auto", "defaults,nobootwait,noatime,barrier=0", "0", "0"]
-    - ["/dev/sdd1", "/data2", "auto", "defaults,nobootwait,noatime,barrier=0", "0", "0"]
-    - ["/dev/sde1", "/data3", "auto", "defaults,nobootwait,noatime,barrier=0", "0", "0"]
-    - ["/dev/sdf1", "/data4", "auto", "defaults,nobootwait,noatime,barrier=0", "0", "0"]
+    - ["ephemeral0.1", "/mnt", "auto", "defaults", "0", "0"]
 runcmd:
+    - [lsblk]
+    - [mdadm, --create, --verbose, /dev/md127, --level=0, --name=MY_RAID, --raid-devices=4, /dev/sdc1, /dev/sdd1, /dev/sde1, /dev/sdf1]
+    - [mkfs.ext4, "-L", "MY_RAID", /dev/md127]
+    - [mkdir, /data]
+    - echo "LABEL=MY_RAID /data ext4 defaults,nofail 0 2" >> /etc/fstab
+    - [mount, "-a"]
     - [chmod, go+w, /data]
-    - [chmod, go+w, /data2]
-    - [chmod, go+w, /data3]
-    - [chmod, go+w, /data4]
     - [chmod, go+w, /mnt]
     - [mv, /mnt2/hdfs, /data/hdfs]
     - pip install hdfs
