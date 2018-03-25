@@ -20,19 +20,13 @@ Then proceed with all instructions below omitting `--create_shared` and `--creat
 Run `python create_cluster.py --user student*` to create 3 cluster nodes on `10.0.1.[21-23]`
 with private DNS names `cluster[1-3]` using necessary flags described below.
 
-**If** you want to ssh to your cluster nodes using a public key add `--ssh_key ~/.ssh/id_rsa_azure.pub`
-You can generate a key pair **id_rsa_azure** following the instructions:
-https://docs.microsoft.com/en-us/azure/virtual-machines/virtual-machines-linux-mac-create-ssh-keys
-
 **If** you haven't created a cluster before, add `--create_shared` flag which creates shared resources like a virtual network (need to do it once throughout the course).
 
 **If** you create these machines for the first time, add `--create_aux` flag which creates resources for virtual machines you create like IP address (need to do once per machine).
 
 After the scipt finishes you will see a **public IP** for each cluster node and a **password** for everything on each machine.
 
-Now ssh to `cluster1` machine (which is a master node):
-- Using a password: `ssh ubuntu@(paste public IP of cluster1 here)` and enter the password
-- Using a key pair: `ssh ubuntu@(paste public IP of cluster1 here) -i ~/.ssh/id_rsa_azure`
+Now ssh to `cluster1` machine (which is a master node). Run `ssh ubuntu@(paste public IP of cluster1 here)` and enter the password.
 
 **Wait for cloud-init to finish (this is crucial):**
 ```
@@ -76,16 +70,11 @@ There will be no charges for VM usage, but all the data is still stored.
 2. `python cluster_control.py --user student* --stop`
 
 ### Ssh access to `cluster2` and `cluster3`
-1. These commands are executed in `cluster1` remote shell.
-2. Generate a key pair with `ssh-keygen`
-3. Run `ssh-copy-id cluster2` and enter the password for this node
-4. Run `ssh-copy-id cluster3` and enter the password for this node
-5. Now you can run `ssh cluster2` and `ssh cluster3`
+We don't have enough public IPs for all nodes, but you can still access these nodes via `cluster1` node.
+Run `ssh cluster2` in `cluster1` remote shell to access `cluster2`.
 
 ### Execute a command on all nodes
-1. `sudo apt-get install pssh`
-2. Run `ssh-copy-id cluster1` and enter the password for this node
-3. `parallel-ssh -i -t 0 -H "cluster1 cluster2 cluster3" "hostname"`
+Run `parallel-ssh -i -t 0 -H "cluster1 cluster2 cluster3" "hostname"` in `cluster1` remote shell.
 
 ## Known issues
 * **(fixed with maintance mode)** Grafana fails to start automatically (because somehow it is already running),
