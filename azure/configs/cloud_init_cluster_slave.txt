@@ -25,6 +25,22 @@ disk_setup:
         table_type: mbr
         layout: [100]
         overwrite: True
+    /dev/sdg:
+        table_type: mbr
+        layout: [100]
+        overwrite: True
+    /dev/sdh:
+        table_type: mbr
+        layout: [100]
+        overwrite: True
+    /dev/sdi:
+        table_type: mbr
+        layout: [100]
+        overwrite: True
+    /dev/sdj:
+        table_type: mbr
+        layout: [100]
+        overwrite: True
 fs_setup:
     - device: ephemeral0.1
       filesystem: ext4
@@ -32,7 +48,7 @@ mounts:
     - ["ephemeral0.1", "/mnt", "auto", "defaults", "0", "0"]
 runcmd:
     - [lsblk]
-    - [mdadm, --create, --verbose, /dev/md127, --level=0, --name=MY_RAID, --raid-devices=4, /dev/sdc1, /dev/sdd1, /dev/sde1, /dev/sdf1]
+    - [mdadm, --create, --verbose, /dev/md127, --level=0, --name=MY_RAID, --raid-devices=8, /dev/sdc1, /dev/sdd1, /dev/sde1, /dev/sdf1, /dev/sdg1, /dev/sdh1, /dev/sdi1, /dev/sdj1]
     - [mkfs.ext4, "-L", "MY_RAID", /dev/md127]
     - [mkdir, /data]
     - echo "LABEL=MY_RAID /data ext4 defaults,nofail 0 2" >> /etc/fstab
