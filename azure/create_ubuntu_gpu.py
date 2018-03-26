@@ -1,6 +1,7 @@
 ##!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import argparse
+import json
 
 import utils
 from utils import RG_TEMPLATE, STORAGE_ACCOUNT_TEMPLATE, VNET_NAME, SUBNET_NAME, NSG_NAME, region_by_user, \
@@ -13,9 +14,17 @@ parser.add_argument("--create_aux", action="store_true", help="create aux resour
 args = parser.parse_args()
 
 student_name = args.user
-rg_name = RG_TEMPLATE.format(student_name)
-storage_account = STORAGE_ACCOUNT_TEMPLATE.format(student_name)
-region = region_by_user[student_name]
+if "@" in student_name:
+    j = json.loads("sber.json")
+    rg_name = j[student_name]["resource_group"]
+    storage_account = j[student_name]["storage_account"]
+    region = j[student_name]["region"]
+    vm_size = j[student_name]["gpu"]
+else:
+    rg_name = RG_TEMPLATE.format(student_name)
+    storage_account = STORAGE_ACCOUNT_TEMPLATE.format(student_name)
+    region = region_by_user[student_name]
+    vm_size = gpus_by_user[student_name]
 
 RESIZE_OS_DISK = False
 OS_DISK_SIZE = 1023
@@ -38,7 +47,6 @@ if args.create_aux:
 
 # create VM
 VM_NAME = INT_DNS_NAME
-vm_size = gpus_by_user[student_name]
 
 IMAGE_NAME = "/subscriptions/" + utils.get_subscription_id() + \
              "/resourceGroups/admin_resources/providers/Microsoft.Compute/images/ubuntu_gpu_image1_" + region
