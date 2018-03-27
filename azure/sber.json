@@ -1,7 +1,7 @@
 {
   "zemushka@inbox.ru": {
     "resource_group": "zemushka_resources",
-    "storage_account": "zemushka_hsefintech11",
+    "storage_account": "zemushkahsefintech11",
     "region": "eastus",
     "gpu": "Standard_NC6"
   }
