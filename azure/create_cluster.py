@@ -1,6 +1,7 @@
 ##!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import argparse
+import json
 
 from joblib import Parallel, delayed
 
@@ -15,9 +16,17 @@ parser.add_argument("--create_aux", action="store_true", help="create aux resour
 args = parser.parse_args()
 
 student_name = args.user
-rg_name = RG_TEMPLATE.format(student_name)
-storage_account = STORAGE_ACCOUNT_TEMPLATE.format(student_name)
-region = region_by_user[student_name]
+if "@" in student_name:
+    j = json.loads("sber.json")
+    rg_name = j[student_name]["resource_group"]
+    storage_account = j[student_name]["storage_account"]
+    region = j[student_name]["region"]
+    vm_size = "Standard_E4s_v3"
+else:
+    rg_name = RG_TEMPLATE.format(student_name)
+    storage_account = STORAGE_ACCOUNT_TEMPLATE.format(student_name)
+    region = region_by_user[student_name]
+    vm_size = "Standard_E4s_v3"
 
 RESIZE_OS_DISK = False
 OS_DISK_SIZE = 511
@@ -46,8 +55,6 @@ def create_cluster_node(idx, user_pass):
         utils.create_nic_with_private_ip(NIC_NAME, rg_name, VNET_NAME, SUBNET_NAME, NSG_NAME, IP_NAME, INT_DNS_NAME, IP)
 
     # create VM https://docs.microsoft.com/en-us/azure/virtual-machines/virtual-machines-windows-sizes
-    VM_SIZE = "Standard_DS12_v2_Promo"
-
     IMAGE_NAME = "/subscriptions/" + utils.get_subscription_id() + \
                  "/resourceGroups/admin_resources/providers/Microsoft.Compute/images/" + \
                  "cluster{0}".format(idx) + "_image1_" + region
@@ -57,7 +64,7 @@ def create_cluster_node(idx, user_pass):
         cloud_init_fn = cloud_init_fill_template("configs/cloud_init_cluster_master_template.txt", user_pass)
     else:
         cloud_init_fn = "configs/cloud_init_cluster_slave.txt"
-    utils.create_vm(VM_NAME, rg_name, region, IMAGE_NAME, NIC_NAME, VM_SIZE, None, OS_DISK_NAME,
+    utils.create_vm(VM_NAME, rg_name, region, IMAGE_NAME, NIC_NAME, vm_size, None, OS_DISK_NAME,
                     user_pass, cloud_init_fn, data_disks, "Standard_LRS")
 
     if RESIZE_OS_DISK:
