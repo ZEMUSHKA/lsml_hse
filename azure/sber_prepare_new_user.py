@@ -56,7 +56,7 @@ for user, settings in j.iteritems():
         "ubuntu_gpu_image1_eastus"
     ]
     for image in images:
-        print "WARN: Add user '{0}' as contributor to '{1}' manually!".format(user, image)
+        pass
         # subprocess.check_output(
         #     """
         #     az role assignment create \
@@ -66,5 +66,6 @@ for user, settings in j.iteritems():
         #     """.format(image=image, user=user, s=get_subscription_id()),
         #     shell=True
         # )
+    print "WARN: Add user '{0}' as contributor to 'admin_resources' manually!".format(user)
 
     print user, "done"
