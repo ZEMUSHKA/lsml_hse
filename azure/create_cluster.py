@@ -17,7 +17,7 @@ args = parser.parse_args()
 
 student_name = args.user
 if "@" in student_name:
-    j = json.loads("sber.json")
+    j = json.load(open("sber.json"))
     rg_name = j[student_name]["resource_group"]
     storage_account = j[student_name]["storage_account"]
     region = j[student_name]["region"]
