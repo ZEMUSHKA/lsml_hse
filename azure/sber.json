@@ -1,7 +1,7 @@
 {
-  "andrew-zimovnov@yandex.ru": {
-    "resource_group": "student1_resources",
-    "storage_account": "student1_hsefintech11",
+  "zemushka@inbox.ru": {
+    "resource_group": "zemushka_resources",
+    "storage_account": "zemushka_hsefintech11",
     "region": "eastus",
     "gpu": "Standard_NC6"
   }
