@@ -35,7 +35,7 @@ runcmd:
     - systemctl daemon-reload
     - apt-get remove unattended-upgrades -y
     - apt-get update
-    - apt-get install mdadm iotop iftop sysstat squid apache2-utils -y
+    - apt-get install mdadm iotop iftop sysstat squid apache2-utils libcupti-dev -y
     - [lsblk]
     - [mdadm, --create, --verbose, /dev/md127, --level=0, --name=MY_RAID, --raid-devices=4, /dev/sdc1, /dev/sdd1, /dev/sde1, /dev/sdf1]
     - [mkfs.ext4, "-L", "MY_RAID", /dev/md127]
@@ -53,7 +53,6 @@ runcmd:
     - cp cuda/include/cudnn.h /usr/local/cuda/include
     - cp cuda/lib64/libcudnn* /usr/local/cuda/lib64
     - chmod a+r /usr/local/cuda/lib64/libcudnn*
-    - apt-get install libcupti-dev -y
     - pip install tensorflow-gpu==1.4.0 --upgrade
     - echo "10.0.1.10 ubuntugpu" >> /etc/hosts
     - mv /etc/squid/squid.conf /etc/squid/squid.conf.orig
