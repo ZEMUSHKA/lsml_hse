@@ -34,6 +34,34 @@ Using `N_KEYS = 200; MB_PER_KEY = 500; N_JOBS = 100` in `spark_demo.ipynb`
 | Standard_DS12_v2 | 4HDD RAID0    | 21 min       |
 | Standard_E4_v3   | 4HDD RAID0    | 16 min       |
 
+
+## HDFS benchmark
+Write test: `hadoop jar /usr/hdp/current/hadoop-mapreduce-client/hadoop-mapreduce-client-jobclient-*-tests.jar TestDFSIO -write -nrFiles 9 -fileSize 10000`
+
+```
+18/03/28 22:06:59 INFO fs.TestDFSIO: ----- TestDFSIO ----- : write
+18/03/28 22:06:59 INFO fs.TestDFSIO:            Date & time: Wed Mar 28 22:06:59 UTC 2018
+18/03/28 22:06:59 INFO fs.TestDFSIO:        Number of files: 9
+18/03/28 22:06:59 INFO fs.TestDFSIO: Total MBytes processed: 90000.0
+18/03/28 22:06:59 INFO fs.TestDFSIO:      Throughput mb/sec: 113.71892472438955
+18/03/28 22:06:59 INFO fs.TestDFSIO: Average IO rate mb/sec: 114.65151977539062
+18/03/28 22:06:59 INFO fs.TestDFSIO:  IO rate std deviation: 10.590325290363486
+```
+
+Flush disks: `parallel-ssh -i -t 0 -H "cluster1 cluster2 cluster3" "sudo sh -c \"sync && echo 3 > /proc/sys/vm/drop_caches\""`
+
+Read test: `hadoop jar /usr/hdp/current/hadoop-mapreduce-client/hadoop-mapreduce-client-jobclient-*-tests.jar TestDFSIO -read -nrFiles 9 -fileSize 10000`
+
+```
+18/03/28 22:15:09 INFO fs.TestDFSIO: ----- TestDFSIO ----- : read
+18/03/28 22:15:09 INFO fs.TestDFSIO:            Date & time: Wed Mar 28 22:15:09 UTC 2018
+18/03/28 22:15:09 INFO fs.TestDFSIO:        Number of files: 9
+18/03/28 22:15:09 INFO fs.TestDFSIO: Total MBytes processed: 90000.0
+18/03/28 22:15:09 INFO fs.TestDFSIO:      Throughput mb/sec: 63.713115415600655
+18/03/28 22:15:09 INFO fs.TestDFSIO: Average IO rate mb/sec: 67.43341064453125
+18/03/28 22:15:09 INFO fs.TestDFSIO:  IO rate std deviation: 17.202486986872554
+```
+
 ## Tools
 
 **(for admin)** Install AzCopy in Windows environment for blobs copy across storage accounts:
