@@ -34,7 +34,7 @@ def get_vm_status(vm_ids):
 
 
 vm_list = get_vm_list()
-vm_ids = map(lambda x: x["id"], vm_list)
+vm_ids = [x["id"] for x in vm_list]
 vm_statuses = get_vm_status(vm_ids)
 
 df = []

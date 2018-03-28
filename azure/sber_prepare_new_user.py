@@ -9,7 +9,7 @@ from utils import get_subscription_id
 
 j = json.load(open("sber.json"))
 
-for user, settings in j.iteritems():
+for user, settings in j.items():
     resource_group = settings["resource_group"]
     storage_account = settings["storage_account"]
     region = settings["region"]
@@ -24,7 +24,7 @@ for user, settings in j.iteritems():
         shell=True
     )
 
-    print "WARN: Add user '{0}' as contributor to '{1}' manually!".format(user, resource_group)
+    print("WARN: Add user '{0}' as contributor to '{1}' manually!".format(user, resource_group))
     # # assign user to his res gr
     # subprocess.check_output(
     #     """
@@ -66,6 +66,6 @@ for user, settings in j.iteritems():
         #     """.format(image=image, user=user, s=get_subscription_id()),
         #     shell=True
         # )
-    print "WARN: Add user '{0}' as contributor to 'admin_resources' manually!".format(user)
+    print("WARN: Add user '{0}' as contributor to 'admin_resources' manually!".format(user))
 
-    print user, "done"
+    print(user, "done")

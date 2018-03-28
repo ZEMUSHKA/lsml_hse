@@ -29,4 +29,4 @@ for _, row in users.iterrows():
         """.format(g=AD_GROUP, u=userId),
         shell=True
     )
-    print row["user"], "added to group"
+    print(row["user"], "added to group")

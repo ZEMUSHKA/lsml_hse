@@ -16,8 +16,8 @@ def list_orphaned_disks():
     if out.strip() == "":
         return None
     out = json.loads(out)
-    out = filter(lambda x: x["ownerId"] is None, out)
-    out = map(lambda x: x["id"], out)
+    out = [x for x in out if x["ownerId"] is None]
+    out = [x["id"] for x in out]
     return out
 
 

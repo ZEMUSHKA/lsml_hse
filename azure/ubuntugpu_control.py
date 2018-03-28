@@ -26,4 +26,4 @@ elif args.remove:
 action_func("ubuntugpu", rg_name)
 
 if args.start:
-    print "ubuntugpu public IP: {}".format(utils.get_public_ip("ip_ubuntugpu", rg_name))
+    print("ubuntugpu public IP: {}".format(utils.get_public_ip("ip_ubuntugpu", rg_name)))

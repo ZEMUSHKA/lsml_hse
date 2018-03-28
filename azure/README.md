@@ -10,7 +10,7 @@ https://docs.microsoft.com/en-us/cli/azure/install-azure-cli
 
 3. Authenticate in http://portal.azure.com (Google Chrome is recommended) using the same credentials.
 
-4. Install Python 2.7
+4. Install Python 2 or 3
 
 5. `pip install joblib`
 

@@ -22,4 +22,4 @@ for idx, (_, row) in enumerate(users.iterrows()):
         """.format(n=resGrName),
         shell=True
     )
-    print user, "done"
+    print(user, "done")

@@ -28,4 +28,4 @@ for _, row in users.iterrows():
         """.format(cont=CONTAINER, fn=PATTERN, acc=storName, key=userKey),
         shell=True
     )
-    print user, "done"
+    print(user, "done")

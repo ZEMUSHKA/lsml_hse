@@ -47,4 +47,4 @@ for idx, (_, row) in enumerate(users.iterrows()):
         """.format(l=region, n=storName, g=rgName),
         shell=True
     )
-    print user, "done"
+    print(user, "done")

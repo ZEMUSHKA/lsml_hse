@@ -53,5 +53,5 @@ if RESIZE_OS_DISK:
     utils.resize_managed_disk(rg_name, OS_DISK_NAME, OS_DISK_SIZE)
     utils.start_vm(VM_NAME, rg_name)
 
-print "ubuntugpu public IP: {}".format(utils.get_public_ip("ip_ubuntugpu", rg_name))
-print "password:", user_pass
+print("ubuntugpu public IP: {}".format(utils.get_public_ip("ip_ubuntugpu", rg_name)))
+print("password:", user_pass)

@@ -18,6 +18,6 @@ for _, row in users.iterrows():
     user_rg = RG_TEMPLATE.format(user)
     user_key = get_storage_key(user_account, user_rg)
     storage_keys[user] = user_key
-    print user, "done"
+    print(user, "done")
 
 json.dump(storage_keys, open("storage_keys.json", "w"), indent=4, sort_keys=True)

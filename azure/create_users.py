@@ -25,7 +25,7 @@ for idx in range(STUDENT_COUNT):
     out = json.loads(out)
     userId = out["objectId"]
     users.append([user, password, userId])
-    print user, "done"
+    print(user, "done")
 
 df = pd.DataFrame(users, columns=["user", "password", "userId"])
 df.to_json("users.json", orient="records")

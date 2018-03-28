@@ -13,4 +13,4 @@ for idx in range(STUDENT_COUNT):
         """.format(u=user, d=AD_DOMAIN),
         shell=True
     )
-    print user, "deleted"
+    print(user, "deleted")

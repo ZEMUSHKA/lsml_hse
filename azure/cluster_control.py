@@ -31,4 +31,4 @@ Parallel(n_jobs=3, backend="threading")(
 )
 
 if args.start:
-    print "cluster1 public IP: {}".format(utils.get_public_ip("ip_cluster1", rg_name))
+    print("cluster1 public IP: {}".format(utils.get_public_ip("ip_cluster1", rg_name)))

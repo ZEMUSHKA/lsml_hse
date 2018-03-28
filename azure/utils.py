@@ -29,8 +29,8 @@ def timeit(method):
         ts = time.time()
         result = method(*args, **kw)
         te = time.time()
-        print '%r (%r, %r) %2.2f sec' % \
-              (method.__name__, args, kw, te-ts)
+        print('%r (%r, %r) %2.2f sec' % \
+              (method.__name__, args, kw, te-ts))
         return result
     return timed
 
@@ -209,21 +209,21 @@ def remove_vm_and_disks(VM_NAME, RG_NAME):
         shell=True
     )
     out = json.loads(out)
-    vm = filter(lambda x: x["name"] == VM_NAME, out)
+    vm = [x for x in out if x["name"] == VM_NAME]
     assert len(vm) == 1
     vm = vm[0]
     storageProfile = vm["storageProfile"]
-    data_disk_ids = map(lambda x: x.get("managedDisk", {}).get("id", None), storageProfile.get("dataDisks", []))
+    data_disk_ids = [x.get("managedDisk", {}).get("id", None) for x in storageProfile.get("dataDisks", [])]
     os_disk_id = storageProfile.get("osDisk", {}).get("managedDisk", {}).get("id", None)
     all_disk_ids = data_disk_ids + [os_disk_id]
-    all_disk_ids = filter(lambda x: x is not None, all_disk_ids)
+    all_disk_ids = [x for x in all_disk_ids if x is not None]
 
-    print "Will delete disks:\n" + "\n".join(all_disk_ids)
+    print("Will delete disks:\n" + "\n".join(all_disk_ids))
 
-    print "Removing VM..."
+    print("Removing VM...")
     remove_vm(VM_NAME, RG_NAME)
 
-    print "Removing disks..."
+    print("Removing disks...")
     remove_disks(all_disk_ids)
 
 
@@ -259,7 +259,7 @@ def get_subscription_id():
         shell=True
     )
     out = json.loads(out)
-    out = filter(lambda x: x["isDefault"], out)[0]
+    out = [x for x in out if x["isDefault"]][0]
     return out["id"]
 
 

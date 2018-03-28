@@ -40,4 +40,4 @@ start "AzCopy {s} to {d}" "C:\\Program Files (x86)\\Microsoft SDKs\\Azure\\AzCop
                 cont=CONTAINER
             )
         f.write(command)
-        print user, "done"
+        print(user, "done")
