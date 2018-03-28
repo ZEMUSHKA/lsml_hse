@@ -53,8 +53,13 @@ runcmd:
     - cp -rT /usr/local/backup /home/ubuntu
     - cd /home/ubuntu && git clone https://github.com/ZEMUSHKA/lsml_hse.git
     - chown -R ubuntu:ubuntu /home/ubuntu/lsml_hse
+    - wget "http://developer.download.nvidia.com/compute/redist/cudnn/v6.0/cudnn-8.0-linux-x64-v6.0.tgz"
+    - tar -xzvf cudnn-8.0-linux-x64-v6.0.tgz
+    - cp cuda/include/cudnn.h /usr/local/cuda/include
+    - cp cuda/lib64/libcudnn* /usr/local/cuda/lib64
+    - chmod a+r /usr/local/cuda/lib64/libcudnn*
     - apt-get install libcupti-dev -y
-    - pip install tensorflow-gpu==1.2.0 --upgrade
+    - pip install tensorflow-gpu==1.4.0 --upgrade
     - echo "10.0.1.10 ubuntugpu" >> /etc/hosts
     - mv /etc/squid/squid.conf /etc/squid/squid.conf.orig
     - echo "http_port 3128" >> /etc/squid/squid.conf
