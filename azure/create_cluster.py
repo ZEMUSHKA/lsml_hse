@@ -17,7 +17,7 @@ student_name = args.user
 rg_name = utils.get_student_resource_group(student_name)
 storage_account = utils.get_student_storage_account(student_name)
 region = utils.get_student_region(student_name)
-vm_size = "Standard_E4s_v3"
+vm_size = "Standard_E4_v3"
 
 RESIZE_OS_DISK = False
 OS_DISK_SIZE = 511
