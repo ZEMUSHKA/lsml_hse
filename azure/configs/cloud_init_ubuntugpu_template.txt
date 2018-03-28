@@ -1,11 +1,4 @@
 #cloud-config
-packages:
-    - mdadm
-    - iotop
-    - iftop
-    - sysstat
-    - squid
-    - apache2-utils
 disk_setup:
     ephemeral0:
         table_type: mbr
@@ -41,6 +34,8 @@ runcmd:
     - systemctl disable apt-daily.timer
     - systemctl daemon-reload
     - apt-get remove unattended-upgrades -y
+    - apt-get update
+    - apt-get install mdadm iotop iftop sysstat squid apache2-utils
     - [lsblk]
     - [mdadm, --create, --verbose, /dev/md127, --level=0, --name=MY_RAID, --raid-devices=4, /dev/sdc1, /dev/sdd1, /dev/sde1, /dev/sdf1]
     - [mkfs.ext4, "-L", "MY_RAID", /dev/md127]
