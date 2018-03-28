@@ -69,11 +69,11 @@ There will be no charges for VM usage, but all the data is still stored.
 1. In Ambari select "Actions" -> "Stop All", wait till it's done.
 2. `python cluster_control.py --user student* --stop`
 
-### Ssh access to `cluster2` and `cluster3`
+## Ssh access to cluster2 and cluster3
 We don't have enough public IPs for all nodes, but you can still access these nodes via `cluster1` node.
 Run `ssh cluster2` in `cluster1` remote shell to access `cluster2`.
 
-### Execute a command on all nodes
+## Execute a command on all nodes
 Run `parallel-ssh -i -t 0 -H "cluster1 cluster2 cluster3" "hostname"` in `cluster1` remote shell.
 
 ## Known issues
