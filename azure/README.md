@@ -12,7 +12,7 @@ https://docs.microsoft.com/en-us/cli/azure/install-azure-cli
 
 4. Install Python 2 or 3
 
-5. `pip install joblib`
+5. `pip install joblib` or `pip3 install joblib` based on your Python version
 
 ## How-To's
 [How to create a Hadoop cluster](docs/CREATE_CLUSTER.md)
