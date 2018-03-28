@@ -35,12 +35,12 @@ parser = argparse.ArgumentParser()
 parser.add_argument("--user", action="store", help="account name, for example student1", required=True)
 args = parser.parse_args()
 
-STUDENT_NAME = args.user
-RG_NAME = RG_TEMPLATE.format(STUDENT_NAME)
-NEW_SIZE = "Standard_DS14_v2_Promo"  # Standard DS14 v2 Promo (16 cores, 112 GB memory)
+student_name = args.user
+rg_name = utils.get_student_resource_group(student_name)
+new_size = "Standard_DS14_v2_Promo"  # Standard DS14 v2 Promo (16 cores, 112 GB memory)
 
 Parallel(n_jobs=3, backend="threading")(
-    delayed(resize_VM)("cluster{0}".format(idx), RG_NAME, NEW_SIZE) for idx in [1, 2, 3]
+    delayed(resize_VM)("cluster{0}".format(idx), rg_name, new_size) for idx in [1, 2, 3]
 )
 
-print "cluster1 public IP: {}".format(utils.get_public_ip("ip_cluster1", RG_NAME))
+print "cluster1 public IP: {}".format(utils.get_public_ip("ip_cluster1", rg_name))

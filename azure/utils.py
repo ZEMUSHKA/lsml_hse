@@ -20,6 +20,10 @@ region_by_user = json.loads(open("regions.json", "r").read())
 gpus_by_user = json.loads(open("gpus.json", "r").read())
 
 
+def load_sber_users():
+    return json.load(open("sber.json"))
+
+
 def timeit(method):
     def timed(*args, **kw):
         ts = time.time()
@@ -321,3 +325,31 @@ def cloud_init_fill_template(template_fn, user_pass):
     with open(result_fn, "w") as f:
         f.write(open(template_fn).read().replace("###PASSWORD###", user_pass))
     return result_fn
+
+
+def get_student_resource_group(student_name):
+    if "@" in student_name:
+        return load_sber_users()[student_name]["resource_group"]
+    else:
+        return RG_TEMPLATE.format(student_name)
+
+
+def get_student_storage_account(student_name):
+    if "@" in student_name:
+        return load_sber_users()[student_name]["storage_account"]
+    else:
+        return STORAGE_ACCOUNT_TEMPLATE.format(student_name)
+
+
+def get_student_region(student_name):
+    if "@" in student_name:
+        return load_sber_users()[student_name]["region"]
+    else:
+        return region_by_user[student_name]
+
+
+def get_student_gpu_size(student_name):
+    if "@" in student_name:
+        return load_sber_users()[student_name]["gpu"]
+    else:
+        return gpus_by_user[student_name]

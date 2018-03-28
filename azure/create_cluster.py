@@ -1,13 +1,11 @@
 ##!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import argparse
-import json
 
 from joblib import Parallel, delayed
 
 import utils
-from utils import RG_TEMPLATE, STORAGE_ACCOUNT_TEMPLATE, VNET_NAME, SUBNET_NAME, NSG_NAME, region_by_user, \
-    cloud_init_fill_template
+from utils import VNET_NAME, SUBNET_NAME, NSG_NAME, cloud_init_fill_template
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--user", action="store", help="account name, for example student1", required=True)
@@ -16,17 +14,10 @@ parser.add_argument("--create_aux", action="store_true", help="create aux resour
 args = parser.parse_args()
 
 student_name = args.user
-if "@" in student_name:
-    j = json.load(open("sber.json"))
-    rg_name = j[student_name]["resource_group"]
-    storage_account = j[student_name]["storage_account"]
-    region = j[student_name]["region"]
-    vm_size = "Standard_E4s_v3"
-else:
-    rg_name = RG_TEMPLATE.format(student_name)
-    storage_account = STORAGE_ACCOUNT_TEMPLATE.format(student_name)
-    region = region_by_user[student_name]
-    vm_size = "Standard_E4s_v3"
+rg_name = utils.get_student_resource_group(student_name)
+storage_account = utils.get_student_storage_account(student_name)
+region = utils.get_student_region(student_name)
+vm_size = "Standard_E4s_v3"
 
 RESIZE_OS_DISK = False
 OS_DISK_SIZE = 511

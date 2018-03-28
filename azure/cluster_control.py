@@ -5,7 +5,6 @@ import argparse
 from joblib import Parallel, delayed
 
 import utils
-from utils import RG_TEMPLATE
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--user", action="store", help="account name, for example student1", required=True)
@@ -14,8 +13,9 @@ parser.add_argument("--stop", action="store_true", help="stop cluster machines")
 parser.add_argument("--remove", action="store_true", help="remove cluster VMs and disks")
 args = parser.parse_args()
 
-STUDENT_NAME = args.user
-RG_NAME = RG_TEMPLATE.format(STUDENT_NAME)
+student_name = args.user
+rg_name = utils.get_student_resource_group(student_name)
+
 
 assert args.start or args.stop or args.remove
 assert not (args.start and args.stop and args.remove)
@@ -27,8 +27,8 @@ elif args.remove:
     action_func = utils.remove_vm_and_disks
 
 Parallel(n_jobs=3, backend="threading")(
-    delayed(action_func)("cluster{0}".format(idx), RG_NAME) for idx in [1, 2, 3]
+    delayed(action_func)("cluster{0}".format(idx), rg_name) for idx in [1, 2, 3]
 )
 
 if args.start:
-    print "cluster1 public IP: {}".format(utils.get_public_ip("ip_cluster1", RG_NAME))
+    print "cluster1 public IP: {}".format(utils.get_public_ip("ip_cluster1", rg_name))
