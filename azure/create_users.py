@@ -10,6 +10,8 @@ from utils import generate_pass, STUDENT_COUNT, AD_DOMAIN
 users = []
 
 for idx in range(STUDENT_COUNT):
+    # if (idx + 1) <= 81:
+    #     continue
     password = generate_pass()
     user = "student{}".format(idx + 1)
     out = subprocess.check_output(

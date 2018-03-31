@@ -79,7 +79,14 @@
     "student79": "Standard_NV6", 
     "student8": "Standard_NC6", 
     "student80": "Standard_NV6", 
-    "student81": "Standard_NV6", 
-    "student9": "Standard_NC6",
+    "student81": "Standard_NC6", 
+    "student82": "Standard_NC6", 
+    "student83": "Standard_NC6", 
+    "student84": "Standard_NC6", 
+    "student85": "Standard_NC6", 
+    "student86": "Standard_NC6", 
+    "student87": "Standard_NC6", 
+    "student88": "Standard_NC6", 
+    "student9": "Standard_NC6", 
     "test": "Standard_NV6"
 }

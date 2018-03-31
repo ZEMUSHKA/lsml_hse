@@ -6,7 +6,7 @@ import string
 import subprocess
 import time
 
-STUDENT_COUNT = 81
+STUDENT_COUNT = 88
 AD_DOMAIN = "zimovnovgmail.onmicrosoft.com"
 AD_GROUP = "students"
 
