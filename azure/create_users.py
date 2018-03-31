@@ -5,6 +5,9 @@ import subprocess
 
 import pandas as pd
 
+# import pandas as pd
+# pd.read_json("users.json", orient="records").to_excel("users.xlsx")
+
 from utils import generate_pass, STUDENT_COUNT, AD_DOMAIN
 
 users = []
