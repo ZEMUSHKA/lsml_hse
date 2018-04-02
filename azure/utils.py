@@ -37,7 +37,7 @@ def timeit(method):
 
 @timeit
 def get_storage_key(account, rg):
-    out = subprocess.check_output(
+    out = check_output_wrapper(
         """
         az storage account keys list \
             --name {n} \
@@ -52,7 +52,7 @@ def get_storage_key(account, rg):
 
 @timeit
 def create_vnet(VNET_NAME, RG_NAME, REGION, SUBNET_NAME):
-    subprocess.check_output(
+    check_output_wrapper(
         """
         az network vnet create \
             -n {VNET_NAME} \
@@ -68,7 +68,7 @@ def create_vnet(VNET_NAME, RG_NAME, REGION, SUBNET_NAME):
 
 @timeit
 def create_nsg(NSG_NAME, RG_NAME, REGION):
-    subprocess.check_output(
+    check_output_wrapper(
         """
         az network nsg create \
             -n {NSG_NAME} \
@@ -81,7 +81,7 @@ def create_nsg(NSG_NAME, RG_NAME, REGION):
 
 @timeit
 def allow_incoming_port(NSG_NAME, RG_NAME, RULE_NAME, PORT, PRIORITY):
-    subprocess.check_output(
+    check_output_wrapper(
         """
         az network nsg rule create \
             --access Allow \
@@ -102,7 +102,7 @@ def allow_incoming_port(NSG_NAME, RG_NAME, RULE_NAME, PORT, PRIORITY):
 
 @timeit
 def create_public_ip(IP_NAME, RG_NAME):
-    subprocess.check_output(
+    check_output_wrapper(
         """
         az network public-ip create \
             -n {IP_NAME} \
@@ -125,7 +125,7 @@ def create_nic_with_private_ip(NIC_NAME, RG_NAME, VNET_NAME, SUBNET_NAME, NSG_NA
             --private-ip-address {IP} """
     if IP_NAME is not None:
         template += " --public-ip-address {IP_NAME} "
-    subprocess.check_output(
+    check_output_wrapper(
         template.format(**locals()),
         shell=True
     )
@@ -158,7 +158,7 @@ def create_vm(VM_NAME, RG_NAME, REGION, IMAGE_NAME, NIC_NAME, VM_SIZE, pub_key, 
     else:
         template += " --authentication-type password --admin-password {0}".format(password)
 
-    subprocess.check_output(
+    check_output_wrapper(
         template.format(**locals()),
         shell=True
     )
@@ -166,7 +166,7 @@ def create_vm(VM_NAME, RG_NAME, REGION, IMAGE_NAME, NIC_NAME, VM_SIZE, pub_key, 
 
 # @timeit
 def deallocate_vm(VM_NAME, RG_NAME):
-    subprocess.check_output(
+    check_output_wrapper(
         """
         az vm deallocate \
             -g {RG_NAME} \
@@ -178,7 +178,7 @@ def deallocate_vm(VM_NAME, RG_NAME):
 
 # @timeit
 def start_vm(VM_NAME, RG_NAME):
-    subprocess.check_output(
+    check_output_wrapper(
         """
         az vm start \
             -g {RG_NAME} \
@@ -189,7 +189,7 @@ def start_vm(VM_NAME, RG_NAME):
 
 
 def remove_vm(VM_NAME, RG_NAME):
-    subprocess.check_output(
+    check_output_wrapper(
         """
         az vm delete \
             -g {RG_NAME} \
@@ -201,7 +201,7 @@ def remove_vm(VM_NAME, RG_NAME):
 
 
 def remove_vm_and_disks(VM_NAME, RG_NAME):
-    out = subprocess.check_output(
+    out = check_output_wrapper(
         """
         az vm list \
             -g {RG_NAME}
@@ -228,7 +228,7 @@ def remove_vm_and_disks(VM_NAME, RG_NAME):
 
 
 def remove_disks(all_disk_ids):
-    subprocess.check_output(
+    check_output_wrapper(
         """
         az disk delete \
             --ids {0} --yes
@@ -239,7 +239,7 @@ def remove_disks(all_disk_ids):
 
 @timeit
 def resize_managed_disk(RG_NAME, DISK_NAME, DISK_SIZE):
-    subprocess.check_output(
+    check_output_wrapper(
         """
         az disk update \
             --resource-group {RG_NAME} \
@@ -252,7 +252,7 @@ def resize_managed_disk(RG_NAME, DISK_NAME, DISK_SIZE):
 
 @timeit
 def get_subscription_id():
-    out = subprocess.check_output(
+    out = check_output_wrapper(
         """
         az account list
         """,
@@ -278,7 +278,7 @@ def create_shared(RG_NAME, region):
 
 
 def get_public_ip(IP_NAME, RG_NAME):
-    out = subprocess.check_output(
+    out = check_output_wrapper(
         """
         az network public-ip show -n {IP_NAME} -g {RG_NAME}
         """.format(**locals()),
@@ -289,7 +289,7 @@ def get_public_ip(IP_NAME, RG_NAME):
 
 
 def resize_VM(VM_NAME, RG_NAME, NEW_SIZE):
-    subprocess.check_output(
+    check_output_wrapper(
         """
         az vm resize \
         --resource-group {RG_NAME} \
@@ -310,7 +310,7 @@ def generate_pass():
 
 
 def get_ad_group_id(ad_group):
-    out = subprocess.check_output(
+    out = check_output_wrapper(
         """
         az ad group show --group {g}
         """.format(g=ad_group),
@@ -353,3 +353,11 @@ def get_student_gpu_size(student_name):
         return load_sber_users()[student_name]["gpu"]
     else:
         return gpus_by_user[student_name]
+
+
+def check_output_wrapper(command, shell):
+    # fix for windows
+    return subprocess.check_output(
+        command.strip() if isinstance(command, str) else command,
+        shell=shell
+    )

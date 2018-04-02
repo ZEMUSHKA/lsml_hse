@@ -3,11 +3,11 @@
 import json
 import subprocess
 
-from utils import remove_disks
+from utils import remove_disks, check_output_wrapper
 
 
 def list_orphaned_disks():
-    out = subprocess.check_output(
+    out = check_output_wrapper(
         """
         az disk list
         """,

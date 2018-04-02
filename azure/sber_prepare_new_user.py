@@ -5,7 +5,7 @@
 import json
 import subprocess
 
-from utils import get_subscription_id
+from utils import get_subscription_id, check_output_wrapper
 
 j = json.load(open("sber.json"))
 
@@ -15,7 +15,7 @@ for user, settings in j.items():
     region = settings["region"]
 
     # create res gr
-    subprocess.check_output(
+    check_output_wrapper(
         """
         az group create \
         -n "{n}" \
@@ -26,7 +26,7 @@ for user, settings in j.items():
 
     print("WARN: Add user '{0}' as contributor to '{1}' manually!".format(user, resource_group))
     # # assign user to his res gr
-    # subprocess.check_output(
+    # check_output_wrapper(
     #     """
     #     az role assignment create \
     #     --assignee {user} \
@@ -37,7 +37,7 @@ for user, settings in j.items():
     # )
 
     # create storage account
-    subprocess.check_output(
+    check_output_wrapper(
         """
         az storage account create \
         -l {l} \
@@ -57,7 +57,7 @@ for user, settings in j.items():
     ]
     for image in images:
         pass
-        # subprocess.check_output(
+        # check_output_wrapper(
         #     """
         #     az role assignment create \
         #         --role Contributor \

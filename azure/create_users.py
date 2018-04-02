@@ -5,6 +5,8 @@ import subprocess
 
 import pandas as pd
 
+from utils import check_output_wrapper
+
 # import pandas as pd
 # pd.read_json("users.json", orient="records").to_excel("users.xlsx")
 
@@ -17,7 +19,7 @@ for idx in range(STUDENT_COUNT):
     #     continue
     password = generate_pass()
     user = "student{}".format(idx + 1)
-    out = subprocess.check_output(
+    out = check_output_wrapper(
         """
         az ad user create \
         --user-principal-name "{u}@{d}" \

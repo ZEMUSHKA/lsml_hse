@@ -2,12 +2,12 @@
 # -*- coding: utf-8 -*-
 import subprocess
 
-from utils import timeit, AD_GROUP, get_ad_group_id, get_subscription_id
+from utils import timeit, AD_GROUP, get_ad_group_id, get_subscription_id, check_output_wrapper
 
 
 @timeit
 def create_image(RG_NAME, IMAGE_NAME, SOURCE, REGION):
-    subprocess.check_output(
+    check_output_wrapper(
         """
         az image create \
             -g {RG_NAME} \
@@ -24,7 +24,7 @@ def create_image(RG_NAME, IMAGE_NAME, SOURCE, REGION):
 
 @timeit
 def create_image_lock(RG_NAME, IMAGE_NAME):
-    subprocess.check_output(
+    check_output_wrapper(
         """
         az lock create -t CanNotDelete -n lock -g {RG_NAME} --parent-resource-path "" --resource-name "{IMAGE_NAME}" \
         --resource-provider-namespace "" --resource-type "Microsoft.Compute/images"
@@ -36,7 +36,7 @@ def create_image_lock(RG_NAME, IMAGE_NAME):
 @timeit
 def assign_role_to_student_group(IMAGE_NAME):
     # for students group
-    subprocess.check_output(
+    check_output_wrapper(
         """
         az role assignment create \
             --role Contributor \

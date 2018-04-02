@@ -4,7 +4,7 @@ import subprocess
 
 import pandas as pd
 
-from utils import RG_TEMPLATE, STORAGE_ACCOUNT_TEMPLATE, region_by_user
+from utils import RG_TEMPLATE, STORAGE_ACCOUNT_TEMPLATE, region_by_user, check_output_wrapper
 
 users = pd.read_json("users.json", orient="records")
 
@@ -17,7 +17,7 @@ for idx, (_, row) in enumerate(users.iterrows()):
     rgName = RG_TEMPLATE.format(user)
     region = region_by_user[user]
     # create res gr
-    subprocess.check_output(
+    check_output_wrapper(
         """
         az group create \
         -n "{n}" \
@@ -26,7 +26,7 @@ for idx, (_, row) in enumerate(users.iterrows()):
         shell=True
     )
     # assign user to his res gr
-    subprocess.check_output(
+    check_output_wrapper(
         """
         az role assignment create \
         --assignee {userId} \
@@ -37,7 +37,7 @@ for idx, (_, row) in enumerate(users.iterrows()):
     )
     # create storage account
     storName = STORAGE_ACCOUNT_TEMPLATE.format(user)
-    subprocess.check_output(
+    check_output_wrapper(
         """
         az storage account create \
         -l {l} \

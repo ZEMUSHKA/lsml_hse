@@ -6,12 +6,12 @@ import subprocess
 import numpy as np
 import pandas as pd
 
-from utils import timeit
+from utils import timeit, check_output_wrapper
 
 
 @timeit
 def get_vm_list():
-    out = subprocess.check_output(
+    out = check_output_wrapper(
         """
         az vm list
         """,
@@ -23,7 +23,7 @@ def get_vm_list():
 
 @timeit
 def get_vm_status(vm_ids):
-    out = subprocess.check_output(
+    out = check_output_wrapper(
         """
         az vm show -d --ids {0}
         """.format(" ".join(vm_ids)),

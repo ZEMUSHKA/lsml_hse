@@ -4,9 +4,9 @@ import subprocess
 
 import pandas as pd
 
-from utils import AD_GROUP, get_ad_group_id
+from utils import AD_GROUP, get_ad_group_id, check_output_wrapper
 
-subprocess.check_output(
+check_output_wrapper(
     """
     az ad group create \
     --display-name {g} \
@@ -21,7 +21,7 @@ group_id = get_ad_group_id(AD_GROUP)
 for _, row in users.iterrows():
     row = dict(row)
     userId = row["userId"]
-    subprocess.check_output(
+    check_output_wrapper(
         """
         az ad group member add \
         --group {g} \

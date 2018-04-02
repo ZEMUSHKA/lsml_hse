@@ -4,7 +4,7 @@ import subprocess
 
 import pandas as pd
 
-from utils import RG_TEMPLATE
+from utils import RG_TEMPLATE, check_output_wrapper
 
 users = pd.read_json("users.json", orient="records")
 
@@ -15,7 +15,7 @@ for idx, (_, row) in enumerate(users.iterrows()):
     user = row["user"]
     resGrName = RG_TEMPLATE.format(user)
     # create res gr
-    subprocess.check_output(
+    check_output_wrapper(
         """
         az group delete \
         -n "{n}" --yes --no-wait

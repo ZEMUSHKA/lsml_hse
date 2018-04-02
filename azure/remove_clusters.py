@@ -6,7 +6,7 @@ import subprocess
 from joblib import Parallel, delayed
 
 import utils
-from utils import RG_TEMPLATE
+from utils import RG_TEMPLATE, check_output_wrapper
 
 finished_students = [
 
@@ -14,7 +14,7 @@ finished_students = [
 
 
 def get_vm_status(VM, RG):
-    out = subprocess.check_output(
+    out = check_output_wrapper(
         """
         az vm show -d -n {0} -g {1}
         """.format(VM, RG),
@@ -28,7 +28,7 @@ def get_vm_status(VM, RG):
 
 
 def list_disks_for_rg(RG):
-    out = subprocess.check_output(
+    out = check_output_wrapper(
         """
         az disk list -g {0}
         """.format(RG),

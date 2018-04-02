@@ -4,7 +4,7 @@ import subprocess
 
 import pandas as pd
 
-from utils import RG_TEMPLATE, STORAGE_ACCOUNT_TEMPLATE, get_storage_key
+from utils import RG_TEMPLATE, STORAGE_ACCOUNT_TEMPLATE, get_storage_key, check_output_wrapper
 
 users = pd.read_json("users.json", orient="records")
 
@@ -18,7 +18,7 @@ for _, row in users.iterrows():
     resGrName = RG_TEMPLATE.format(user)
     storName = STORAGE_ACCOUNT_TEMPLATE.format(user)
     userKey = get_storage_key(storName, resGrName)
-    subprocess.check_output(
+    check_output_wrapper(
         """
         az storage blob delete \
         --container-name {cont} \
