@@ -9,7 +9,7 @@ from utils import RG_TEMPLATE, STORAGE_ACCOUNT_TEMPLATE, region_by_user, check_o
 users = pd.read_json("users.json", orient="records")
 
 for idx, (_, row) in enumerate(users.iterrows()):
-    # if idx + 1 <= 81:
+    # if idx + 1 <= 88:
     #     continue
     row = dict(row)
     user = row["user"]

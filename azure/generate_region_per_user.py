@@ -18,13 +18,15 @@ import pandas as pd
 
 regions = ["eastus"] * 17 + \
           ["southcentralus"] * 44 + \
-          ["westeurope"] * 27
+          ["westeurope"] * 27 + \
+          ["southeastasia"] * 10
 
 gpus_kind = ["Standard_NC6"] * 17 + \
             ["Standard_NC6"] * 24 + \
             ["Standard_NV6"] * 20 + \
             ["Standard_NV6"] * 19 + \
-            ["Standard_NC6"] * 8
+            ["Standard_NC6"] * 8 + \
+            ["Standard_NV6"] * 10
 
 users = pd.read_json("users.json", orient="records")
 assert len(regions) == len(users) == len(gpus_kind)
