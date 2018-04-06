@@ -4,12 +4,14 @@
 # switch to sponsored: az account set --subscription "Sponsorship 2017"
 import json
 import subprocess
+from joblib import Parallel, delayed
 
 from utils import get_subscription_id, check_output_wrapper
 
 j = json.load(open("sber.json"))
 
-for user, settings in j.items():
+
+def make_user(user, settings):
     resource_group = settings["resource_group"]
     storage_account = settings["storage_account"]
     region = settings["region"]
@@ -69,3 +71,12 @@ for user, settings in j.items():
     print("WARN: Add user '{0}' as contributor to 'admin_resources' manually!".format(user))
 
     print(user, "done")
+
+
+Parallel(n_jobs=5, backend="threading")(
+    delayed(make_user)(user, settings) for user, settings in j.items() if user not in [
+        'alex.kuznetsov87@gmail.com',
+        'kate_volodkina@mail.ru',
+        'dmitryevsimakov@gmail.com'
+    ]
+)

@@ -73,7 +73,7 @@
   },
   "Y.kovaleva@bk.ru": {
     "resource_group": "Ykovalevar",
-    "storage_account": "Ykovalevas11",
+    "storage_account": "ykovalevas11",
     "region": "eastus",
     "gpu": "Standard_NC6"
   },
