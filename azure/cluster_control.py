@@ -27,6 +27,16 @@ elif args.stop:
 elif args.remove:
     action_func = utils.remove_vm_and_disks
 
+if args.remove:
+    # remove orphaned disks (to make sure)
+    disks = utils.list_disks_for_rg(rg_name)
+    disks = [x["id"] for x in disks]
+    if disks:
+        print("Removing orphaned disks")
+        for disk in disks:
+            print(disk)
+        utils.remove_disks(disks)
+
 Parallel(n_jobs=args.jobs or 3, backend="threading")(
     delayed(action_func)("cluster{0}".format(idx), rg_name) for idx in [1, 2, 3]
 )

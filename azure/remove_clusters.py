@@ -1,12 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import json
-import subprocess
 
 from joblib import Parallel, delayed
 
 import utils
-from utils import RG_TEMPLATE, check_output_wrapper
+from utils import RG_TEMPLATE, check_output_wrapper, list_disks_for_rg
 
 finished_students = [
 
@@ -25,19 +24,6 @@ def get_vm_status(VM, RG):
     out = json.loads(out)
     power_state = out["powerState"]
     return power_state
-
-
-def list_disks_for_rg(RG):
-    out = check_output_wrapper(
-        """
-        az disk list -g {0}
-        """.format(RG),
-        shell=True
-    )
-    if out == "":
-        return []
-    out = json.loads(out)
-    return out
 
 
 def safe_remove(VM, RG):

@@ -361,3 +361,16 @@ def check_output_wrapper(command, shell):
         command.strip() if isinstance(command, str) else command,
         shell=shell
     )
+
+
+def list_disks_for_rg(RG):
+    out = check_output_wrapper(
+        """
+        az disk list -g {0}
+        """.format(RG),
+        shell=True
+    )
+    if out == "":
+        return []
+    out = json.loads(out)
+    return out
