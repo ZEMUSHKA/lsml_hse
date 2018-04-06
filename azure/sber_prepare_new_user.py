@@ -73,10 +73,6 @@ def make_user(user, settings):
     print(user, "done")
 
 
-Parallel(n_jobs=5, backend="threading")(
-    delayed(make_user)(user, settings) for user, settings in j.items() if user not in [
-        'alex.kuznetsov87@gmail.com',
-        'kate_volodkina@mail.ru',
-        'dmitryevsimakov@gmail.com'
-    ]
+Parallel(n_jobs=10, backend="threading")(
+    delayed(make_user)(user, settings) for user, settings in j.items()
 )
