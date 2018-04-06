@@ -17,7 +17,7 @@ https://docs.microsoft.com/en-us/cli/azure/install-azure-cli
 ## How-To's
 1. Clone this repo running: `git clone https://github.com/ZEMUSHKA/lsml_hse`
 2. Switch to azure subscription we use if you've used azure before:
-- ФТиАД: `az account set --subscription "ФКН ВШЭ"`
+- ФТиАД: `az account set --subscription "8a6f80b4-e575-43c3-94ee-bab031dd0042"`
 - ПМИ: `az account set --subscription "Sponsorship 2017"`
 3. Use any of the below:
 
