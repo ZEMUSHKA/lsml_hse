@@ -4,5 +4,167 @@
     "storage_account": "zemushkahsefintech11",
     "region": "eastus",
     "gpu": "Standard_NC6"
+  },
+  "aaverchenkova@yandex.ru": {
+    "resource_group": "aaverchenkova_resources",
+    "storage_account": "aaverchenkovastorage11",
+    "region": "eastus",
+    "gpu": "Standard_NC6"
+  },
+  "padamenko@gmail.com": {
+    "resource_group": "padamenko_resources",
+    "storage_account": "padamenkostorage11",
+    "region": "eastus",
+    "gpu": "Standard_NC6"
+  },
+  "acrobat78@mail.ru": {
+    "resource_group": "acrobat78_resources",
+    "storage_account": "acrobat78storage11",
+    "region": "eastus",
+    "gpu": "Standard_NC6"
+  },
+  "vaskind@yandex.ru": {
+    "resource_group": "vaskind_resources",
+    "storage_account": "vaskindstorage11",
+    "region": "eastus",
+    "gpu": "Standard_NC6"
+  },
+  "washaev@gmail.com": {
+    "resource_group": "washaev_resources",
+    "storage_account": "washaevstorage11",
+    "region": "eastus",
+    "gpu": "Standard_NC6"
+  },
+  "kate_volodkina@mail.ru": {
+    "resource_group": "katevolodkina_resources",
+    "storage_account": "katevolodkinastorage11",
+    "region": "eastus",
+    "gpu": "Standard_NC6"
+  },
+  "dmitryhse@gmail.com": {
+    "resource_group": "dmitryhse_resources",
+    "storage_account": "dmitryhsestorage11",
+    "region": "eastus",
+    "gpu": "Standard_NC6"
+  },
+  "yudzhadobin@gmail.com": {
+    "resource_group": "yudzhadobin_resources",
+    "storage_account": "yudzhadobinstorage11",
+    "region": "eastus",
+    "gpu": "Standard_NC6"
+  },
+  "kamildraf@gmail.com": {
+    "resource_group": "kamildraf_resources",
+    "storage_account": "kamildrafstorage11",
+    "region": "eastus",
+    "gpu": "Standard_NC6"
+  },
+  "d.kiseleff@gmail.com": {
+    "resource_group": "dkiseleff_resources",
+    "storage_account": "dkiseleffstorage11",
+    "region": "eastus",
+    "gpu": "Standard_NC6"
+  },
+  "anyakny@mail.ru": {
+    "resource_group": "anyakny_resources",
+    "storage_account": "anyaknystorage11",
+    "region": "eastus",
+    "gpu": "Standard_NC6"
+  },
+  "Y.kovaleva@bk.ru": {
+    "resource_group": "Ykovaleva_resources",
+    "storage_account": "Ykovalevastorage11",
+    "region": "eastus",
+    "gpu": "Standard_NC6"
+  },
+  "ak.519@yandex.ru": {
+    "resource_group": "ak519_resources",
+    "storage_account": "ak519storage11",
+    "region": "eastus",
+    "gpu": "Standard_NC6"
+  },
+  "sergeysmith1995@ya.ru": {
+    "resource_group": "sergeysmith1995_resources",
+    "storage_account": "sergeysmith1995storage11",
+    "region": "eastus",
+    "gpu": "Standard_NC6"
+  },
+  "alex.kuznetsov87@gmail.com": {
+    "resource_group": "alexkuznetsov87_resources",
+    "storage_account": "alexkuznetsov87storage11",
+    "region": "eastus",
+    "gpu": "Standard_NC6"
+  },
+  "vanikiforoff@gmail.com": {
+    "resource_group": "vanikiforoff_resources",
+    "storage_account": "vanikiforoffstorage11",
+    "region": "eastus",
+    "gpu": "Standard_NC6"
+  },
+  "orlov_alexander_azure@mail.ru": {
+    "resource_group": "orlovalexanderazure_resources",
+    "storage_account": "orlovalexanderazurestorage11",
+    "region": "eastus",
+    "gpu": "Standard_NC6"
+  },
+  "as.pestova@gmail.com": {
+    "resource_group": "aspestova_resources",
+    "storage_account": "aspestovastorage11",
+    "region": "eastus",
+    "gpu": "Standard_NC6"
+  },
+  "blackchaosforge@gmail.com": {
+    "resource_group": "blackchaosforge_resources",
+    "storage_account": "blackchaosforgestorage11",
+    "region": "eastus",
+    "gpu": "Standard_NC6"
+  },
+  "dmitryevsimakov@gmail.com": {
+    "resource_group": "dmitryevsimakov_resources",
+    "storage_account": "dmitryevsimakovstorage11",
+    "region": "eastus",
+    "gpu": "Standard_NC6"
+  },
+  "sepnur95@gmail.com": {
+    "resource_group": "sepnur95_resources",
+    "storage_account": "sepnur95storage11",
+    "region": "eastus",
+    "gpu": "Standard_NC6"
+  },
+  "id_step1@mail.ru": {
+    "resource_group": "idstep1_resources",
+    "storage_account": "idstep1storage11",
+    "region": "eastus",
+    "gpu": "Standard_NC6"
+  },
+  "john0205@mail.ru": {
+    "resource_group": "john0205_resources",
+    "storage_account": "john0205storage11",
+    "region": "eastus",
+    "gpu": "Standard_NC6"
+  },
+  "and.sss.92@gmail.com": {
+    "resource_group": "andsss92_resources",
+    "storage_account": "andsss92storage11",
+    "region": "eastus",
+    "gpu": "Standard_NC6"
+  },
+  "nikita1994175@ya.ru": {
+    "resource_group": "nikita1994175_resources",
+    "storage_account": "nikita1994175storage11",
+    "region": "eastus",
+    "gpu": "Standard_NC6"
+  },
+  "shvedovdenis1995@gmail.com": {
+    "resource_group": "shvedovdenis1995_resources",
+    "storage_account": "shvedovdenis1995storage11",
+    "region": "eastus",
+    "gpu": "Standard_NC6"
+  },
+  "a.tolokonnikov@yahoo.com": {
+    "resource_group": "atolokonnikov_resources",
+    "storage_account": "atolokonnikovstorage11",
+    "region": "eastus",
+    "gpu": "Standard_NC6"
   }
 }
