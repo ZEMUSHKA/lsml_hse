@@ -48,10 +48,7 @@ use `admin/admin` to authenticate.
 - Start Hadoop cluster components by clicking "Actions" -> "Start All".
 
 Start Jupyter notebooks on `cluster1`:
-```
-tmux
-./start_notebook.sh
-```
+Run `tmux` and then inside tmux run: `./start_notebook.sh`
 
 Open Notebooks using `https://cluster1:9999` via http proxy or `https://(paste public IP of cluster1 here):9999` to access from the Internet.
 Use generated password for `cluster1` to access Jupyter Notebooks.

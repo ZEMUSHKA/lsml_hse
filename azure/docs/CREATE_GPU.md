@@ -44,10 +44,7 @@ This machine has a squid http proxy to access its network. Use the following set
 You can setup an http proxy in Google Chrome using a plugin described [here](SETUP_PROXY.md).
 
 Now start Jupyter notebooks (in remote shell):
-```
-tmux
-./start_notebook.sh
-```
+Run `tmux` and then inside tmux run: `./start_notebook.sh`
 
 Open Notebooks using `https://ubuntugpu:9999` via http proxy or `https://(paste public IP of virtual machine here):9999` to access from the Internet.
 Use generated password to access Jupyter Notebooks.
