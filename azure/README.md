@@ -15,7 +15,11 @@ https://docs.microsoft.com/en-us/cli/azure/install-azure-cli
 5. `pip install joblib` or `pip3 install joblib` based on your Python version
 
 ## How-To's
-Clone this repo running: `git clone https://github.com/ZEMUSHKA/lsml_hse`
+1. Clone this repo running: `git clone https://github.com/ZEMUSHKA/lsml_hse`
+2. Switch to azure subscription we use if you've used azure before:
+- ПМИ: `az account set --subscription "ФКН ВШЭ"`
+- ФТиАД: `az account set --subscription "Sponsorship 2017"`
+3. Use any of the below:
 
 [How to create a Hadoop cluster](docs/CREATE_CLUSTER.md)
 
