@@ -11,6 +11,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument("--user", action="store", help="account name, for example student1", required=True)
 parser.add_argument("--create_shared", action="store_true", help="create shared resources")
 parser.add_argument("--create_aux", action="store_true", help="create aux resources, only once per script run")
+parser.add_argument("--jobs", action="store_true", help="number of parallel jobs")
 args = parser.parse_args()
 
 student_name = args.user
@@ -65,7 +66,7 @@ def create_cluster_node(idx, user_pass):
 
 
 user_pass = utils.generate_pass()
-Parallel(n_jobs=3, backend="threading")(
+Parallel(n_jobs=args.jobs or 3, backend="threading")(
     delayed(create_cluster_node)(idx, user_pass) for idx in [1, 2, 3]
 )
 

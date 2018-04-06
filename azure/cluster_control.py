@@ -11,6 +11,7 @@ parser.add_argument("--user", action="store", help="account name, for example st
 parser.add_argument("--start", action="store_true", help="start cluster machines")
 parser.add_argument("--stop", action="store_true", help="stop cluster machines")
 parser.add_argument("--remove", action="store_true", help="remove cluster VMs and disks")
+parser.add_argument("--jobs", action="store_true", help="number of parallel jobs")
 args = parser.parse_args()
 
 student_name = args.user
@@ -26,7 +27,7 @@ elif args.stop:
 elif args.remove:
     action_func = utils.remove_vm_and_disks
 
-Parallel(n_jobs=3, backend="threading")(
+Parallel(n_jobs=args.jobs or 3, backend="threading")(
     delayed(action_func)("cluster{0}".format(idx), rg_name) for idx in [1, 2, 3]
 )
 
