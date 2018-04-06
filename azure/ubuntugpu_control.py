@@ -23,6 +23,10 @@ elif args.stop:
 elif args.remove:
     action_func = utils.remove_vm_and_disks
 
+if args.remove:
+    # remove orphaned disks (to make sure)
+    utils.remove_orphaned_disks(rg_name)
+
 action_func("ubuntugpu", rg_name)
 
 if args.start:

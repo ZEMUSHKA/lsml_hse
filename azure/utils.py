@@ -374,3 +374,14 @@ def list_disks_for_rg(RG):
         return []
     out = json.loads(out)
     return out
+
+
+def remove_orphaned_disks(rg_name):
+    disks = list_disks_for_rg(rg_name)
+    disks = [x for x in disks if x["ownerId"] is None]
+    disks = [x["id"] for x in disks]
+    if disks:
+        print("Removing orphaned disks:")
+        for disk in disks:
+            print(disk)
+        remove_disks(disks)
