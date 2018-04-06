@@ -14,6 +14,8 @@ https://docs.microsoft.com/en-us/cli/azure/install-azure-cli
 
 5. `pip install joblib` or `pip3 install joblib` based on your Python version
 
+6. If you use Windows, install Putty for ssh: https://www.putty.org/
+
 ## How-To's
 1. Clone this repo running: `git clone https://github.com/ZEMUSHKA/lsml_hse`
 2. Switch to azure subscription we use if you've used azure before:
