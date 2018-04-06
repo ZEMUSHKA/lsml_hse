@@ -16,6 +16,8 @@ https://docs.microsoft.com/en-us/cli/azure/install-azure-cli
 
 6. If you use Windows, install Putty for ssh: https://www.putty.org/
 
+7. If you use Windows, install https://git-scm.com/
+
 ## How-To's
 1. Clone this repo running: `git clone https://github.com/ZEMUSHKA/lsml_hse`
 2. Switch to azure subscription we use if you've used azure before:
