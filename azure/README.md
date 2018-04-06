@@ -15,6 +15,8 @@ https://docs.microsoft.com/en-us/cli/azure/install-azure-cli
 5. `pip install joblib` or `pip3 install joblib` based on your Python version
 
 ## How-To's
+Clone this repo running: `git clone https://github.com/ZEMUSHKA/lsml_hse`
+
 [How to create a Hadoop cluster](docs/CREATE_CLUSTER.md)
 
 [How to create a machine with GPU](docs/CREATE_GPU.md)
