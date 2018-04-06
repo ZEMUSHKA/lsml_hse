@@ -30,8 +30,9 @@ After the scipt finishes you will see a **public IP** of your new machine and a 
 Now ssh to `ubuntugpu` machine. Run `ssh ubuntu@(paste public IP of virtual machine here)` and enter the password.
 
 **Wait for cloud-init to finish on the remote machine (this is crucial):**
+
+Run `tail -fn 100 /var/log/cloud-init-output.log` in remote shell and wait for
 ```
-ubuntu@ubuntugpu:~$ tail -fn 100 /var/log/cloud-init-output.log
 Cloud-init v. 0.7.8 finished at Mon, 08 May 2017 11:05:21 +0000. Datasource DataSourceAzureNet [seed=/dev/sr0].  Up 77.67 seconds
 ```
 
