@@ -17,12 +17,12 @@ Then proceed with all instructions below omitting `--create_shared` and `--creat
 
 ## Create instructions
 
-Run `python create_cluster.py --user student*` to create 3 cluster nodes on `10.0.1.[21-23]`
-with private DNS names `cluster[1-3]` using necessary flags described below.
-
 **If** you haven't created a cluster before, add `--create_shared` flag which creates shared resources like a virtual network (need to do it once throughout the course).
 
 **If** you create these machines for the first time, add `--create_aux` flag which creates resources for virtual machines you create like IP address (need to do once per machine).
+
+Run `python create_cluster.py --user student*` to create 3 cluster nodes on `10.0.1.[21-23]`
+with private DNS names `cluster[1-3]` using necessary flags described above.
 
 After the scipt finishes you will see a **public IP** for each cluster node and a **password** for everything on each machine.
 
