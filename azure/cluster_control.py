@@ -11,7 +11,7 @@ parser.add_argument("--user", action="store", help="account name, for example st
 parser.add_argument("--start", action="store_true", help="start cluster machines")
 parser.add_argument("--stop", action="store_true", help="stop cluster machines")
 parser.add_argument("--remove", action="store_true", help="remove cluster VMs and disks")
-parser.add_argument("--jobs", action="store_true", help="number of parallel jobs")
+parser.add_argument("--jobs", action="store", help="number of parallel jobs")
 args = parser.parse_args()
 
 student_name = args.user
