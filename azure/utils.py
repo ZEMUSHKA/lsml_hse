@@ -228,6 +228,8 @@ def remove_vm_and_disks(VM_NAME, RG_NAME):
 
 
 def remove_disks(all_disk_ids):
+    if not all_disk_ids:
+        return
     check_output_wrapper(
         """
         az disk delete \
