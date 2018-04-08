@@ -6,7 +6,9 @@
 1. Install Azure CLI 2.0 (tested with 2.0.29):
 https://docs.microsoft.com/en-us/cli/azure/install-azure-cli
 
-2. Authenticate with `az login` in command line using your student credentials.
+2. Authenticate with `az login` in command line using your student credentials:
+    - ФТиАД: e-mail address with invitation from Sberbank
+    - ПМИ: student*@zimovnovgmail.onmicrosoft.com
 
 3. Authenticate in http://portal.azure.com (Google Chrome is recommended) using the same credentials.
 
