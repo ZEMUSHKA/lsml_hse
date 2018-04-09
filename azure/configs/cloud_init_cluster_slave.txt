@@ -41,3 +41,6 @@ runcmd:
     - [chmod, go+w, /mnt]
     - [mv, /mnt2/hdfs, /data/hdfs]
     - pip install hdfs
+    - wget http://finance.yendor.com/ML/VW/Binaries/vw-8.20170920 -O /usr/local/bin/vw
+    - chmod +x /usr/local/bin/vw
+    - printf "f6b4e94c4eef3949d185925a00dd0f2a\t/usr/local/bin/vw" | md5sum -c --strict
