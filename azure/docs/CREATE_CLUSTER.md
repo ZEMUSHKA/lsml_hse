@@ -10,7 +10,7 @@ We are using images for a ready-to-use HDP cluster.
 
 First remove all cluster machines (can be in any state, will be removed anyway):
 ```
-python cluster_control.py —user student* —remove
+python cluster_control.py --user student* --remove
 ```
 
 Then proceed with all instructions below omitting `--create_shared` and `--create_aux` flags.
