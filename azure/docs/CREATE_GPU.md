@@ -12,7 +12,7 @@ We will use both NV6 and NC6 machines in different regions!
 
 First remove it (can be in any state, will be removed anyway):
 ```
-python ubuntugpu_control.py —user student* —remove
+python ubuntugpu_control.py —-user student* —-remove
 ```
 
 Then proceed with all instructions below omitting `--create_shared` and `--create_aux` flags.
