@@ -380,7 +380,7 @@ def list_disks_for_rg(RG):
 
 def remove_orphaned_disks(rg_name):
     disks = list_disks_for_rg(rg_name)
-    disks = [x for x in disks if (x.get("managedBy") or x.get("ownerId")) is None]
+    disks = [x for x in disks if x["managedBy"] is None]
     disks = [x["id"] for x in disks]
     if disks:
         print("Removing orphaned disks:")
