@@ -1,0 +1,55 @@
+#cloud-config
+disk_setup:
+    ephemeral0:
+        table_type: mbr
+        layout: [100]
+        overwrite: True
+    /dev/sdc:
+        table_type: mbr
+        layout: [100]
+        overwrite: True
+    /dev/sdd:
+        table_type: mbr
+        layout: [100]
+        overwrite: True
+    /dev/sde:
+        table_type: mbr
+        layout: [100]
+        overwrite: True
+    /dev/sdf:
+        table_type: mbr
+        layout: [100]
+        overwrite: True
+fs_setup:
+    - device: ephemeral0.1
+      filesystem: ext4
+mounts:
+    - ["ephemeral0.1", "/mnt", "auto", "defaults", "0", "0"]
+runcmd:
+    - systemctl stop apt-daily.service
+    - systemctl kill --kill-who=all apt-daily.service
+    - while ! (systemctl list-units --all apt-daily.service | fgrep -q dead) do sleep 1; done
+    - systemctl stop apt-daily.timer
+    - systemctl disable apt-daily.service
+    - systemctl disable apt-daily.timer
+    - systemctl daemon-reload
+    - apt-get remove unattended-upgrades -y
+    - apt-get update
+    - apt-get install mdadm iotop iftop sysstat squid apache2-utils libcupti-dev pssh sshpass -y
+    - [lsblk]
+    - [mdadm, --create, --verbose, /dev/md127, --level=0, --name=MY_RAID, --raid-devices=4, /dev/sdc1, /dev/sdd1, /dev/sde1, /dev/sdf1]
+    - [mkfs.ext4, "-L", "MY_RAID", /dev/md127]
+    - [mkdir, /data]
+    - echo "LABEL=MY_RAID /data ext4 defaults,nofail 0 2" >> /etc/fstab
+    - [mount, "-a"]
+    - [chmod, go+w, /data]
+    - [chmod, go+w, /mnt]
+    - chown -R ubuntu /usr/local/backup
+    - cp -rT /usr/local/backup /home/ubuntu
+    - wget "http://developer.download.nvidia.com/compute/redist/cudnn/v6.0/cudnn-8.0-linux-x64-v6.0.tgz"
+    - tar -xzvf cudnn-8.0-linux-x64-v6.0.tgz
+    - cp cuda/include/cudnn.h /usr/local/cuda/include
+    - cp cuda/lib64/libcudnn* /usr/local/cuda/lib64
+    - chmod a+r /usr/local/cuda/lib64/libcudnn*
+    - pip install tensorflow-gpu==1.4.0 --upgrade
+    - python -c "from notebook.auth import passwd; print 'c.NotebookApp.password = u\'{}\''.format(passwd('###PASSWORD###'))" >> jupyter_config.py
