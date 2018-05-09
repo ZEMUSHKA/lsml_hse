@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 # switch to sber: az account set --subscription "ФКН ВШЭ"
 # switch to sponsored: az account set --subscription "Sponsorship 2017"
+# switch to sponsored2: az account set --subscription "Microsoft Azure Sponsorship 2"
 import json
 import subprocess
 from joblib import Parallel, delayed

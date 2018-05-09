@@ -16,10 +16,13 @@ def list_orphaned_disks():
     if out.strip() == "":
         return None
     out = json.loads(out)
-    out = [x for x in out if x["ownerId"] is None]
+    out = [x for x in out if x["managedBy"] is None]
     out = [x["id"] for x in out]
     return out
 
 
 orphaned = list_orphaned_disks()
+print(len(orphaned))
+for elem in orphaned:
+    print(elem)
 remove_disks(orphaned)

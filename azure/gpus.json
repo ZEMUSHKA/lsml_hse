@@ -98,5 +98,6 @@
     "student96": "Standard_NV6", 
     "student97": "Standard_NV6", 
     "student98": "Standard_NV6", 
-    "test": "Standard_NV6"
+    "test": "Standard_NV6",
+    "sirius": "Standard_NC6"
 }

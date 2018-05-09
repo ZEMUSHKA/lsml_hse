@@ -26,8 +26,8 @@ def create_image(RG_NAME, IMAGE_NAME, SOURCE, REGION):
 def create_image_lock(RG_NAME, IMAGE_NAME):
     check_output_wrapper(
         """
-        az lock create -t CanNotDelete -n lock -g {RG_NAME} --parent-resource-path "" --resource-name "{IMAGE_NAME}" \
-        --resource-provider-namespace "" --resource-type "Microsoft.Compute/images"
+        az lock create -t CanNotDelete -n lock -g {RG_NAME} --resource-name "{IMAGE_NAME}" \
+        --resource-type "Microsoft.Compute/images"
         """.format(**locals()),
         shell=True
     )
