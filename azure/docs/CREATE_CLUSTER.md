@@ -32,6 +32,8 @@ Now ssh to `cluster1` machine (which is a master node). Run `ssh ubuntu@(paste p
 
 Run `tail -fn 100 /var/log/cloud-init-output.log` in remote shell and wait for
 ```
+ALL DONE
+...
 Cloud-init v. 0.7.5 finished at Tue, 11 Apr 2017 11:13:50 +0000. Datasource DataSourceAzureNet [seed=/dev/sr0].  Up 247.74 seconds
 ```
 
