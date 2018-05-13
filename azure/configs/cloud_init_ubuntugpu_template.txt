@@ -35,7 +35,7 @@ runcmd:
     - systemctl daemon-reload
     - apt-get remove unattended-upgrades -y
     - apt-get update
-    - apt-get install mdadm iotop iftop sysstat squid apache2-utils libcupti-dev -y
+    - apt-get install mdadm iotop iftop sysstat squid apache2-utils libcupti-dev nvidia-cuda-toolkit -y
     - [lsblk]
     - [mdadm, --create, --verbose, /dev/md127, --level=0, --name=MY_RAID, --raid-devices=4, /dev/sdc1, /dev/sdd1, /dev/sde1, /dev/sdf1]
     - [mkfs.ext4, "-L", "MY_RAID", /dev/md127]
@@ -65,3 +65,5 @@ runcmd:
     - htpasswd -cb /etc/squid/passwd ubuntu ###PASSWORD###
     - systemctl restart squid
     - python -c "from notebook.auth import passwd; print 'c.NotebookApp.password = u\'{}\''.format(passwd('###PASSWORD###'))" >> jupyter_config.py
+    - pip install catboost sklearn ipywidgets --upgrade
+    - jupyter nbextension enable --py --sys-prefix widgetsnbextension
