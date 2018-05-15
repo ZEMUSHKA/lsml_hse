@@ -13,10 +13,13 @@ for idx, (_, row) in enumerate(users.iterrows()):
     #     continue
     row = dict(row)
     user = row["user"]
+    # if user != "student54":
+    #     continue
     userId = row["userId"]
     rgName = RG_TEMPLATE.format(user)
     region = region_by_user[user]
     # create res gr
+    print "start", user
     check_output_wrapper(
         """
         az group create \
