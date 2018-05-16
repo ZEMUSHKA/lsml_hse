@@ -81,5 +81,6 @@ runcmd:
     - HOME=/root sshpass -p ###PASSWORD### ssh-copy-id -i /home/ubuntu/.ssh/id_rsa ubuntu@cluster3
     - wget http://finance.yendor.com/ML/VW/Binaries/vw-8.20170920 -O /usr/local/bin/vw
     - chmod +x /usr/local/bin/vw
+    - chown ubuntu /usr/local/bin/vw
     - printf "f6b4e94c4eef3949d185925a00dd0f2a\t/usr/local/bin/vw" | md5sum -c --strict
     - echo "ALL DONE"
