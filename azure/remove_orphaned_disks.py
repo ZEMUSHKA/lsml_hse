@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 import json
 import subprocess
+from joblib import Parallel, delayed
 
 from utils import remove_disks, check_output_wrapper
 
@@ -25,4 +26,9 @@ orphaned = list_orphaned_disks()
 print(len(orphaned))
 for elem in orphaned:
     print(elem)
-remove_disks(orphaned)
+
+batch_size = 5
+Parallel(n_jobs=10, backend="threading")(
+    delayed(remove_disks)(orphaned[start:start + batch_size])
+    for start in range(0, len(orphaned), batch_size)
+)
