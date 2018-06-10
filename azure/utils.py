@@ -387,3 +387,24 @@ def remove_orphaned_disks(rg_name):
         for disk in disks:
             print(disk)
         remove_disks(disks)
+
+
+def get_cpu_usage(subscription_id, rg_name, vm_name, start, end, interval):
+    # example:
+    # start = "2018-05-08T00:00:00Z"
+    # end = "2018-05-25T00:00:00Z"
+    # interval = "PT24H"
+    out = ""
+    try:
+        out = check_output_wrapper(
+            """
+            az monitor metrics list \
+            --resource "/subscriptions/{subscription_id}/resourceGroups/{rg_name}/providers/Microsoft.Compute/virtualMachines/{vm_name}" \
+            --metric "Percentage CPU" --start-time {start} --end-time {end} --interval {interval}
+            """.format(**locals()),
+            shell=True
+        )
+        out = json.loads(out)
+        return list(map(lambda x: (x["timeStamp"], x["average"]), out["value"][0]["timeseries"][0]["data"]))
+    except:
+        print("couldn't get stat for", rg_name, vm_name)
