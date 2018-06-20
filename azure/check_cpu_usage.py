@@ -6,15 +6,15 @@ import pandas as pd
 
 import utils
 
-# users = pd.read_json("users.json", orient="records")
+users = pd.read_json("users.json", orient="records")
 
-users = json.load(open("sber.json"))
-users = pd.DataFrame(users.keys(), columns=["user"])
+# users = json.load(open("sber.json"))
+# users = pd.DataFrame(users.keys(), columns=["user"])
 
 subscription_id = utils.get_subscription_id()
-VM_NAME = "cluster1"
-start = "2018-05-08T00:00:00Z"
-end = "2018-05-25T00:00:00Z"
+VM_NAME = "ubuntugpu"
+start = "2018-06-03T00:00:00Z"
+end = "2018-06-21T00:00:00Z"
 interval = "PT24H"
 
 df = []
@@ -32,4 +32,4 @@ for idx, (_, row) in enumerate(users.iterrows()):
 
 df = pd.DataFrame(df)
 df = df[sorted(df.columns)]
-df.to_excel("cpu_report1_fintech.xlsx")
+df.to_excel("gpu_report.xlsx")
