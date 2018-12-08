@@ -6,12 +6,12 @@ import string
 import subprocess
 import time
 
-STUDENT_COUNT = 98
+STUDENT_COUNT = 10
 AD_DOMAIN = "zimovnovgmail.onmicrosoft.com"
 AD_GROUP = "students"
 
 RG_TEMPLATE = "{0}_resources"
-STORAGE_ACCOUNT_TEMPLATE = "{0}lsmlhse645221"
+STORAGE_ACCOUNT_TEMPLATE = "{0}zianhse19"
 VNET_NAME = "network"
 SUBNET_NAME = "subnet"
 NSG_NAME = "security_group"
