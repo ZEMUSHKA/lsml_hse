@@ -24,7 +24,7 @@ On Linux you can use `ssh` and `git`.
 Clone this repo running `git clone https://github.com/ZEMUSHKA/lsml_hse` to get a bunch of useful scripts.
 
 * Install AzCopy 8 (or 7) (https://docs.microsoft.com/ru-ru/azure/storage/common/storage-use-azcopy).
-Create Resource Group in "East US" region and Storage Account in it.
+Create Resource Group "my_resources" in "East US" region and Storage Account in it.
 Go to that Storage Account and create a container called "images".
 Go to that Storage Account and get "key1" Key in "Access keys" settings.
 Now execute (Windows example)
