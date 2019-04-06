@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 import subprocess
 
-from utils import timeit, AD_GROUP, get_ad_group_id, get_subscription_id, check_output_wrapper
+from utils import timeit, AD_GROUP, get_ad_group_id, get_subscription_id, check_output_wrapper, REGIONS
 
 
 @timeit
@@ -47,7 +47,7 @@ def assign_role_to_student_group(IMAGE_NAME):
     )
 
 
-for region in ["eastus", "southcentralus", "westeurope", "southeastasia"]:
+for region in REGIONS:
     create_image("admin_resources",
                  "ubuntu_gpu_image1_{0}".format(region),
                  "https://lsml1{0}.blob.core.windows.net/images/ubuntugpu.vhd".format(region),

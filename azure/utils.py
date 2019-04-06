@@ -15,6 +15,8 @@ STORAGE_ACCOUNT_TEMPLATE = "{0}zianhse19"
 VNET_NAME = "network"
 SUBNET_NAME = "subnet"
 NSG_NAME = "security_group"
+# REGIONS = ["eastus", "southcentralus", "westeurope", "southeastasia"]
+REGIONS = ["eastus", "southcentralus"]
 
 region_by_user = json.loads(open("regions.json", "r").read())
 gpus_by_user = json.loads(open("gpus.json", "r").read())
