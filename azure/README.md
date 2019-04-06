@@ -11,7 +11,7 @@
 * Install Azure CLI 2.0 (https://docs.microsoft.com/en-us/cli/azure/install-azure-cli)
 and authenticate with `az login` in command line using your Microsoft Account.
 If you've used Azure before, make sure that you switch to sponsored azure subscription with
-`az account set --subscription SPONSORED_SUBSCRIPTION_ID`.
+`az account set --subscription [SPONSORED_SUBSCRIPTION_ID]`.
 
 * Authenticate in http://portal.azure.com (Google Chrome is recommended) using your Microsoft Account.
 This is the web interface for the things you can do with Azure CLI, like creating a Virtual Machine.
