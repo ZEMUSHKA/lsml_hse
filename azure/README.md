@@ -1,4 +1,4 @@
-# Scripts and Wiki for Azure
+# Azure Wiki
 
 ![](docs/azure_logo.png)
 
