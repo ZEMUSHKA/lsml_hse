@@ -6,24 +6,15 @@ import string
 import subprocess
 import time
 
-STUDENT_COUNT = 10
-AD_DOMAIN = "zimovnovgmail.onmicrosoft.com"
-AD_GROUP = "students"
+RG_NAME = "my_resources"
+REGION = "eastus"
 
-RG_TEMPLATE = "{0}_resources"
-STORAGE_ACCOUNT_TEMPLATE = "{0}zianhse19"
 VNET_NAME = "network"
 SUBNET_NAME = "subnet"
 NSG_NAME = "security_group"
-# REGIONS = ["eastus", "southcentralus", "westeurope", "southeastasia"]
-REGIONS = ["eastus", "southcentralus"]
 
-region_by_user = json.loads(open("regions.json", "r").read())
-gpus_by_user = json.loads(open("gpus.json", "r").read())
-
-
-def load_sber_users():
-    return json.load(open("sber.json"))
+CLUSTER_IMAGE = "cluster{0}_image"
+UBUNTUGPU_IMAGE = "ubuntugpu_image"
 
 
 def timeit(method):

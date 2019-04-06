@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 import argparse
 
-from utils import timeit, check_output_wrapper
+from utils import timeit, check_output_wrapper, CLUSTER_IMAGE, UBUNTUGPU_IMAGE
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--storage_account", action="store", required=True)
@@ -27,11 +27,11 @@ def create_image(RG_NAME, IMAGE_NAME, SOURCE, REGION):
 
 
 create_image(args.resource_group,
-             "ubuntugpu_image",
+             UBUNTUGPU_IMAGE,
              "https://{0}.blob.core.windows.net/images/ubuntugpu.vhd".format(args.storage_account),
              args.region)
 for clIdx in [1, 2, 3]:
     create_image(args.resource_group,
-                 "cluster{0}_image".format(clIdx),
+                 CLUSTER_IMAGE.format(clIdx),
                  "https://{0}.blob.core.windows.net/images/cluster{1}.vhd".format(args.storage_account, clIdx),
                  args.region)
