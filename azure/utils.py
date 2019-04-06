@@ -16,6 +16,9 @@ NSG_NAME = "security_group"
 CLUSTER_IMAGE = "cluster{0}_image"
 UBUNTUGPU_IMAGE = "ubuntugpu_image"
 
+CLUSTER_VM = "cluster{0}"
+UBUNTUGPU_VM = "ubuntugpu"
+
 
 def timeit(method):
     def timed(*args, **kw):
@@ -282,7 +285,7 @@ def get_public_ip(IP_NAME, RG_NAME):
     return out["ipAddress"]
 
 
-def resize_VM(VM_NAME, RG_NAME, NEW_SIZE):
+def resize_vm(VM_NAME, RG_NAME, NEW_SIZE):
     check_output_wrapper(
         """
         az vm resize \
@@ -319,34 +322,6 @@ def cloud_init_fill_template(template_fn, user_pass, postfix=""):
     with open(result_fn, "w") as f:
         f.write(open(template_fn).read().replace("###PASSWORD###", user_pass))
     return result_fn
-
-
-def get_student_resource_group(student_name):
-    if "@" in student_name:
-        return load_sber_users()[student_name]["resource_group"]
-    else:
-        return RG_TEMPLATE.format(student_name)
-
-
-def get_student_storage_account(student_name):
-    if "@" in student_name:
-        return load_sber_users()[student_name]["storage_account"]
-    else:
-        return STORAGE_ACCOUNT_TEMPLATE.format(student_name)
-
-
-def get_student_region(student_name):
-    if "@" in student_name:
-        return load_sber_users()[student_name]["region"]
-    else:
-        return region_by_user[student_name]
-
-
-def get_student_gpu_size(student_name):
-    if "@" in student_name:
-        return load_sber_users()[student_name]["gpu"]
-    else:
-        return gpus_by_user[student_name]
 
 
 def check_output_wrapper(command, shell):

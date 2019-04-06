@@ -5,7 +5,7 @@ import argparse
 from joblib import Parallel, delayed
 
 import utils
-from utils import RG_TEMPLATE, resize_VM
+from utils import RG_NAME, resize_vm, CLUSTER_VM
 
 """
 README:
@@ -31,16 +31,10 @@ Even more memory per worker (huge ALS workload maybe):
 
 """
 
-parser = argparse.ArgumentParser()
-parser.add_argument("--user", action="store", help="account name, for example student1", required=True)
-args = parser.parse_args()
-
-student_name = args.user
-rg_name = utils.get_student_resource_group(student_name)
 new_size = "Standard_DS14_v2_Promo"  # Standard DS14 v2 Promo (16 cores, 112 GB memory)
 
 Parallel(n_jobs=3, backend="threading")(
-    delayed(resize_VM)("cluster{0}".format(idx), rg_name, new_size) for idx in [1, 2, 3]
+    delayed(resize_vm)(CLUSTER_VM.format(idx), RG_NAME, new_size) for idx in [1, 2, 3]
 )
 
-print("cluster1 public IP: {}".format(utils.get_public_ip("ip_cluster1", rg_name)))
+print("cluster1 public IP: {}".format(utils.get_public_ip("ip_cluster1", RG_NAME)))

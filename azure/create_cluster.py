@@ -13,7 +13,6 @@ parser.add_argument("--create_aux", action="store_true", help="create aux resour
 parser.add_argument("--jobs", type=int, action="store", help="number of parallel jobs")
 args = parser.parse_args()
 
-
 VM_SIZE = "Standard_E4_v3"
 
 RESIZE_OS_DISK = False
