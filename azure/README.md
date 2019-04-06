@@ -28,10 +28,7 @@ Create Resource Group in "East US" region and Storage Account in it.
 Go to that Storage Account and create a container called "images".
 Go to that Storage Account and get "key1" Key in "Access keys" settings.
 Now execute (Windows example)
-```
-cd "C:\Program Files (x86)\Microsoft SDKs\Azure\AzCopy"
-AzCopy.exe /Source:https://lsml1eastus.blob.core.windows.net/images /Dest:https://[STORAGE_ACCOUNT_NAME].blob.core.windows.net/images /S /DestKey:[KEY1_KEY]
-```
+`cd "C:\Program Files (x86)\Microsoft SDKs\Azure\AzCopy"` and `AzCopy.exe /Source:https://lsml1eastus.blob.core.windows.net/images /Dest:https://[STORAGE_ACCOUNT_NAME].blob.core.windows.net/images /S /DestKey:[KEY1_KEY]`
 to copy all disk images you will need to your storage account.
 
 ## Further reading
