@@ -1,10 +1,7 @@
 ##!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import argparse
-
 from joblib import Parallel, delayed
 
-import utils
 from utils import RG_NAME, resize_vm, CLUSTER_VM
 
 """

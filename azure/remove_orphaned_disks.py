@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import json
-import subprocess
 from joblib import Parallel, delayed
 
 from utils import remove_disks, check_output_wrapper
