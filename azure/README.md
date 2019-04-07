@@ -27,7 +27,7 @@ Clone this repo running `git clone https://github.com/ZEMUSHKA/lsml_hse` to get 
 Create Resource Group **my_resources** in "East US" region and Storage Account in it (has unique name).
 Go to that Storage Account -> Blobs and create a container called **images**.
 Go to that Storage Account and get "key1" Key in "Access keys" settings.
-Now execute (Windows example, you can create a small Windows VM to excute this)
+Now execute (Windows example, you can create a small Windows VM to execute this)
 `cd "C:\Program Files (x86)\Microsoft SDKs\Azure\AzCopy"` and `AzCopy.exe /Source:https://lsml1eastus.blob.core.windows.net/images /Dest:https://[STORAGE_ACCOUNT_NAME].blob.core.windows.net/images /S /DestKey:[KEY1_KEY]`
 to copy all disk images you will need to your storage account.
 
