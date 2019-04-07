@@ -10,15 +10,15 @@ args = parser.parse_args()
 
 
 @timeit
-def create_image(RG_NAME, IMAGE_NAME, SOURCE, REGION):
+def create_image(rg_name, image_name, source, region):
     check_output_wrapper(
         """
         az image create \
-            -g {RG_NAME} \
-            -n {IMAGE_NAME} \
-            --source "{SOURCE}" \
+            -g {rg_name} \
+            -n {image_name} \
+            --source "{source}" \
             --os-type linux \
-            -l {REGION}
+            -l {region}
         """.format(**locals()),
         shell=True
     )
