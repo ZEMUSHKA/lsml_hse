@@ -54,6 +54,20 @@ Use generated password to access Jupyter Notebooks.
 
 You can start/stop machine in Azure portal http://portal.azure.com
 
+## Upgrading CUDA and TF (optional)
+```
+wget http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1604/x86_64/cuda-repo-ubuntu1604_10.0.130-1_amd64.deb
+wget http://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1604/x86_64/nvidia-machine-learning-repo-ubuntu1604_1.0.0-1_amd64.deb
+sudo dpkg -i cuda-repo-ubuntu1604_10.0.130-1_amd64.deb
+sudo dpkg -i nvidia-machine-learning-repo-ubuntu1604_1.0.0-1_amd64.deb
+sudo apt-get update
+sudo apt-get install cuda=10.0.130-1
+sudo apt-get install libcudnn7=7.5.0.56-1+cuda10.0
+sudo apt-get autoremove
+sudo pip install tensorflow-gpu==1.13.1
+sudo reboot
+```
+
 ## GPU machine start/stop
 
 Stop (deallocate) resources when you don't need them.
