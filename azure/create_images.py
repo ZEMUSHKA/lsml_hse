@@ -26,7 +26,7 @@ def create_image(rg_name, image_name, source, region):
 
 create_image(RG_NAME,
              UBUNTUGPU_IMAGE,
-             "https://{0}.blob.core.windows.net/images/ubuntugpu.vhd".format(args.storage_account),
+             "https://{0}.blob.core.windows.net/images/ubuntugpu1.vhd".format(args.storage_account),
              REGION)
 for clIdx in [1, 2, 3]:
     create_image(RG_NAME,
