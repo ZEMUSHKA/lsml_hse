@@ -31,7 +31,7 @@ Clone this repo running `git clone https://github.com/ZEMUSHKA/lsml_hse` to get 
     Install AzCopy 8 (https://docs.microsoft.com/ru-ru/azure/storage/common/storage-use-azcopy)
     and execute `cd "C:\Program Files (x86)\Microsoft SDKs\Azure\AzCopy"`
     and `AzCopy.exe /Source:https://lsml1eastus.blob.core.windows.net/images /Dest:https://[STORAGE_ACCOUNT_NAME].blob.core.windows.net/images /S /DestKey:[KEY1_KEY]`
-    to copy all disk images you will need to your storage account.
+    to copy all disk images you will need to your storage account (server-side copy, takes 13 min).
     - Create machine images from copied disk images with
     `python create_images.py --storage_account [STORAGE_ACCOUNT_NAME]`
 
