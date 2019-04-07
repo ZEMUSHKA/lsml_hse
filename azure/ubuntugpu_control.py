@@ -3,16 +3,13 @@
 import argparse
 
 import utils
+from utils import RG_NAME, UBUNTUGPU_VM
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--user", action="store", help="account name, for example student1", required=True)
 parser.add_argument("--start", action="store_true", help="start ubuntugpu machines")
 parser.add_argument("--stop", action="store_true", help="stop ubuntugpu machines")
 parser.add_argument("--remove", action="store_true", help="remove ubuntugpu VM and disks")
 args = parser.parse_args()
-
-student_name = args.user
-rg_name = utils.get_student_resource_group(student_name)
 
 assert args.start or args.stop or args.remove
 assert not (args.start and args.stop and args.remove)
@@ -25,9 +22,9 @@ elif args.remove:
 
 if args.remove:
     # remove orphaned disks (to make sure)
-    utils.remove_orphaned_disks(rg_name)
+    utils.remove_orphaned_disks(RG_NAME)
 
-action_func("ubuntugpu", rg_name)
+action_func(UBUNTUGPU_VM, RG_NAME)
 
 if args.start:
-    print("ubuntugpu public IP: {}".format(utils.get_public_ip("ip_ubuntugpu", rg_name)))
+    print("ubuntugpu public IP: {}".format(utils.get_public_ip("ip_ubuntugpu", RG_NAME)))

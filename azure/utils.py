@@ -6,24 +6,18 @@ import string
 import subprocess
 import time
 
-STUDENT_COUNT = 10
-AD_DOMAIN = "zimovnovgmail.onmicrosoft.com"
-AD_GROUP = "students"
+RG_NAME = "my_resources"
+REGION = "eastus"
 
-RG_TEMPLATE = "{0}_resources"
-STORAGE_ACCOUNT_TEMPLATE = "{0}zianhse19"
 VNET_NAME = "network"
 SUBNET_NAME = "subnet"
 NSG_NAME = "security_group"
-# REGIONS = ["eastus", "southcentralus", "westeurope", "southeastasia"]
-REGIONS = ["eastus", "southcentralus"]
 
-region_by_user = json.loads(open("regions.json", "r").read())
-gpus_by_user = json.loads(open("gpus.json", "r").read())
+CLUSTER_VM = "cluster{0}"
+UBUNTUGPU_VM = "ubuntugpu"
 
-
-def load_sber_users():
-    return json.load(open("sber.json"))
+CLUSTER_IMAGE = CLUSTER_VM + "_image"
+UBUNTUGPU_IMAGE = UBUNTUGPU_VM + "_image"
 
 
 def timeit(method):
@@ -31,20 +25,19 @@ def timeit(method):
         ts = time.time()
         result = method(*args, **kw)
         te = time.time()
-        print('%r (%r, %r) %2.2f sec' % \
-              (method.__name__, args, kw, te-ts))
+        print('%r (%r, %r) %2.2f sec' % (method.__name__, args, kw, te-ts))
         return result
     return timed
 
 
 @timeit
-def get_storage_key(account, rg):
+def get_storage_key(storage_account, rg_name):
     out = check_output_wrapper(
         """
         az storage account keys list \
-            --name {n} \
-            --resource-group {g}
-        """.format(n=account, g=rg),
+            --name {storage_account} \
+            --resource-group {rg_name}
+        """.format(**locals()),
         shell=True
     )
     out = json.loads(out)
@@ -53,15 +46,15 @@ def get_storage_key(account, rg):
 
 
 @timeit
-def create_vnet(VNET_NAME, RG_NAME, REGION, SUBNET_NAME):
+def create_vnet(vnet_name, rg_name, region, subnet_name):
     check_output_wrapper(
         """
         az network vnet create \
-            -n {VNET_NAME} \
-            -g {RG_NAME} \
-            -l {REGION} \
+            -n {vnet_name} \
+            -g {rg_name} \
+            -l {region} \
             --address-prefix 10.0.0.0/16 \
-            --subnet-name {SUBNET_NAME} \
+            --subnet-name {subnet_name} \
             --subnet-prefix 10.0.1.0/24
         """.format(**locals()),
         shell=True
@@ -69,64 +62,64 @@ def create_vnet(VNET_NAME, RG_NAME, REGION, SUBNET_NAME):
 
 
 @timeit
-def create_nsg(NSG_NAME, RG_NAME, REGION):
+def create_nsg(nsg_name, rg_name, region):
     check_output_wrapper(
         """
         az network nsg create \
-            -n {NSG_NAME} \
-            -g {RG_NAME} \
-            -l {REGION}
+            -n {nsg_name} \
+            -g {rg_name} \
+            -l {region}
         """.format(**locals()),
         shell=True
     )
 
 
 @timeit
-def allow_incoming_port(NSG_NAME, RG_NAME, RULE_NAME, PORT, PRIORITY):
+def allow_incoming_port(nsg_name, rg_name, rule_name, port, priority):
     check_output_wrapper(
         """
         az network nsg rule create \
             --access Allow \
-            --nsg-name {NSG_NAME} \
-            -g {RG_NAME} \
+            --nsg-name {nsg_name} \
+            -g {rg_name} \
             --protocol Tcp \
-            --name {RULE_NAME} \
+            --name {rule_name} \
             --source-address-prefix "*" \
             --source-port-range "*" \
             --direction InBound \
-            --destination-port-range {PORT} \
+            --destination-port-range {port} \
             --destination-address-prefix "*" \
-            --priority {PRIORITY}
+            --priority {priority}
         """.format(**locals()),
         shell=True
     )
 
 
 @timeit
-def create_public_ip(IP_NAME, RG_NAME):
+def create_public_ip(ip_name, rg_name):
     check_output_wrapper(
         """
         az network public-ip create \
-            -n {IP_NAME} \
-            -g {RG_NAME}
+            -n {ip_name} \
+            -g {rg_name}
         """.format(**locals()),
         shell=True
     )
 
 
 @timeit
-def create_nic_with_private_ip(NIC_NAME, RG_NAME, VNET_NAME, SUBNET_NAME, NSG_NAME, IP_NAME, INT_DNS_NAME, IP):
+def create_nic_with_private_ip(nic_name, rg_name, vnet_name, subnet_name, nsg_name, ip_name, int_dns_name, ip):
     template = """
         az network nic create \
-            -n {NIC_NAME} \
-            -g {RG_NAME} \
-            --vnet-name {VNET_NAME} \
-            --subnet {SUBNET_NAME} \
-            --network-security-group {NSG_NAME} \
-            --internal-dns-name {INT_DNS_NAME} \
-            --private-ip-address {IP} """
-    if IP_NAME is not None:
-        template += " --public-ip-address {IP_NAME} "
+            -n {nic_name} \
+            -g {rg_name} \
+            --vnet-name {vnet_name} \
+            --subnet {subnet_name} \
+            --network-security-group {nsg_name} \
+            --internal-dns-name {int_dns_name} \
+            --private-ip-address {ip} """
+    if ip_name is not None:
+        template += " --public-ip-address {ip_name} "
     check_output_wrapper(
         template.format(**locals()),
         shell=True
@@ -134,19 +127,19 @@ def create_nic_with_private_ip(NIC_NAME, RG_NAME, VNET_NAME, SUBNET_NAME, NSG_NA
 
 
 @timeit
-def create_vm(VM_NAME, RG_NAME, REGION, IMAGE_NAME, NIC_NAME, VM_SIZE, pub_key, OS_DISK_NAME,
+def create_vm(vm_name, rg_name, region, image_name, nic_name, vm_size, pub_key, os_disk_name,
               password, cloud_init_fn=None, data_disks=None, storage_type="Standard_LRS"):
     template = \
         """
         az vm create \
-            -n {VM_NAME} \
-            -g {RG_NAME} \
-            -l {REGION} \
+            -n {vm_name} \
+            -g {rg_name} \
+            -l {region} \
             --admin-username ubuntu \
-            --image "{IMAGE_NAME}" \
-            --nics {NIC_NAME} \
-            --size {VM_SIZE} \
-            --os-disk-name {OS_DISK_NAME} \
+            --image "{image_name}" \
+            --nics {nic_name} \
+            --size {vm_size} \
+            --os-disk-name {os_disk_name} \
             --storage-sku {storage_type} \
             --storage-caching "ReadWrite" """
 
@@ -167,51 +160,51 @@ def create_vm(VM_NAME, RG_NAME, REGION, IMAGE_NAME, NIC_NAME, VM_SIZE, pub_key, 
 
 
 # @timeit
-def deallocate_vm(VM_NAME, RG_NAME):
+def deallocate_vm(vm_name, rg_name):
     check_output_wrapper(
         """
         az vm deallocate \
-            -g {RG_NAME} \
-            -n {VM_NAME}
+            -g {rg_name} \
+            -n {vm_name}
         """.format(**locals()),
         shell=True
     )
 
 
 # @timeit
-def start_vm(VM_NAME, RG_NAME):
+def start_vm(vm_name, rg_name):
     check_output_wrapper(
         """
         az vm start \
-            -g {RG_NAME} \
-            -n {VM_NAME}
+            -g {rg_name} \
+            -n {vm_name}
         """.format(**locals()),
         shell=True
     )
 
 
-def remove_vm(VM_NAME, RG_NAME):
+def remove_vm(vm_name, rg_name):
     check_output_wrapper(
         """
         az vm delete \
-            -g {RG_NAME} \
-            -n {VM_NAME} \
+            -g {rg_name} \
+            -n {vm_name} \
             --yes
         """.format(**locals()),
         shell=True
     )
 
 
-def remove_vm_and_disks(VM_NAME, RG_NAME):
+def remove_vm_and_disks(vm_name, rg_name):
     out = check_output_wrapper(
         """
         az vm list \
-            -g {RG_NAME}
+            -g {rg_name}
         """.format(**locals()),
         shell=True
     )
     out = json.loads(out)
-    vm = [x for x in out if x["name"] == VM_NAME]
+    vm = [x for x in out if x["name"] == vm_name]
     assert len(vm) == 1
     vm = vm[0]
     storageProfile = vm["storageProfile"]
@@ -223,7 +216,7 @@ def remove_vm_and_disks(VM_NAME, RG_NAME):
     print("Will delete disks:\n" + "\n".join(all_disk_ids))
 
     print("Removing VM...")
-    remove_vm(VM_NAME, RG_NAME)
+    remove_vm(vm_name, rg_name)
 
     print("Removing disks...")
     remove_disks(all_disk_ids)
@@ -242,13 +235,13 @@ def remove_disks(all_disk_ids):
 
 
 @timeit
-def resize_managed_disk(RG_NAME, DISK_NAME, DISK_SIZE):
+def resize_managed_disk(rg_name, disk_name, disk_size):
     check_output_wrapper(
         """
         az disk update \
-            --resource-group {RG_NAME} \
-            --name {DISK_NAME} \
-            --size-gb {DISK_SIZE}
+            --resource-group {rg_name} \
+            --name {disk_name} \
+            --size-gb {disk_size}
         """.format(**locals()),
         shell=True
     )
@@ -268,23 +261,23 @@ def get_subscription_id():
 
 
 @timeit
-def create_shared(RG_NAME, region):
+def create_shared(rg_name, region, vnet_name, nsg_name, subnet_name):
     # create vnet and subnet
-    create_vnet(VNET_NAME, RG_NAME, region, SUBNET_NAME)
+    create_vnet(vnet_name, rg_name, region, subnet_name)
 
     # create network security group
-    create_nsg(NSG_NAME, RG_NAME, region)
+    create_nsg(nsg_name, rg_name, region)
 
     # firewall rules
-    allow_incoming_port(NSG_NAME, RG_NAME, "allow_ssh", 22, 1000)
-    allow_incoming_port(NSG_NAME, RG_NAME, "allow_squid", 3128, 1010)
-    allow_incoming_port(NSG_NAME, RG_NAME, "allow_jupyter", 9999, 1020)
+    allow_incoming_port(nsg_name, rg_name, "allow_ssh", 22, 1000)
+    allow_incoming_port(nsg_name, rg_name, "allow_squid", 3128, 1010)
+    allow_incoming_port(nsg_name, rg_name, "allow_jupyter", 9999, 1020)
 
 
-def get_public_ip(IP_NAME, RG_NAME):
+def get_public_ip(ip_name, rg_name):
     out = check_output_wrapper(
         """
-        az network public-ip show -n {IP_NAME} -g {RG_NAME}
+        az network public-ip show -n {ip_name} -g {rg_name}
         """.format(**locals()),
         shell=True
     )
@@ -292,13 +285,13 @@ def get_public_ip(IP_NAME, RG_NAME):
     return out["ipAddress"]
 
 
-def resize_VM(VM_NAME, RG_NAME, NEW_SIZE):
+def resize_vm(vm_name, rg_name, new_size):
     check_output_wrapper(
         """
         az vm resize \
-        --resource-group {RG_NAME} \
-        --name {VM_NAME} \
-        --size {NEW_SIZE}
+        --resource-group {rg_name} \
+        --name {vm_name} \
+        --size {new_size}
         """.format(**locals()),
         shell=True
     )
@@ -331,34 +324,6 @@ def cloud_init_fill_template(template_fn, user_pass, postfix=""):
     return result_fn
 
 
-def get_student_resource_group(student_name):
-    if "@" in student_name:
-        return load_sber_users()[student_name]["resource_group"]
-    else:
-        return RG_TEMPLATE.format(student_name)
-
-
-def get_student_storage_account(student_name):
-    if "@" in student_name:
-        return load_sber_users()[student_name]["storage_account"]
-    else:
-        return STORAGE_ACCOUNT_TEMPLATE.format(student_name)
-
-
-def get_student_region(student_name):
-    if "@" in student_name:
-        return load_sber_users()[student_name]["region"]
-    else:
-        return region_by_user[student_name]
-
-
-def get_student_gpu_size(student_name):
-    if "@" in student_name:
-        return load_sber_users()[student_name]["gpu"]
-    else:
-        return gpus_by_user[student_name]
-
-
 def check_output_wrapper(command, shell):
     # fix for windows
     return subprocess.check_output(
@@ -367,11 +332,11 @@ def check_output_wrapper(command, shell):
     )
 
 
-def list_disks_for_rg(RG):
+def list_disks_for_rg(rg_name):
     out = check_output_wrapper(
         """
         az disk list -g {0}
-        """.format(RG),
+        """.format(rg_name),
         shell=True
     )
     if out == "":

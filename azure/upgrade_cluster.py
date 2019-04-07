@@ -1,17 +1,14 @@
 ##!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import argparse
-
 from joblib import Parallel, delayed
 
-import utils
-from utils import RG_TEMPLATE, resize_VM
+from utils import RG_NAME, resize_vm, CLUSTER_VM
 
 """
 README:
-1. Stop All in Ambari
-2. Run this script
-3. Change Ambari settings
+1. Stop All in Ambari && python cluster_control.py --stop
+2. Run this script && python cluster_control.py --start
+3. Change Ambari settings (run on cluster1 node)
 
 curl 'http://localhost:8080/api/v1/clusters/Cluster/config_groups/2' -u admin:admin -H "X-Requested-By: ambari" -i  -X PUT --data '{"ConfigGroup":{"group_name":"MasterNode","description":"","tag":"YARN","hosts":[],"desired_configs":[]}}' --compressed
 /var/lib/ambari-server/resources/scripts/configs.sh set localhost Cluster yarn-site yarn.nodemanager.resource.cpu-vcores 16
@@ -31,16 +28,10 @@ Even more memory per worker (huge ALS workload maybe):
 
 """
 
-parser = argparse.ArgumentParser()
-parser.add_argument("--user", action="store", help="account name, for example student1", required=True)
-args = parser.parse_args()
-
-student_name = args.user
-rg_name = utils.get_student_resource_group(student_name)
-new_size = "Standard_DS14_v2_Promo"  # Standard DS14 v2 Promo (16 cores, 112 GB memory)
+NEW_SIZE = "Standard_E16_v3"  # 16 cores, 128 GB memory
 
 Parallel(n_jobs=3, backend="threading")(
-    delayed(resize_VM)("cluster{0}".format(idx), rg_name, new_size) for idx in [1, 2, 3]
+    delayed(resize_vm)(CLUSTER_VM.format(idx), RG_NAME, NEW_SIZE) for idx in [1, 2, 3]
 )
 
-print("cluster1 public IP: {}".format(utils.get_public_ip("ip_cluster1", rg_name)))
+print("Done!")
