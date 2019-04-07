@@ -5,7 +5,7 @@ import argparse
 from joblib import Parallel, delayed
 
 import utils
-from utils import VNET_NAME, SUBNET_NAME, NSG_NAME, cloud_init_fill_template, CLUSTER_IMAGE, RG_NAME, REGION
+from utils import VNET_NAME, SUBNET_NAME, NSG_NAME, cloud_init_fill_template, CLUSTER_IMAGE, RG_NAME, REGION, CLUSTER_VM
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--create_shared", action="store_true", help="create shared resources")
@@ -19,13 +19,13 @@ RESIZE_OS_DISK = False
 OS_DISK_SIZE = 511
 
 if args.create_shared:
-    utils.create_shared(RG_NAME, REGION)
+    utils.create_shared(RG_NAME, REGION, VNET_NAME, NSG_NAME, SUBNET_NAME)
 
 
 def create_cluster_node(idx, user_pass):
     IP_NAME = "ip_cluster{0}".format(idx)
     NIC_NAME = "nic_cluster{0}".format(idx)
-    INT_DNS_NAME = "cluster{0}".format(idx)
+    INT_DNS_NAME = CLUSTER_VM.format(idx)
     OS_DISK_NAME = "cluster{0}_os_disk".format(idx)
     VM_NAME = INT_DNS_NAME
     IP = "10.0.1.2{0}".format(idx)
