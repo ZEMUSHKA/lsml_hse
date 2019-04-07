@@ -37,4 +37,4 @@ Parallel(n_jobs=3, backend="threading")(
     delayed(resize_vm)(CLUSTER_VM.format(idx), RG_NAME, NEW_SIZE) for idx in [1, 2, 3]
 )
 
-print("cluster1 public IP: {}".format(utils.get_public_ip("ip_cluster1", RG_NAME)))
+print("Done!")
