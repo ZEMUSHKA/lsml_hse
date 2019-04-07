@@ -31,10 +31,10 @@ Even more memory per worker (huge ALS workload maybe):
 
 """
 
-new_size = "Standard_E16_v3"  # 16 cores, 128 GB memory
+NEW_SIZE = "Standard_E16_v3"  # 16 cores, 128 GB memory
 
 Parallel(n_jobs=3, backend="threading")(
-    delayed(resize_vm)(CLUSTER_VM.format(idx), RG_NAME, new_size) for idx in [1, 2, 3]
+    delayed(resize_vm)(CLUSTER_VM.format(idx), RG_NAME, NEW_SIZE) for idx in [1, 2, 3]
 )
 
 print("cluster1 public IP: {}".format(utils.get_public_ip("ip_cluster1", RG_NAME)))
