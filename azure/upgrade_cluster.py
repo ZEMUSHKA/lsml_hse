@@ -31,7 +31,7 @@ Even more memory per worker (huge ALS workload maybe):
 
 """
 
-new_size = "Standard_DS14_v2_Promo"  # Standard DS14 v2 Promo (16 cores, 112 GB memory)
+new_size = "Standard_E16_v3"  # 16 cores, 128 GB memory
 
 Parallel(n_jobs=3, backend="threading")(
     delayed(resize_vm)(CLUSTER_VM.format(idx), RG_NAME, new_size) for idx in [1, 2, 3]
