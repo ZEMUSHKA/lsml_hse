@@ -9,9 +9,9 @@ from utils import RG_NAME, resize_vm, CLUSTER_VM
 
 """
 README:
-1. Stop All in Ambari
-2. Run this script
-3. Change Ambari settings
+1. Stop All in Ambari && python cluster_control.py --stop
+2. Run this script && python cluster_control.py --start
+3. Change Ambari settings (run on cluster1 node)
 
 curl 'http://localhost:8080/api/v1/clusters/Cluster/config_groups/2' -u admin:admin -H "X-Requested-By: ambari" -i  -X PUT --data '{"ConfigGroup":{"group_name":"MasterNode","description":"","tag":"YARN","hosts":[],"desired_configs":[]}}' --compressed
 /var/lib/ambari-server/resources/scripts/configs.sh set localhost Cluster yarn-site yarn.nodemanager.resource.cpu-vcores 16
