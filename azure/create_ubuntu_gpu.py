@@ -3,7 +3,8 @@
 import argparse
 
 import utils
-from utils import VNET_NAME, SUBNET_NAME, NSG_NAME, cloud_init_fill_template, RG_NAME, REGION, UBUNTUGPU_IMAGE
+from utils import VNET_NAME, SUBNET_NAME, NSG_NAME, cloud_init_fill_template, RG_NAME, REGION, UBUNTUGPU_IMAGE, \
+    UBUNTUGPU_VM
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--create_shared", action="store_true", help="create shared resources")
@@ -16,11 +17,11 @@ RESIZE_OS_DISK = False
 OS_DISK_SIZE = 1023
 
 if args.create_shared:
-    utils.create_shared(RG_NAME, REGION)
+    utils.create_shared(RG_NAME, REGION, VNET_NAME, NSG_NAME, SUBNET_NAME)
 
 IP_NAME = "ip_ubuntugpu"
 NIC_NAME = "nic_ubuntugpu"
-INT_DNS_NAME = "ubuntugpu"
+INT_DNS_NAME = UBUNTUGPU_VM
 OS_DISK_NAME = "ubuntugpu_os_disk"
 IP = "10.0.1.10"
 
